@@ -11,7 +11,7 @@ function readTextFileArt(file)
                 let allText = rawFile.responseText;
                 let jsonArt = JSON.parse(csvJSON(allText));
                 let selectedArt = getRandom(jsonArt, 1);
-                let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred but any art is great!"];
+                let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred (and high-res) but any art is great! If you're getting this art from instagram we recommend https://ingramer.com/tools/instagram-photo-downloader/"];
                 let selectedArtTitle = selectedArt[0]["What is the name of this piece? (Untitled if there is no name)"];
                 let selectedArtTitleURL = selectedArt[0]["Link where we can find this work online"];
                 let selectedArtist = selectedArt[0]["What is the name of the artist?"];
