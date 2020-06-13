@@ -68,27 +68,54 @@ function readTextFileResources(file)
                 let selectedPetition = getRandom(jsonSign, 3);
                 document.getElementById("sign1").href = selectedPetition[0]['URL to resource'];
                 document.getElementById("sign1").innerHTML = selectedPetition[0]['Title'];
+                document.getElementById("save-sign-1").addEventListener("click", function(){
+                  saveArticle("sign1");
+                });
                 document.getElementById("sign2").href = selectedPetition[1]['URL to resource'];
                 document.getElementById("sign2").innerHTML = selectedPetition[1]['Title'];
+                document.getElementById("save-sign-2").addEventListener("click", function(){
+                  saveArticle("sign2");
+                });
                 document.getElementById("sign3").href = selectedPetition[2]['URL to resource'];
                 document.getElementById("sign3").innerHTML = selectedPetition[2]['Title'];
+                document.getElementById("save-sign-3").addEventListener("click", function(){
+                  saveArticle("sign3");
+                });
 
                 let selectedDonation = getRandom(jsonDonate, 3);
                 document.getElementById("donate1").href = selectedDonation[0]['URL to resource'];
                 document.getElementById("donate1").innerHTML = selectedDonation[0]['Title'];
+                document.getElementById("save-donate-1").addEventListener("click", function(){
+                  saveArticle("donate1");
+                });
                 document.getElementById("donate2").href = selectedDonation[1]['URL to resource'];
                 document.getElementById("donate2").innerHTML = selectedDonation[1]['Title'];
+                document.getElementById("save-donate-2").addEventListener("click", function(){
+                  saveArticle("donate2");
+                });
                 document.getElementById("donate3").href = selectedDonation[2]['URL to resource'];
                 document.getElementById("donate3").innerHTML = selectedDonation[2]['Title'];
+                document.getElementById("save-donate-3").addEventListener("click", function(){
+                  saveArticle("donate3");
+                });
 
 
                 let selectedRead = getRandom(jsonRead, 3);
                 document.getElementById("read1").href = selectedRead[0]['URL to resource'];
                 document.getElementById("read1").innerHTML = selectedRead[0]['Title'];
+                document.getElementById("save-read-1").addEventListener("click", function(){
+                  saveArticle("read1");
+                });
                 document.getElementById("read2").href = selectedRead[1]['URL to resource'];
                 document.getElementById("read2").innerHTML = selectedRead[1]['Title'];
+                document.getElementById("save-read-2").addEventListener("click", function(){
+                  saveArticle("read2");
+                });
                 document.getElementById("read3").href = selectedRead[2]['URL to resource'];
                 document.getElementById("read3").innerHTML = selectedRead[2]['Title'];
+                document.getElementById("save-read-3").addEventListener("click", function(){
+                  saveArticle("read3");
+                });
 
             }
         }
@@ -162,19 +189,6 @@ function updateTime() {
     document.getElementById("date").innerHTML = dateString;
 }
 
-function testStoring() {
-  chrome.storage.sync.set({'name': 'Chris'}, function() {
-    console.log('Value is set to ' + 'chris');
-  });
-}
-
-function testGetting() {
-  chrome.storage.sync.get('name', function(result) {
-    console.log(result);
-    console.log('Value currently is ' + result.name);
-  });
-}
-
 function convertDay(num) {
   switch(num) {
   case 0:
@@ -240,35 +254,29 @@ function convertMonth(num) {
 }
 }
 
-function storeLink(id) {
-  console.log(id);
-  chrome.storage.sync.set({'name': 'Chris'}, function() {
-    console.log('Value is set to ' + 'chris');
+function saveArticle(id){
+  console.log("running");
+  var saved = {};
+  var allArticles = [];
+  chrome.storage.sync.get('savedArticles', function(result) {
+    console.log("is this running?")
+    console.log(result.savedArticles);
+    allArticles = result.savedArticles;
+    saved.title = document.getElementById(id).innerHTML;
+    saved.link = document.getElementById(id).href;
+    allArticles.push(saved);
+    chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+      console.log('Value is set to ' + allArticles);
+    });
   });
 }
 
 window.onload = function () {
   updateTime();
-  document.getElementById("save-sign-1").addEventListener("click", function(){
-    var saved = {};
-    var allArticles = [];
-    chrome.storage.sync.get('savedArticles', function(result) {
-      allArticles = result.savedArticles;
-    });
-    saved.title = document.getElementById("sign1").innerHTML;
-    saved.link = document.getElementById("sign1").href
-    allArticles.push(saved);
-    console.log(allArticles);
-    chrome.storage.sync.set({'savedArticles': allArticles}, function() {
-      console.log('Value is set to ' + allArticles);
-    });
-  });
 };
 
 readTextFileArt('art.csv');
 readTextFileResources('resources.csv');
 
-testStoring();
-testGetting();
 // This updates every second in case the time changes
 setInterval(updateTime,1000);
