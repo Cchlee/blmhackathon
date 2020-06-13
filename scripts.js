@@ -162,6 +162,19 @@ function updateTime() {
     document.getElementById("date").innerHTML = dateString;
 }
 
+function testStoring() {
+  chrome.storage.sync.set({'name': 'Chris'}, function() {
+    console.log('Value is set to ' + 'chris');
+  });
+}
+
+function testGetting() {
+  chrome.storage.sync.get('name', function(result) {
+    console.log(result);
+    console.log('Value currently is ' + result.name);
+  });
+}
+
 function convertDay(num) {
   switch(num) {
   case 0:
@@ -227,12 +240,35 @@ function convertMonth(num) {
 }
 }
 
+function storeLink(id) {
+  console.log(id);
+  chrome.storage.sync.set({'name': 'Chris'}, function() {
+    console.log('Value is set to ' + 'chris');
+  });
+}
+
 window.onload = function () {
   updateTime();
+  document.getElementById("save-sign-1").addEventListener("click", function(){
+    var saved = {};
+    var allArticles = [];
+    chrome.storage.sync.get('savedArticles', function(result) {
+      allArticles = result.savedArticles;
+    });
+    saved.title = document.getElementById("sign1").innerHTML;
+    saved.link = document.getElementById("sign1").href
+    allArticles.push(saved);
+    console.log(allArticles);
+    chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+      console.log('Value is set to ' + allArticles);
+    });
+  });
 };
 
 readTextFileArt('art.csv');
 readTextFileResources('resources.csv');
 
+testStoring();
+testGetting();
 // This updates every second in case the time changes
 setInterval(updateTime,1000);
