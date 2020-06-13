@@ -121,7 +121,7 @@ function convertGoogleImageToURL(googleURL) {
 function updateTime() {
     var date = new Date();
     var timeString = date.getHours();
-    document.getElementById("clock").innerText = timeString;
+    // document.getElementById("clock").innerText = timeString;
 }
 
 updateTime();
