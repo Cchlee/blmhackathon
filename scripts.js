@@ -10,9 +10,16 @@ function readTextFileArt(file)
             {
                 let allText = rawFile.responseText;
                 let jsonArt = JSON.parse(csvJSON(allText));
+                console.log(jsonArt);
                 let selectedArt = getRandom(jsonArt, 1);
                 let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred but any art is great!"];
+                let selectedArtTitle = selectedArt[0]["What is the name of this piece? (Untitled if there is no name)\r"];
+                let selectedArtTitleURL = selectedArt[0]["Link where we can find this work online"];
+                let selectedArtist = selectedArt[0]["What is the name of the artist?"];
                 document.body.style.backgroundImage = "url(\'" + convertGoogleImageToURL(selectedArtURL) + "\')";
+                document.getElementById("artTitle").innerHTML = selectedArtTitle;
+                document.getElementById("artTitle").href = selectedArtTitleURL;
+                document.getElementById("artistName").innerHTML = selectedArtist;
             }
         }
     }
