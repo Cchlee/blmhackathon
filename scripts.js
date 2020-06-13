@@ -7,11 +7,13 @@ function readJSON(path) {
           let file = new File([this.response], 'temp');
           let fileReader = new FileReader();
           fileReader.addEventListener('load', function(){
-               let dict = JSON.parse(fileReader.result);
-               let featuredSites = getRandom(dict['Instagram sites'], 2);
-               document.getElementById("link1").href = featuredSites[0];
-               document.getElementById("link2").href = featuredSites[1];
-               console.log(featuredSites);
+            let csv = fileReader.result;
+            console.log(csv);
+               // let dict = JSON.parse(fileReader.result);
+               // let featuredSites = getRandom(dict['Instagram sites'], 2);
+               // document.getElementById("link1").href = featuredSites[0];
+               // document.getElementById("link2").href = featuredSites[1];
+               // console.log(featuredSites);
           fileReader.readAsText(file);
       }
     }
@@ -32,4 +34,4 @@ function getRandom(arr, n) {
     return result;
 }
 
-readJSON('resources.json');
+readJSON('art.csv');

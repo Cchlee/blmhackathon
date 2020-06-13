@@ -1,0 +1,9 @@
+{
+    "name": "Tab for Black Lives Matter",
+    "version": "1.0",
+    "description": "Contribute ad revenue to and educate yourself on the Black lives matter cause. New resources daily, new fund each week.",
+    "manifest_version": 2,
+    "chrome_url_overrides" : {
+        "newtab": "home.html"
+    }
+}
