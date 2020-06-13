@@ -65,7 +65,6 @@ function readTextFileResources(file)
                   }
                 }
 
-<<<<<<< Updated upstream
                 const numToGrab = 10
                 let selectedPetition = getRandom(jsonSign, numToGrab);
                 let i = 0;
@@ -80,7 +79,6 @@ function readTextFileResources(file)
                     i += 1
                   }
                 }
-=======
                 let selectedPetition = getRandom(jsonSign, 3);
                 document.getElementById("sign1").href = selectedPetition[0]['URL to resource'];
                 document.getElementById("sign1").innerHTML = selectedPetition[0]['Title'];
@@ -120,7 +118,6 @@ function readTextFileResources(file)
                   saveArticle("donate3");
                   changeColor("save-donate-3");
                 });
->>>>>>> Stashed changes
 
                 i = 0;
                 let selectedDonation = getRandom(jsonDonate, numToGrab);
@@ -138,7 +135,6 @@ function readTextFileResources(file)
 
                 i = 0;
                 let selectedRead = getRandom(jsonRead, 3);
-<<<<<<< Updated upstream
                 while (i < 3) {
                   if (selectedDonation[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
                     let addOne = (i + 1).toString()
@@ -150,7 +146,6 @@ function readTextFileResources(file)
                     i += 1
                   }
                 }
-=======
                 document.getElementById("read1").href = selectedRead[0]['URL to resource'];
                 document.getElementById("read1").innerHTML = selectedRead[0]['Title'];
                 document.getElementById("save-read-1").addEventListener("click", function(){
@@ -170,7 +165,6 @@ function readTextFileResources(file)
                   changeColor("save-read-3");
                 });
 
->>>>>>> Stashed changes
             }
         }
     }
