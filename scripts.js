@@ -1,32 +1,36 @@
-const MongoClient = require('mongodb').MongoClient;
-
-async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
-
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
-
-async function main(){
-    /**
-     * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
-     * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
-     */
-    const uri = "mongodb+srv://blm:BlackLivesMatterHack@cluster0-8a3x0.mongodb.net/test?retryWrites=true&w=majority";
-    const client = new MongoClient(uri);
-
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect();
-
-        // Make the appropriate DB calls
-        await  listDatabases(client);
-
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
+function readJSON(path) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', path, true);
+    xhr.responseType = 'blob';
+    xhr.onload = function(e) {
+      if (this.status == 200) {
+          let file = new File([this.response], 'temp');
+          let fileReader = new FileReader();
+          fileReader.addEventListener('load', function(){
+               let dict = JSON.parse(fileReader.result);
+               let featuredSites = getRandom(dict['Instagram sites'], 2);
+               document.getElementById("link1").href = featuredSites[0];
+               document.getElementById("link2").href = featuredSites[1];
+               console.log(featuredSites);
+          });
+          fileReader.readAsText(file);
+      }
     }
+    xhr.send();
 }
 
-main().catch(console.error);
+function getRandom(arr, n) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+}
+
+readJSON('resources.json');
