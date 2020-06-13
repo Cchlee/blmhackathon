@@ -65,58 +65,48 @@ function readTextFileResources(file)
                   }
                 }
 
-                let selectedPetition = getRandom(jsonSign, 3);
-                document.getElementById("sign1").href = selectedPetition[0]['URL to resource'];
-                document.getElementById("sign1").innerHTML = selectedPetition[0]['Title'];
-                document.getElementById("save-sign-1").addEventListener("click", function(){
-                  saveArticle("sign1");
-                });
-                document.getElementById("sign2").href = selectedPetition[1]['URL to resource'];
-                document.getElementById("sign2").innerHTML = selectedPetition[1]['Title'];
-                document.getElementById("save-sign-2").addEventListener("click", function(){
-                  saveArticle("sign2");
-                });
-                document.getElementById("sign3").href = selectedPetition[2]['URL to resource'];
-                document.getElementById("sign3").innerHTML = selectedPetition[2]['Title'];
-                document.getElementById("save-sign-3").addEventListener("click", function(){
-                  saveArticle("sign3");
-                });
+                const numToGrab = 10
+                let selectedPetition = getRandom(jsonSign, numToGrab);
+                let i = 0;
+                while (i < 3) {
+                  if (selectedPetition[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
+                    let addOne = (i + 1).toString()
+                    document.getElementById("sign" + addOne).href = selectedPetition[i]['URL to resource'];
+                    document.getElementById("sign" + addOne).innerHTML = selectedPetition[i]['Title'];
+                    document.getElementById("save-sign-" + addOne).addEventListener("click", function(){
+                      saveArticle("sign" + addOne);
+                    });
+                    i += 1
+                  }
+                }
 
-                let selectedDonation = getRandom(jsonDonate, 3);
-                document.getElementById("donate1").href = selectedDonation[0]['URL to resource'];
-                document.getElementById("donate1").innerHTML = selectedDonation[0]['Title'];
-                document.getElementById("save-donate-1").addEventListener("click", function(){
-                  saveArticle("donate1");
-                });
-                document.getElementById("donate2").href = selectedDonation[1]['URL to resource'];
-                document.getElementById("donate2").innerHTML = selectedDonation[1]['Title'];
-                document.getElementById("save-donate-2").addEventListener("click", function(){
-                  saveArticle("donate2");
-                });
-                document.getElementById("donate3").href = selectedDonation[2]['URL to resource'];
-                document.getElementById("donate3").innerHTML = selectedDonation[2]['Title'];
-                document.getElementById("save-donate-3").addEventListener("click", function(){
-                  saveArticle("donate3");
-                });
+                i = 0;
+                let selectedDonation = getRandom(jsonDonate, numToGrab);
+                while (i < 3) {
+                  if (selectedDonation[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
+                    let addOne = (i + 1).toString()
+                    document.getElementById("donate" + addOne).href = selectedDonation[i]['URL to resource'];
+                    document.getElementById("donate" + addOne).innerHTML = selectedDonation[i]['Title'];
+                    document.getElementById("save-donate-" + addOne).addEventListener("click", function(){
+                      saveArticle("donate" + addOne);
+                    });
+                    i += 1
+                  }
+                }
 
-
+                i = 0;
                 let selectedRead = getRandom(jsonRead, 3);
-                document.getElementById("read1").href = selectedRead[0]['URL to resource'];
-                document.getElementById("read1").innerHTML = selectedRead[0]['Title'];
-                document.getElementById("save-read-1").addEventListener("click", function(){
-                  saveArticle("read1");
-                });
-                document.getElementById("read2").href = selectedRead[1]['URL to resource'];
-                document.getElementById("read2").innerHTML = selectedRead[1]['Title'];
-                document.getElementById("save-read-2").addEventListener("click", function(){
-                  saveArticle("read2");
-                });
-                document.getElementById("read3").href = selectedRead[2]['URL to resource'];
-                document.getElementById("read3").innerHTML = selectedRead[2]['Title'];
-                document.getElementById("save-read-3").addEventListener("click", function(){
-                  saveArticle("read3");
-                });
-
+                while (i < 3) {
+                  if (selectedDonation[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
+                    let addOne = (i + 1).toString()
+                    document.getElementById("read" + addOne).href = selectedRead[i]['URL to resource'];
+                    document.getElementById("read" + addOne).innerHTML = selectedRead[i]['Title'];
+                    document.getElementById("save-read-" + addOne).addEventListener("click", function(){
+                      saveArticle("read" + addOne);
+                    });
+                    i += 1
+                  }
+                }
             }
         }
     }
