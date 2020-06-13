@@ -39,7 +39,7 @@ footer {
 .dropdown-content {
   display: none;
   position: absolute;
-  min-width: 375px;
+  min-width: 300px;
   z-index: 1;
 }
 

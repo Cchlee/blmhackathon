@@ -65,6 +65,7 @@ function readTextFileResources(file)
                   }
                 }
 
+<<<<<<< Updated upstream
                 const numToGrab = 10
                 let selectedPetition = getRandom(jsonSign, numToGrab);
                 let i = 0;
@@ -79,6 +80,47 @@ function readTextFileResources(file)
                     i += 1
                   }
                 }
+=======
+                let selectedPetition = getRandom(jsonSign, 3);
+                document.getElementById("sign1").href = selectedPetition[0]['URL to resource'];
+                document.getElementById("sign1").innerHTML = selectedPetition[0]['Title'];
+                document.getElementById("save-sign-1").addEventListener("click", function(){
+                  saveArticle("sign1");
+                  changeColor("save-sign-1");
+                });
+                document.getElementById("sign2").href = selectedPetition[1]['URL to resource'];
+                document.getElementById("sign2").innerHTML = selectedPetition[1]['Title'];
+                document.getElementById("save-sign-2").addEventListener("click", function(){
+                  saveArticle("sign2");
+                  changeColor("save-sign-2");
+                });
+                document.getElementById("sign3").href = selectedPetition[2]['URL to resource'];
+                document.getElementById("sign3").innerHTML = selectedPetition[2]['Title'];
+                document.getElementById("save-sign-3").addEventListener("click", function(){
+                  saveArticle("sign3");
+                  changeColor("save-sign-3");
+                });
+
+                let selectedDonation = getRandom(jsonDonate, 3);
+                document.getElementById("donate1").href = selectedDonation[0]['URL to resource'];
+                document.getElementById("donate1").innerHTML = selectedDonation[0]['Title'];
+                document.getElementById("save-donate-1").addEventListener("click", function(){
+                  saveArticle("donate1");
+                  changeColor("save-donate-1");
+                });
+                document.getElementById("donate2").href = selectedDonation[1]['URL to resource'];
+                document.getElementById("donate2").innerHTML = selectedDonation[1]['Title'];
+                document.getElementById("save-donate-2").addEventListener("click", function(){
+                  saveArticle("donate2");
+                  changeColor("save-donate-2");
+                });
+                document.getElementById("donate3").href = selectedDonation[2]['URL to resource'];
+                document.getElementById("donate3").innerHTML = selectedDonation[2]['Title'];
+                document.getElementById("save-donate-3").addEventListener("click", function(){
+                  saveArticle("donate3");
+                  changeColor("save-donate-3");
+                });
+>>>>>>> Stashed changes
 
                 i = 0;
                 let selectedDonation = getRandom(jsonDonate, numToGrab);
@@ -96,6 +138,7 @@ function readTextFileResources(file)
 
                 i = 0;
                 let selectedRead = getRandom(jsonRead, 3);
+<<<<<<< Updated upstream
                 while (i < 3) {
                   if (selectedDonation[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
                     let addOne = (i + 1).toString()
@@ -107,6 +150,27 @@ function readTextFileResources(file)
                     i += 1
                   }
                 }
+=======
+                document.getElementById("read1").href = selectedRead[0]['URL to resource'];
+                document.getElementById("read1").innerHTML = selectedRead[0]['Title'];
+                document.getElementById("save-read-1").addEventListener("click", function(){
+                  saveArticle("read1");
+                  changeColor("save-read-1");
+                });
+                document.getElementById("read2").href = selectedRead[1]['URL to resource'];
+                document.getElementById("read2").innerHTML = selectedRead[1]['Title'];
+                document.getElementById("save-read-2").addEventListener("click", function(){
+                  saveArticle("read2");
+                  changeColor("save-read-2");
+                });
+                document.getElementById("read3").href = selectedRead[2]['URL to resource'];
+                document.getElementById("read3").innerHTML = selectedRead[2]['Title'];
+                document.getElementById("save-read-3").addEventListener("click", function(){
+                  saveArticle("read3");
+                  changeColor("save-read-3");
+                });
+
+>>>>>>> Stashed changes
             }
         }
     }
@@ -266,6 +330,12 @@ function storeLink(id) {
   chrome.storage.sync.set({'name': 'Chris'}, function() {
     console.log('Value is set to ' + 'chris');
   });
+function changeColor(id){
+  if (document.getElementById(id).style.color==="white"){
+    document.getElementById(id).style.color="orange";
+  } else {
+    document.getElementById(id).style.color="white";
+  }
 }
 
 function saveArticle(id){
