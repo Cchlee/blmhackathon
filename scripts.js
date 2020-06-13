@@ -13,13 +13,15 @@ function readTextFileArt(file)
                 console.log(jsonArt);
                 let selectedArt = getRandom(jsonArt, 1);
                 let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred but any art is great!"];
-                let selectedArtTitle = selectedArt[0]["What is the name of this piece? (Untitled if there is no name)\r"];
+                let selectedArtTitle = selectedArt[0]["What is the name of this piece? (Untitled if there is no name)"];
                 let selectedArtTitleURL = selectedArt[0]["Link where we can find this work online"];
                 let selectedArtist = selectedArt[0]["What is the name of the artist?"];
+                let selectedArtistURL = selectedArt[0]["The artist's online portfolio or Instagram handle - if possible (i.e. @kerryjamesmarshs)\r"]
                 document.body.style.backgroundImage = "url(\'" + convertGoogleImageToURL(selectedArtURL) + "\')";
                 document.getElementById("artTitle").innerHTML = selectedArtTitle;
                 document.getElementById("artTitle").href = selectedArtTitleURL;
                 document.getElementById("artistName").innerHTML = selectedArtist;
+                document.getElementById("artistName").href = selectedArtistURL;
             }
         }
     }
@@ -87,16 +89,18 @@ function readTextFileResources(file)
 function csvJSON(csv){
   let lines=csv.split("\n");
   let result = [];
+  let commaRegex = /,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/g
+  let quotesRegex = /^"(.*)"$/g
   // NOTE: If your columns contain commas in their values, you'll need
   // to deal with those before doing the next step
   // (you might convert them to &&& or something, then covert them back later)
   // jsfiddle showing the issue https://jsfiddle.net/
-  let headers=lines[0].split(",");
+  let headers = lines[0].split(commaRegex).map(h => h.replace(quotesRegex, "$1"));
   for(let i=1;i<lines.length;i++){
       let obj = {};
-      let currentline=lines[i].split(",");
+      let currentline=lines[i].split(commaRegex);
       for(let j=0;j<headers.length;j++){
-          obj[headers[j]] = currentline[j];
+          obj[headers[j]] = currentline[j].replace(quotesRegex, "$1");
       }
       result.push(obj);
   }
