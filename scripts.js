@@ -12,7 +12,7 @@ function readTextFileArt(file)
                 let jsonArt = JSON.parse(csvJSON(allText));
                 let selectedArt = getRandom(jsonArt, 1);
                 let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred but any art is great!"];
-                document.body.style.backgroundImage = "url(\'" + selectedArtURL + "\')";
+                // document.body.style.backgroundImage = "url(\'" + selectedArtURL + "\')";
             }
         }
     }
