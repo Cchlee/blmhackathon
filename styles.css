@@ -18,7 +18,8 @@ footer {
 .dropbtn {
   color: white;
   padding: 16px;
-  font-size: 36px;
+  font-size: 45px;
+  text-shadow: 2px 2px black;
   background-color: transparent;
   transform: skew(-20deg);
   border: none;
@@ -51,7 +52,7 @@ footer {
 }
 
 /* Change color of dropdown links on hover */
-/* .dropdown-content a:hover {background-color: #ddd;} */
+ .dropdown-content a:hover {color: white;} 
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
