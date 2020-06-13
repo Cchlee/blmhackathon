@@ -1,7 +1,7 @@
 {
     "name": "Tab for Black Lives Matter - Beta Version",
     "version": "1.0",
-    "description": "Discover new Black artists, contribute ad revenue to, and educate yourself on the Black lives matter cause. New resources and art with each open tab.",
+    "description": "Discover new Black artists, contribute ad revenue to, and educate yourself on the Black lives matter cause.",
     "manifest_version": 2,
     "chrome_url_overrides" : {
         "newtab": "home.html"

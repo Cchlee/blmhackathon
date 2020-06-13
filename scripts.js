@@ -39,18 +39,29 @@ function readTextFileResources(file)
             {
                 let allText = rawFile.responseText;
                 let jsonResources = JSON.parse(csvJSON(allText));
-                console.log(jsonResources);
                 let jsonSign = []
                 let jsonRead = []
                 let jsonDonate = []
+
+                let allContentURLs = new Set()
+
                 for (let i = 0; i < jsonResources.length; i++) {
                   let resource = jsonResources[i];
                   if (resource['Category'] === 'Petition') {
-                    jsonSign.push(resource);
+                    if (!allContentURLs.has(resource['URL to resource'])) {
+                      jsonSign.push(resource);
+                      allContentURLs.add(resource['URL to resource'])
+                    }
                   } else if (resource['Category'] === 'Donation fund') {
-                    jsonDonate.push(resource);
+                    if (!allContentURLs.has(resource['URL to resource'])) {
+                      jsonDonate.push(resource);
+                      allContentURLs.add(resource['URL to resource'])
+                    }
                   } else {
-                    jsonRead.push(resource);
+                    if (!allContentURLs.has(resource['URL to resource'])) {
+                      jsonRead.push(resource);
+                      allContentURLs.add(resource['URL to resource'])
+                    }
                   }
                 }
 
@@ -138,7 +149,7 @@ function updateTime() {
         minuteString = "0" + date.getMinutes();
     } else {
         minuteString = date.getMinutes();
-    } 
+    }
     if (date.getHours() > 12) {
         hourString = date.getHours() - 12;
     } else {
