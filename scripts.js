@@ -12,7 +12,6 @@ function readJSON(path) {
                document.getElementById("link1").href = featuredSites[0];
                document.getElementById("link2").href = featuredSites[1];
                console.log(featuredSites);
-          });
           fileReader.readAsText(file);
       }
     }
