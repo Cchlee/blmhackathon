@@ -8,6 +8,16 @@ body {
     padding-top: 20px;
 }
 
+.hideable {
+    display: block;
+}
+
+.fa-eye-slash:hover .fa-eye:before {
+    /* content:"\f06e"; */
+    color: red;
+    content:"\f070";
+}
+
 footer {
   position: absolute;
   bottom: 0;

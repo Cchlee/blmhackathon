@@ -240,6 +240,20 @@ function convertMonth(num) {
 }
 }
 
+function toggleOverlay() {
+  let overlay = document.getElementsByClassName("hideable");
+  let eye = document.getElementById("hide-overlay-btn");
+  for (let i = 0; i < overlay.length; i++) {
+    if (overlay[i].style.visibility === "hidden") {
+      overlay[i].style.visibility = "visible";
+      eye.innerHTML = "<i class=\"fa fa-eye\"></i>";
+    } else {
+      overlay[i].style.visibility = "hidden";
+      eye.innerHTML = "<i class=\"fa fa-eye-slash\"></i>";
+    }
+  }
+}
+
 function storeLink(id) {
   console.log(id);
   chrome.storage.sync.set({'name': 'Chris'}, function() {
@@ -262,6 +276,9 @@ window.onload = function () {
     chrome.storage.sync.set({'savedArticles': allArticles}, function() {
       console.log('Value is set to ' + allArticles);
     });
+  });
+  this.document.getElementById("hide-overlay-btn").addEventListener("click", function(){
+    toggleOverlay();
   });
 };
 
