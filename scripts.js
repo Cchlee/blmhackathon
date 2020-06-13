@@ -240,6 +240,21 @@ function convertMonth(num) {
 }
 }
 
+function addSavedItemsToList(lst) {
+  //lst is [[title, link], [title, link], etc]
+  let content = document.getElementById("saved-articles-list");
+  let i = 0;
+  for (let savedItem in lst) {
+    let a = document.createElement('a');
+    let link = document.createTextNode(lst[i][0]);
+    a.appendChild(link);
+    a.title = lst[i][0];
+    a.href = lst[i][1];
+    content.appendChild(a);
+    i = i+1;
+  }
+}
+
 function storeLink(id) {
   console.log(id);
   chrome.storage.sync.set({'name': 'Chris'}, function() {
@@ -249,9 +264,10 @@ function storeLink(id) {
 
 window.onload = function () {
   updateTime();
+  addSavedItemsToList([['Title1', 'http://google.com/'], ['Title2', 'https://www.facebook.com/']]);
   document.getElementById("save-sign-1").addEventListener("click", function(){
-    var saved = {};
-    var allArticles = [];
+    let saved = {};
+    let allArticles = [];
     chrome.storage.sync.get('savedArticles', function(result) {
       allArticles = result.savedArticles;
     });
