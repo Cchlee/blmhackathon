@@ -64,7 +64,6 @@ function readTextFileResources(file)
 
                 let selectedRead = getRandom(jsonRead, 3);
                 document.getElementById("read1").href = selectedRead[0]['URL to resource'];
-                console.log(selectedRead[0])
                 document.getElementById("read1").innerHTML = selectedRead[0]['Title'];
                 document.getElementById("read2").href = selectedRead[1]['URL to resource'];
                 document.getElementById("read2").innerHTML = selectedRead[1]['Title'];
@@ -119,11 +118,85 @@ function convertGoogleImageToURL(googleURL) {
 }
 
 function updateTime() {
-    var date = new Date();
-    var timeString = date.getHours();
-    // document.getElementById("clock").innerText = timeString;
+    let date = new Date();
+    let timeString = date.getHours() + ":" + date.getMinutes();
+    let dateString = convertDay(date.getDay()) + ", " + convertMonth(date.getMonth()) + " " + date.getDate()
+
+    document.getElementById("clock").innerHTML = timeString;
+    document.getElementById("date").innerHTML = dateString;
 }
 
-updateTime();
+function convertDay(num) {
+  switch(num) {
+  case 0:
+    return "Sunday"
+    break;
+  case 1:
+    return "Monday"
+    break;
+  case 2:
+    return "Tuesday"
+    break;
+  case 3:
+    return "Wednesday"
+    break;
+  case 4:
+    return "Thursday"
+    break;
+  case 5:
+    return "Friday"
+    break;
+  default:
+    return "Saturday"
+}
+}
+
+function convertMonth(num) {
+  switch(num) {
+  case 0:
+    return "January"
+    break;
+  case 1:
+    return "February"
+    break;
+  case 2:
+    return "March"
+    break;
+  case 3:
+    return "April"
+    break;
+  case 4:
+    return "May"
+    break;
+  case 5:
+    return "June"
+    break;
+  case 6:
+    return "July"
+    break;
+  case 7:
+    return "August"
+    break;
+  case 8:
+    return "September"
+    break;
+  case 9:
+    return "October"
+    break;
+  case 10:
+    return "November"
+    break;
+  default:
+    return "December"
+}
+}
+
+window.onload = function () {
+  updateTime();
+};
+
 readTextFileArt('art.csv');
 readTextFileResources('resources.csv');
+
+// This updates every second in case the time changes
+setInterval(updateTime,1000);
