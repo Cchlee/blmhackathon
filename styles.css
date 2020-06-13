@@ -71,7 +71,7 @@ footer {
 
 /* DropUP Button */
 .dropupbtn {
-  background-color: #4CAF50;
+  background-color: transparent;
   color: white;
   padding: 16px;
   font-size: 16px;
@@ -89,25 +89,41 @@ footer {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  min-width: 375px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+}
+
+#saved-articles-list {
+  max-height: 300px;
+  overflow: scroll;
 }
 
 /* Links inside the dropdown */
 .dropup-content a {
   color: black;
-  padding: 12px 16px;
+  padding: 8px 12px;
   text-decoration: none;
   display: block;
+  max-height: 300px;
+  text-shadow: none;
+  font-size: 20px;
 }
 
 .dropup-content a:hover {
   background-color: #ddd;
+  max-height: 300px;
+  overflow: scroll;
 }
 .dropup:hover .dropup-content {
   display: block;
   position: absolute;
-  margin-top: -176px;
+  margin-top: -355px;
+  max-height: 300px;
 }
-.dropup:hover .dropupbtn {background-color: #3e8e41;}
+.dropup:hover .dropupbtn {background-color: #D3D3D3;}
+
+#dropdownTitle {
+  font-size: 24px;
+  text-shadow: 2px 2px black;
+}
