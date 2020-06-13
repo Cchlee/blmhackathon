@@ -10,7 +10,6 @@ function readTextFileArt(file)
             {
                 let allText = rawFile.responseText;
                 let jsonArt = JSON.parse(csvJSON(allText));
-                console.log(jsonArt);
                 let selectedArt = getRandom(jsonArt, 1);
                 let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred but any art is great!"];
                 let selectedArtTitle = selectedArt[0]["What is the name of this piece? (Untitled if there is no name)"];
@@ -40,6 +39,7 @@ function readTextFileResources(file)
             {
                 let allText = rawFile.responseText;
                 let jsonResources = JSON.parse(csvJSON(allText));
+                console.log(jsonResources);
                 let jsonSign = []
                 let jsonRead = []
                 let jsonDonate = []
@@ -100,7 +100,9 @@ function csvJSON(csv){
       let obj = {};
       let currentline=lines[i].split(commaRegex);
       for(let j=0;j<headers.length;j++){
-          obj[headers[j]] = currentline[j].replace(quotesRegex, "$1");
+          if(obj[headers[j]] = currentline[j] != null){
+            obj[headers[j]] = currentline[j].replace(quotesRegex, "$1");
+          }
       }
       result.push(obj);
   }
