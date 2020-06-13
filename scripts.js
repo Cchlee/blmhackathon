@@ -45,14 +45,31 @@ function readTextFileResources(file)
                   }
                 }
 
-                let selectedPetition = getRandom(jsonSign, 1);
-                document.getElementById("sign").href = selectedPetition[0]['URL to resource'];
+                let selectedPetition = getRandom(jsonSign, 3);
+                document.getElementById("sign1").href = selectedPetition[0]['URL to resource'];
+                document.getElementById("sign1").innerHTML = selectedPetition[0]['Title'];
+                document.getElementById("sign2").href = selectedPetition[1]['URL to resource'];
+                document.getElementById("sign2").innerHTML = selectedPetition[1]['Title'];
+                document.getElementById("sign3").href = selectedPetition[2]['URL to resource'];
+                document.getElementById("sign3").innerHTML = selectedPetition[2]['Title'];
 
-                let selectedDonation = getRandom(jsonDonate, 1);
-                document.getElementById("donate").href = selectedDonation[0]['URL to resource'];
+                let selectedDonation = getRandom(jsonDonate, 3);
+                document.getElementById("donate1").href = selectedDonation[0]['URL to resource'];
+                document.getElementById("donate1").innerHTML = selectedDonation[0]['Title'];
+                document.getElementById("donate2").href = selectedDonation[1]['URL to resource'];
+                document.getElementById("donate2").innerHTML = selectedDonation[1]['Title'];
+                document.getElementById("donate3").href = selectedDonation[2]['URL to resource'];
+                document.getElementById("donate3").innerHTML = selectedDonation[2]['Title'];
 
-                let selectedRead = getRandom(jsonRead, 1);
-                document.getElementById("read").href = selectedRead[0]['URL to resource'];
+
+                let selectedRead = getRandom(jsonRead, 3);
+                document.getElementById("read1").href = selectedRead[0]['URL to resource'];
+                console.log(selectedRead[0])
+                document.getElementById("read1").innerHTML = selectedRead[0]['Title'];
+                document.getElementById("read2").href = selectedRead[1]['URL to resource'];
+                document.getElementById("read2").innerHTML = selectedRead[1]['Title'];
+                document.getElementById("read3").href = selectedRead[2]['URL to resource'];
+                document.getElementById("read3").innerHTML = selectedRead[2]['Title'];
 
             }
         }
