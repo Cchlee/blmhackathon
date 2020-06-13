@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=Yatra+One&display=swap" rel="stylesheet">
 <script src="scripts.js"></script>
-<body style="font-family: Yatra One, cursive;">
+<body style="font-family: Yatra One, cursive; color: white; font-size: 24px">
 
 <!-- <a id="link1" href="">Link 1</a>
 <a id="link2" href="">Link 2</a> -->
@@ -14,33 +14,33 @@
   <div class="container" style="height: 100px">
       <div class="h-100 row align-items-center text-center" >
         <div class="col-3">
-          <h1 id="clock"></h1>
+          <h1 id="clock" style="font-size:80px"></h1>
           <p id="date"></p>
         </div>
           <div class="col-3">
             <div class="dropdown">
-              <button class="dropbtn">SIGN</button>
-              <div class="dropdown-content">
-                <a id="sign1" href="#">Link 1</a>
-                <a id="sign2" href="#">Link 2</a>
-                <a id="sign3" href="#">Link 3</a>
+                <button class="dropbtn"> <div class="reverse-skew">SIGN</div></button>
+                <div class="dropdown-content">
+                  <a id="sign1" href="#">Link 1</a>
+                  <a id="sign2" href="#">Link 2</a>
+                  <a id="sign3" href="#">Link 3</a>
+                </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="dropdown" >
+              <button class="dropbtn"><div class="reverse-skew">READ </div></button>
+              <div class="dropdown-content" style="left: 50%; right: auto; text-align: center !important; transform: translate(-50%, 0)">
+                <a id="read1" href="#">Link 1</a> 
+                <a id="read2" href="#">Link 2</a> 
+                <a id="read3" href="#">Link 3</a> 
               </div>
             </div>
           </div>
           <div class="col-3">
-            <div class="dropdown">
-              <button class="dropbtn">READ</button>
-              <div class="dropdown-content">
-                <a id="read1" href="#">Link 1</a>
-                <a id="read2" href="#">Link 2</a>
-                <a id="read3" href="#">Link 3</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="dropdown">
-              <button class="dropbtn">DONATE</button>
-              <div class="dropdown-content">
+            <div class="dropdown" >
+              <button class="dropbtn"><div class="reverse-skew">DONATE </div></button>
+              <div class="dropdown-content" style="right: 0;">
                 <a id="donate1" href="#">Link 1</a>
                 <a id="donate2" href="#">Link 2</a>
                 <a id="donate3" href="#">Link 3</a>
@@ -51,9 +51,11 @@
     </div>
   </div>
 </header>
+<!-- DELETE LATER -->
+<br><br><br><br><br><br>
 <footer>
-  <div class="container" style="height: 100px">
-    <div class="h-100 row align-items-center" >
+  <div class="container">
+    <div class="h-25 row align-items-center" >
       <div class="col-3 text-left">
         TITLE:
         <a id="artTitle" href="#"></a>

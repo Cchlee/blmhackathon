@@ -126,7 +126,19 @@ function convertGoogleImageToURL(googleURL) {
 
 function updateTime() {
     let date = new Date();
-    let timeString = date.getHours() + ":" + date.getMinutes();
+    let minuteString = "";
+    let hourString = "";
+    if (date.getMinutes() < 10) {
+        minuteString = "0" + date.getMinutes();
+    } else {
+        minuteString = date.getMinutes();
+    } 
+    if (date.getHours() > 12) {
+        hourString = date.getHours() - 12;
+    } else {
+        hourString = date.getHours();
+    }
+    let timeString = hourString + ":" + minuteString;
     let dateString = convertDay(date.getDay()) + ", " + convertMonth(date.getMonth()) + " " + date.getDate()
 
     document.getElementById("clock").innerHTML = timeString;
