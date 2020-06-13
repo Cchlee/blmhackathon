@@ -12,7 +12,7 @@ function readTextFileArt(file)
                 let jsonArt = JSON.parse(csvJSON(allText));
                 let selectedArt = getRandom(jsonArt, 1);
                 let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred but any art is great!"];
-                // document.body.style.backgroundImage = "url(\'" + selectedArtURL + "\')";
+                document.body.style.backgroundImage = "url(\'" + convertGoogleImageToURL(selectedArtURL) + "\')";
             }
         }
     }
@@ -93,6 +93,12 @@ function getRandom(arr, n) {
         taken[x] = --len in taken ? taken[len] : len;
     }
     return result;
+}
+
+function convertGoogleImageToURL(googleURL) {
+  let arr = googleURL.split('https://drive.google.com/open?id=');
+  img_id = arr[1];
+  return 'https://drive.google.com/uc?export=view&id=' + img_id;
 }
 
 readTextFileArt('art.csv');
