@@ -1,37 +1,97 @@
-function readJSON(path) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', path, true);
-    xhr.responseType = 'blob';
-    xhr.onload = function(e) {
-      if (this.status == 200) {
-          let file = new File([this.response], 'temp');
-          let fileReader = new FileReader();
-          fileReader.addEventListener('load', function(){
-            let csv = fileReader.result;
-            console.log(csv);
-               // let dict = JSON.parse(fileReader.result);
-               // let featuredSites = getRandom(dict['Instagram sites'], 2);
-               // document.getElementById("link1").href = featuredSites[0];
-               // document.getElementById("link2").href = featuredSites[1];
-               // console.log(featuredSites);
-          fileReader.readAsText(file);
-      }
+function readTextFileArt(file)
+{
+    let rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                let allText = rawFile.responseText;
+                let jsonArt = JSON.parse(csvJSON(allText));
+                //DO STUFF WITH THE ART HERE
+            }
+        }
     }
-    xhr.send();
+    rawFile.send(null);
+}
+
+function readTextFileResources(file)
+{
+    let rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                let allText = rawFile.responseText;
+                let jsonResources = JSON.parse(csvJSON(allText));
+                let jsonSign = []
+                let jsonRead = []
+                let jsonDonate = []
+                for (let i = 0; i < jsonResources.length; i++) {
+                  let resource = jsonResources[i];
+                  if (resource['Category'] === 'Petition') {
+                    jsonSign.push(resource);
+                  } else if (resource['Category'] === 'Donation fund') {
+                    jsonDonate.push(resource);
+                  } else {
+                    jsonRead.push(resource);
+                  }
+                }
+
+                let selectedPetition = getRandom(jsonSign, 1);
+                document.getElementById("sign").href = selectedPetition[0]['URL to resource'];
+
+                let selectedDonation = getRandom(jsonDonate, 1);
+                document.getElementById("donate").href = selectedDonation[0]['URL to resource'];
+
+                let selectedRead = getRandom(jsonRead, 1);
+                document.getElementById("read").href = selectedRead[0]['URL to resource'];
+
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+//let csv is the CSV file with headers
+function csvJSON(csv){
+  let lines=csv.split("\n");
+  let result = [];
+  // NOTE: If your columns contain commas in their values, you'll need
+  // to deal with those before doing the next step
+  // (you might convert them to &&& or something, then covert them back later)
+  // jsfiddle showing the issue https://jsfiddle.net/
+  let headers=lines[0].split(",");
+  for(let i=1;i<lines.length;i++){
+      let obj = {};
+      let currentline=lines[i].split(",");
+      for(let j=0;j<headers.length;j++){
+          obj[headers[j]] = currentline[j];
+      }
+      result.push(obj);
+  }
+  //return result; //JavaScript object
+  return JSON.stringify(result); //JSON
 }
 
 function getRandom(arr, n) {
-    var result = new Array(n),
+    let result = new Array(n),
         len = arr.length,
         taken = new Array(len);
     if (n > len)
         throw new RangeError("getRandom: more elements taken than available");
     while (n--) {
-        var x = Math.floor(Math.random() * len);
+        let x = Math.floor(Math.random() * len);
         result[n] = arr[x in taken ? taken[x] : x];
         taken[x] = --len in taken ? taken[len] : len;
     }
     return result;
 }
 
-readJSON('art.csv');
+readTextFileArt('art.csv');
+readTextFileResources('resources.csv');
