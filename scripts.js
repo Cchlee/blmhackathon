@@ -73,6 +73,7 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("sign" + addOne).href = selectedPetition[i]['URL to resource'];
                     document.getElementById("sign" + addOne).innerHTML = selectedPetition[i]['Title'];
+                    checkIfSaved(selectedPetition[i]['Title'], i, "save-sign-");
                     document.getElementById("save-sign-" + addOne).addEventListener("click", function(){
                       saveArticle("sign" + addOne);
                       changeColor("save-sign-" + addOne);
@@ -88,6 +89,7 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("donate" + addOne).href = selectedDonation[i]['URL to resource'];
                     document.getElementById("donate" + addOne).innerHTML = selectedDonation[i]['Title'];
+                    checkIfSaved(selectedDonation[i]['Title'], i, "save-donate-");
                     document.getElementById("save-donate-" + addOne).addEventListener("click", function(){
                       saveArticle("donate" + addOne);
                       changeColor("save-donate-" + addOne);
@@ -103,6 +105,7 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("read" + addOne).href = selectedRead[i]['URL to resource'];
                     document.getElementById("read" + addOne).innerHTML = selectedRead[i]['Title'];
+                    checkIfSaved(selectedRead[i]['Title'], i, "save-read-");
                     document.getElementById("save-read-" + addOne).addEventListener("click", function(){
                       saveArticle("read" + addOne);
                       changeColor("save-read-" + addOne);
@@ -260,6 +263,20 @@ function addSavedItemsToList() {
       content.appendChild(a);
       i = i+1;
     }
+  });
+}
+
+function checkIfSaved(title, curr, type){
+  chrome.storage.sync.get('savedArticles', function(result) {
+    for (var x = 0; x < result.savedArticles.length; x++) {
+      if (result.savedArticles[x].title === title) {
+        console.log("there");
+        changeColor(type + curr);
+        return true;
+      } 
+    }
+    console.log("not there")
+    return false;
   });
 }
 
