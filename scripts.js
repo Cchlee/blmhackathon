@@ -118,5 +118,12 @@ function convertGoogleImageToURL(googleURL) {
   return 'https://drive.google.com/uc?export=view&id=' + img_id;
 }
 
+function updateTime() {
+    var date = new Date();
+    var timeString = date.getHours();
+    document.getElementById("clock").innerText = timeString;
+}
+
+updateTime();
 readTextFileArt('art.csv');
 readTextFileResources('resources.csv');
