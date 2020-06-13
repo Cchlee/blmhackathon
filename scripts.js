@@ -10,7 +10,9 @@ function readTextFileArt(file)
             {
                 let allText = rawFile.responseText;
                 let jsonArt = JSON.parse(csvJSON(allText));
-                //DO STUFF WITH THE ART HERE
+                let selectedArt = getRandom(jsonArt, 1);
+                let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred but any art is great!"];
+                document.body.style.backgroundImage = "url(\'" + selectedArtURL + "\')";
             }
         }
     }
