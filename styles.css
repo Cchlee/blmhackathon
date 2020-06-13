@@ -43,6 +43,10 @@ footer {
   z-index: 1;
 }
 
+#resource-link, #art-link, #artistName, #artTitle, #creditsLink {
+  color: #D3D3D3;
+}
+
 /* Links inside the dropdown */
 .dropdown-content a {
   color: white;
@@ -52,10 +56,14 @@ footer {
 }
 
 /* Change color of dropdown links on hover */
- .dropdown-content a:hover {color: white;} 
+ .dropdown-content a:hover {color: white;}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #ddd;}
+
+footer {
+  padding-bottom: 10px;
+}
