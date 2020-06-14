@@ -22,6 +22,8 @@ body {
     animation-fill-mode: forwards; 
 }
 
+/* Animations */
+
 @keyframes fadeInAnimation { 
     0% { 
         opacity: 0; 
@@ -30,6 +32,17 @@ body {
         opacity: 1; 
     } 
 } 
+
+@keyframes moveFromTop {
+  from {
+      opacity: 0;
+      transform: translateY(-7%);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0%);
+  }
+}
 
 .hideable {
     display: block;
@@ -111,7 +124,10 @@ footer {
  .dropdown-content a:hover {color: white;}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+  animation: moveFromTop 400ms ease-in-out;
+}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #ddd;}
@@ -171,6 +187,7 @@ footer {
 }
 .dropup:hover .dropup-content {
   background-color: #ddd;
+  animation: moveFromTop 400ms ease-in-out;
   display: block;
   position: absolute;
   margin-top: -365px;
