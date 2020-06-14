@@ -305,7 +305,6 @@ function checkIfSaved(title, curr, type){
 }
 
 function changeColor(id){
-  console.log(id);
   if (document.getElementById(id).style.color==="white"){
     document.getElementById(id).style.color="yellow";
   } else {
