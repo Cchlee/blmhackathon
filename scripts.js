@@ -50,6 +50,8 @@ function readTextFileArt(file) {
   rawFile.send(null);
 }
 
+var headerTitleLinks = [] //GLOBAL ARRAY TO STORE HEADER LINKS
+
 /**
  * readTextFileResources is used to handle the dropdown resources
  */
@@ -85,7 +87,6 @@ function readTextFileResources(file) {
           }
         }
 
-<<<<<<< Updated upstream
         const numToGrab = 10;
         let selectedPetition = getRandom(jsonSign, numToGrab);
         let i = 0;
@@ -108,6 +109,8 @@ function readTextFileResources(file) {
                 saveArticleFromDropdown("sign" + addOne);
                 changeColor("save-sign-" + addOne);
               });
+            var preset = {"title": selectedPetition[i]['Title'].toString(), "element": "save-sign-"+addOne};
+            headerTitleLinks.push(preset);
             i += 1;
           } else {
             selectedPetition = getRandom(jsonSign, numToGrab);
@@ -135,113 +138,12 @@ function readTextFileResources(file) {
                 saveArticleFromDropdown("donate" + addOne);
                 changeColor("save-donate-" + addOne);
               });
+              var preset = {"title": selectedDonation[i]['Title'].toString(), "element": "save-donate-"+addOne};
+              headerTitleLinks.push(preset);
             i += 1;
           } else {
             selectedDonation = getRandom(jsonDonate, numToGrab);
           }
-=======
-var headerTitleLinks = []
-
-function readTextFileResources(file)
-{
-    let rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                let allText = rawFile.responseText;
-                let jsonResources = JSON.parse(csvJSON(allText));
-                let jsonSign = []
-                let jsonRead = []
-                let jsonDonate = []
-
-                let allContentURLs = new Set()
-
-                for (let i = 0; i < jsonResources.length; i++) {
-                  let resource = jsonResources[i];
-                  if (resource['Category'] === 'Petition') {
-                    if (!allContentURLs.has(resource['URL to resource'])) {
-                      jsonSign.push(resource);
-                      allContentURLs.add(resource['URL to resource'])
-                    }
-                  } else if (resource['Category'] === 'Donation fund') {
-                    if (!allContentURLs.has(resource['URL to resource'])) {
-                      jsonDonate.push(resource);
-                      allContentURLs.add(resource['URL to resource'])
-                    }
-                  } else {
-                    if (!allContentURLs.has(resource['URL to resource'])) {
-                      jsonRead.push(resource);
-                      allContentURLs.add(resource['URL to resource'])
-                    }
-                  }
-                }
-
-                const numToGrab = 10
-                let selectedPetition = getRandom(jsonSign, numToGrab);
-                let i = 0;
-                while (i < 3) {
-                  if (selectedPetition[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
-                    let addOne = (i + 1).toString()
-                    document.getElementById("sign" + addOne).href = selectedPetition[i]['URL to resource'];
-                    document.getElementById("sign" + addOne).innerHTML = selectedPetition[i]['Title'];
-                    checkIfSaved(selectedPetition[i]['Title'], addOne, "save-sign-");
-                    document.getElementById("save-sign-" + addOne).addEventListener("click", function(){
-                      saveArticle("sign" + addOne);
-                      changeColor("save-sign-" + addOne);
-                    });
-                    // var titleText = selectedPetition[i]['Title'].toString();
-                    // var preset = {};
-                    // preset[titleText] = "save-sign-"+addOne;
-                    // headerTitleLinks.push(preset);
-                    i += 1
-                  }
-                }
-
-                i = 0;
-                let selectedDonation = getRandom(jsonDonate, numToGrab);
-                while (i < 3) {
-                  if (selectedDonation[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
-                    let addOne = (i + 1).toString()
-                    document.getElementById("donate" + addOne).href = selectedDonation[i]['URL to resource'];
-                    document.getElementById("donate" + addOne).innerHTML = selectedDonation[i]['Title'];
-                    checkIfSaved(selectedDonation[i]['Title'], addOne, "save-donate-");
-                    document.getElementById("save-donate-" + addOne).addEventListener("click", function(){
-                      saveArticle("donate" + addOne);
-                      changeColor("save-donate-" + addOne);
-                    });
-                    // var titleText = selectedPetition[i]['Title'].toString();
-                    // var preset = {};
-                    // preset[titleText] = "save-donate-"+addOne;
-                    // headerTitleLinks.push(preset);
-                    i += 1
-                  }
-                }
-
-                i = 0;
-                let selectedRead = getRandom(jsonRead, 3);
-                while (i < 3) {
-                  if (selectedRead[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
-                    let addOne = (i + 1).toString()
-                    document.getElementById("read" + addOne).href = selectedRead[i]['URL to resource'];
-                    document.getElementById("read" + addOne).innerHTML = selectedRead[i]['Title'];
-                    checkIfSaved(selectedRead[i]['Title'], addOne, "save-read-");
-                    document.getElementById("save-read-" + addOne).addEventListener("click", function(){
-                      saveArticle("read" + addOne);
-                      changeColor("save-read-" + addOne);
-                    });
-                    // var titleText = selectedPetition[i]['Title'].toString();
-                    // var preset = {};
-                    // preset[titleText] = "save-read-"+addOne;
-                    // headerTitleLinks.push(preset);
-                    i += 1
-                  }
-                }
-            }
->>>>>>> Stashed changes
         }
 
         i = 0;
@@ -264,6 +166,8 @@ function readTextFileResources(file)
                 saveArticleFromDropdown("read" + addOne);
                 changeColor("save-read-" + addOne);
               });
+              var preset = {"title": selectedRead[i]['Title'].toString(), "element": "save-read-"+addOne};
+              headerTitleLinks.push(preset);
             i += 1;
           } else {
             selectedRead = getRandom(jsonRead, numToGrab);
@@ -418,29 +322,21 @@ function addSavedItemsToList() {
       outerdiv.appendChild(bottomdiv);
       content.appendChild(outerdiv);
 
-<<<<<<< Updated upstream
       document
         .getElementById("saved-resource-" + i.toString())
         .addEventListener("click", function () {
           saveArticleFromDropup(this.id);
           changeColor(this.id);
+          for (let i = 0; i < headerTitleLinks.length; i++) {
+            if (headerTitleLinks[i].title === a.title){
+              changeColor(headerTitleLinks[i].element);
+            }
+          }
         });
       i = i + 1;
     }
   });
 }
-=======
-      document.getElementById('saved-resource-' + i.toString()).addEventListener("click", function(){
-        unSaveArticle(this.id);
-        console.log(headerTitleLinks);
-        changeColor(this.id);
-        // for (let i = 0; i < headerTitleLinks.length; i++) {
-        //   if (headerTitleLinks[i].has(a.title)){
-        //     console.log(headerTitleLinks[i].getString(a.title));
-        //   }
-        // }
-      });
->>>>>>> Stashed changes
 
 /**
  * this function toggles showing and hiding the overlay
