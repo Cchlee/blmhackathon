@@ -1,3 +1,7 @@
+function truncate(str, n){
+  return (str.length > n) ? str.substr(0, n-1) + '&hellip;' : str;
+}
+
 function readTextFileArt(file)
 {
     let rawFile = new XMLHttpRequest();
@@ -17,7 +21,7 @@ function readTextFileArt(file)
                 let selectedArtist = selectedArt[0]["What is the name of the artist?"];
                 let selectedArtistURL = selectedArt[0]["The artist's online portfolio or Instagram handle - if possible (i.e. @kerryjamesmarshs)\r"]
                 document.body.style.backgroundImage = "url(\'" + convertGoogleImageToURL(selectedArtURL) + "\')";
-                document.getElementById("artTitle").innerHTML = selectedArtTitle;
+                document.getElementById("artTitle").innerHTML = truncate(selectedArtTitle,25);
                 document.getElementById("artTitle").href = selectedArtTitleURL;
                 document.getElementById("artistName").innerHTML = selectedArtist;
                 document.getElementById("artistName").href = selectedArtistURL;
