@@ -341,6 +341,9 @@ function addSavedItemsToList() {
       a.href = result['savedArticles'][i]['link'];
       a.setAttribute('id', 'saved-resource-link-' + i.toString());
       a.setAttribute('target', '_blank');
+      a.addEventListener("mouseenter", function(){
+        a.setAttribute('style', 'color:black');
+      });
       topdiv.appendChild(a);
 
       let span = document.createElement('span');
