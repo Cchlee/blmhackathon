@@ -288,30 +288,8 @@ function addSavedItemsToList() {
   let donatediv = document.createElement("div");
   donatediv.setAttribute("id", "donatediv");
 
-  addLabelToDiv("Sign", petitionsdiv, content);
-  addLabelToDiv("Donate", donatediv, content);
-  addLabelToDiv("Read", readingdiv, content);
-
   let i = 0;
   chrome.storage.sync.get("savedArticles", function (result) {
-    //This code determinse how high to place the dropup menu
-    if (result["savedArticles"].length <= 3) {
-      let list = document.getElementById("saved-articles-list");
-      let dropupContent = document.getElementsByClassName(
-        "dropup-content"
-      )[0];
-      let button = document.getElementById("dropdownTitle");
-      let marginTop =
-        42 + button.offsetHeight + (result["savedArticles"].length + 2) * 46; // The height of each link is exactly 46
-      dropupContent.style.marginTop = "-" + marginTop.toString() + "px";
-      let dropup = document.getElementsByClassName("dropup")[0];
-    } else {
-      let dropupContent = document.getElementsByClassName(
-        "dropup-content"
-      )[0];
-      dropupContent.style.marginTop = "-365px";
-    }
-
     //This code builds the lists
     for (let savedItem in result["savedArticles"]) {
       let outerdiv = document.createElement("div");
@@ -377,6 +355,43 @@ function addSavedItemsToList() {
       i = i + 1;
     }
 
+    let titleCount = 0;
+
+  if(petitionsdiv.lastChild != null){
+    addLabelToDiv("Sign", petitionsdiv, content);
+    titleCount++;
+  }
+  if(donatediv.lastChild != null){
+    addLabelToDiv("Donate", donatediv, content);
+    titleCount++;
+  }
+  if(readingdiv.lastChild != null){
+    addLabelToDiv("Read", readingdiv, content);
+    titleCount++;
+  }
+
+  if(titleCount == 0){
+    addLabelToDiv("No resources saved.", readingdiv, content);
+    titleCount++;
+  }
+
+  //This code determinse how high to place the dropup menu
+  if (result["savedArticles"].length <= 3) {
+    let list = document.getElementById("saved-articles-list");
+    let dropupContent = document.getElementsByClassName(
+      "dropup-content"
+    )[0];
+    let button = document.getElementById("dropdownTitle");
+    let marginTop =
+      42 + button.offsetHeight + (result["savedArticles"].length - 1 + titleCount) * 46; // The height of each link is exactly 46
+    dropupContent.style.marginTop = "-" + marginTop.toString() + "px";
+    let dropup = document.getElementsByClassName("dropup")[0];
+  } else {
+    let dropupContent = document.getElementsByClassName(
+      "dropup-content"
+    )[0];
+    dropupContent.style.marginTop = "-365px";
+  }
 
   });
 }
@@ -664,7 +679,7 @@ function addLabelToDiv(label, inputdiv, content) {
   p.appendChild(title);
   topdiv.appendChild(p);
   outerdiv.appendChild(topdiv);
-  inputdiv.appendChild(outerdiv);
+  inputdiv.prepend(outerdiv);
   content.appendChild(inputdiv);
 }
 
