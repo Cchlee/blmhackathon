@@ -77,6 +77,7 @@ function readTextFileResources(file)
                     document.getElementById("save-sign-" + addOne).addEventListener("click", function(){
                       saveArticle("sign" + addOne);
                       changeColor("save-sign-" + addOne);
+                      updateSavedContent()
                     });
                     i += 1
                   }
@@ -93,6 +94,7 @@ function readTextFileResources(file)
                     document.getElementById("save-donate-" + addOne).addEventListener("click", function(){
                       saveArticle("donate" + addOne);
                       changeColor("save-donate-" + addOne);
+                      updateSavedContent()
                     });
                     i += 1
                   }
@@ -109,6 +111,7 @@ function readTextFileResources(file)
                     document.getElementById("save-read-" + addOne).addEventListener("click", function(){
                       saveArticle("read" + addOne);
                       changeColor("save-read-" + addOne);
+                      updateSavedContent()
                     });
                     i += 1
                   }
@@ -255,12 +258,38 @@ function addSavedItemsToList() {
   let i = 0;
   chrome.storage.sync.get('savedArticles', function(result) {
     for (let savedItem in result['savedArticles']) {
+      let outerdiv = document.createElement('div');
+      outerdiv.setAttribute('class', 'row align-items-center');
+
+      let topdiv = document.createElement('div');
+      topdiv.setAttribute('class', 'col-10');
+
+      let bottomdiv = document.createElement('div');
+      bottomdiv.setAttribute('class', 'col-1');
+
+
       let a = document.createElement('a');
       let link = document.createTextNode(result['savedArticles'][i]['title']);
       a.appendChild(link);
       a.title = result['savedArticles'][i]['title'];
       a.href = result['savedArticles'][i]['link'];
-      content.appendChild(a);
+      topdiv.appendChild(a);
+
+      let span = document.createElement('span');
+      span.setAttribute('class', 'fa fa-star');
+      span.setAttribute('id', 'saved-resource-' + i.toString());
+      span.setAttribute('style', 'color:yellow');
+      bottomdiv.appendChild(span);
+
+      outerdiv.appendChild(topdiv);
+      outerdiv.appendChild(bottomdiv);
+
+      content.appendChild(outerdiv);
+
+      document.getElementById('saved-resource-' + i.toString()).addEventListener("click", function(){
+        unSaveArticle(this.id);
+      });
+
       i = i+1;
     }
   });
@@ -282,7 +311,7 @@ function checkIfSaved(title, curr, type){
 
 function changeColor(id){
   if (document.getElementById(id).style.color==="white"){
-    document.getElementById(id).style.color="orange";
+    document.getElementById(id).style.color="yellow";
   } else {
     document.getElementById(id).style.color="white";
   }
@@ -300,6 +329,33 @@ function saveArticle(id){
       console.log(allArticles);
     });
   });
+}
+
+function unSaveArticle(i) {
+  let toDeleteIndex = parseInt(i.split('-')[2])
+  var saved = {};
+  var allArticles = [];
+  chrome.storage.sync.get('savedArticles', function(result) {
+    allArticles = result.savedArticles;
+    allArticles.splice(toDeleteIndex, 1);
+    chrome.storage.local.clear(function() {
+      var error = chrome.runtime.lastError;
+        if (error) {
+            console.error(error);
+        }
+    });
+    chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+      updateSavedContent();
+    });
+  });
+}
+
+function updateSavedContent() {
+  let content = document.getElementById("saved-articles-list");
+  while (content.hasChildNodes()) {
+      content.removeChild(content.lastChild);
+  }
+  addSavedItemsToList();
 }
 
 window.onload = function () {
