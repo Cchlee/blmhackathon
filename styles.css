@@ -19,12 +19,25 @@ body {
   animation-fill-mode: forwards;
 }
 
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
+/* Animations */
+
+@keyframes fadeInAnimation { 
+    0% { 
+        opacity: 0; 
+    } 
+    100% { 
+        opacity: 1; 
+    } 
+} 
+
+@keyframes moveFromTop {
+  from {
+      opacity: 0;
+      transform: translateY(-7%);
   }
-  100% {
-    opacity: 1;
+  to {
+      opacity: 1;
+      transform: translateY(0%);
   }
 }
 
@@ -136,6 +149,7 @@ footer {
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
+  animation: moveFromTop 400ms ease-in-out;
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
@@ -157,6 +171,7 @@ footer {
   transform: skew(-20deg);
 }
 
+
 /* The container <div> - needed to position the dropdown content */
 .dropup {
   position: relative;
@@ -175,7 +190,8 @@ footer {
 
 #saved-articles-list {
   max-height: 300px;
-  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Links inside the dropdown */
@@ -192,10 +208,10 @@ footer {
 .dropup-content a:hover {
   background-color: #ddd;
   max-height: 300px;
-  overflow: scroll;
 }
 .dropup:hover .dropup-content {
   background-color: #ddd;
+  animation: moveFromTop 400ms ease-in-out;
   display: block;
   position: absolute;
   margin-top: -365px;
