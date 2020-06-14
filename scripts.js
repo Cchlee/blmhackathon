@@ -77,7 +77,6 @@ function readTextFileResources(file)
                     document.getElementById("save-sign-" + addOne).addEventListener("click", function(){
                       saveArticle("sign" + addOne);
                       changeColor("save-sign-" + addOne);
-                      updateSavedContent()
                     });
                     i += 1
                   }
@@ -94,7 +93,6 @@ function readTextFileResources(file)
                     document.getElementById("save-donate-" + addOne).addEventListener("click", function(){
                       saveArticle("donate" + addOne);
                       changeColor("save-donate-" + addOne);
-                      updateSavedContent()
                     });
                     i += 1
                   }
@@ -111,7 +109,6 @@ function readTextFileResources(file)
                     document.getElementById("save-read-" + addOne).addEventListener("click", function(){
                       saveArticle("read" + addOne);
                       changeColor("save-read-" + addOne);
-                      updateSavedContent()
                     });
                     i += 1
                   }
@@ -299,17 +296,16 @@ function checkIfSaved(title, curr, type){
   chrome.storage.sync.get('savedArticles', function(result) {
     for (var x = 0; x < result.savedArticles.length; x++) {
       if (result.savedArticles[x].title === title) {
-        console.log("there");
         changeColor(type + curr);
         return true;
-      } 
+      }
     }
-    console.log("not there")
     return false;
   });
 }
 
 function changeColor(id){
+  console.log(id);
   if (document.getElementById(id).style.color==="white"){
     document.getElementById(id).style.color="yellow";
   } else {
@@ -322,12 +318,38 @@ function saveArticle(id){
   var allArticles = [];
   chrome.storage.sync.get('savedArticles', function(result) {
     allArticles = result.savedArticles;
-    saved.title = document.getElementById(id).innerHTML;
-    saved.link = document.getElementById(id).href;
-    allArticles.push(saved);
-    chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+    let toDelete = false;
+    let toDeleteIndex = -1;
+    console.log(document.getElementById(id).href)
+    for (let i = 0; i < allArticles.length; i++) {
+      console.log(allArticles[i]['link'])
+      if (allArticles[i]['link'] === document.getElementById(id).href) {
+        toDelete = true;
+        toDeleteIndex = i;
+      }
+    }
+    console.log(toDelete);
+    if (toDelete) {
+      allArticles.splice(toDeleteIndex, 1);
       console.log(allArticles);
-    });
+      chrome.storage.local.clear(function() {
+        var error = chrome.runtime.lastError;
+          if (error) {
+              console.error(error);
+          }
+      });
+      chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        updateSavedContent();
+        console.log("deleting");
+      });
+    } else {
+      saved.title = document.getElementById(id).innerHTML;
+      saved.link = document.getElementById(id).href;
+      allArticles.push(saved);
+      chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        updateSavedContent();
+      });
+    }
   });
 }
 
