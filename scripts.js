@@ -270,6 +270,7 @@ function addSavedItemsToList() {
       a.appendChild(link);
       a.title = result['savedArticles'][i]['title'];
       a.href = result['savedArticles'][i]['link'];
+      a.setAttribute('target', '_blank');
       topdiv.appendChild(a);
 
       let span = document.createElement('span');
