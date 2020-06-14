@@ -108,7 +108,8 @@ footer {
 
 #saved-articles-list {
   max-height: 300px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 /* Links inside the dropdown */
@@ -125,7 +126,6 @@ footer {
 .dropup-content a:hover {
   background-color: #ddd;
   max-height: 300px;
-  overflow: scroll;
 }
 .dropup:hover .dropup-content {
   background-color: #ddd;
