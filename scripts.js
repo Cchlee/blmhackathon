@@ -309,6 +309,10 @@ function addSavedItemsToList() {
     for (let savedItem in result['savedArticles']) {
       //INCREASE MARGIN SIZE
       if (result['savedArticles'].length <= 7) { // 7 = amount of saved objects that fit in the window
+        let list = document.getElementById("saved-articles-list")
+        // list.setAttribute('display': 'visible')
+        // console.log(elmnt.offsetHeight)
+        // list.setAttribute('display': 'hidden')
           let dropupContent = document.getElementsByClassName("dropup-content")[0];
           let marginTop = 115 + (result['savedArticles'].length - 1)*60;
           dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
