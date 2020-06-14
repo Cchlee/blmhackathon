@@ -81,7 +81,7 @@ body {
 }
 
 .star-btn:hover .fa-star:before {
-    color: yellow;
+    color: gray;
 }
 
 .star-btn-dropup:hover .fa-star:before {
@@ -213,7 +213,7 @@ footer {
 }
 
 ::-webkit-scrollbar-thumb{
-  background: rgba(205, 205, 205, 1);
+  background: rgba(195, 195, 195, 1);
   border-radius: 10px;
 }
 
@@ -252,6 +252,10 @@ footer {
 
 #clock {
   font-size: 80px;
+}
+
+.titlerow {
+  background: rgba(205, 205, 205, 1);
 }
 
 @media only screen and (max-width: 1000px) {

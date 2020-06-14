@@ -345,6 +345,7 @@ function addSavedItemsToList() {
       span.setAttribute("class", "fa fa-star");
       span.setAttribute("id", "saved-resource-" + i.toString());
       span.setAttribute("style", "color:gray");
+
       starSpan.appendChild(span);
       bottomdiv.appendChild(starSpan);
       outerdiv.appendChild(topdiv);
@@ -652,7 +653,7 @@ function convertMonth(num) {
 
 function addLabelToDiv(label, inputdiv, content) {
   let outerdiv = document.createElement("div");
-  outerdiv.setAttribute("class", "row align-items-center");
+  outerdiv.setAttribute("class", "titlerow row align-items-center");
   let topdiv = document.createElement("div");
   topdiv.setAttribute("class", "col-10");
   let p = document.createElement("p");
