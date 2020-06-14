@@ -11,7 +11,7 @@ function readTextFileArt(file)
                 let allText = rawFile.responseText;
                 let jsonArt = JSON.parse(csvJSON(allText));
                 let selectedArt = getRandom(jsonArt, 1);
-                let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred (and high-res) but any art is great! If you're getting this art from instagram we recommend https://ingramer.com/tools/instagram-photo-downloader/"];
+                let selectedArtURL = selectedArt[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred but any art is great!"];
                 let selectedArtTitle = selectedArt[0]["What is the name of this piece? (Untitled if there is no name)"];
                 let selectedArtTitleURL = selectedArt[0]["Link where we can find this work online"];
                 let selectedArtist = selectedArt[0]["What is the name of the artist?"];
@@ -73,6 +73,7 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("sign" + addOne).href = selectedPetition[i]['URL to resource'];
                     document.getElementById("sign" + addOne).innerHTML = selectedPetition[i]['Title'];
+                    checkIfSaved(selectedPetition[i]['Title'], addOne, "save-sign-");
                     document.getElementById("save-sign-" + addOne).addEventListener("click", function(){
                       saveArticle("sign" + addOne);
                       changeColor("save-sign-" + addOne);
@@ -88,6 +89,7 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("donate" + addOne).href = selectedDonation[i]['URL to resource'];
                     document.getElementById("donate" + addOne).innerHTML = selectedDonation[i]['Title'];
+                    checkIfSaved(selectedDonation[i]['Title'], addOne, "save-donate-");
                     document.getElementById("save-donate-" + addOne).addEventListener("click", function(){
                       saveArticle("donate" + addOne);
                       changeColor("save-donate-" + addOne);
@@ -103,6 +105,7 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("read" + addOne).href = selectedRead[i]['URL to resource'];
                     document.getElementById("read" + addOne).innerHTML = selectedRead[i]['Title'];
+                    checkIfSaved(selectedRead[i]['Title'], addOne, "save-read-");
                     document.getElementById("save-read-" + addOne).addEventListener("click", function(){
                       saveArticle("read" + addOne);
                       changeColor("save-read-" + addOne);
@@ -281,21 +284,59 @@ function addSavedItemsToList() {
         let dropup = document.getElementsByClassName("dropup")[0];
         console.log(dropup.style.margin);
       }
+      let outerdiv = document.createElement('div');
+      outerdiv.setAttribute('class', 'row align-items-center');
+
+      let topdiv = document.createElement('div');
+      topdiv.setAttribute('class', 'col-10');
+
+      let bottomdiv = document.createElement('div');
+      bottomdiv.setAttribute('class', 'col-1');
 
       let a = document.createElement('a');
       let link = document.createTextNode(result['savedArticles'][i]['title']);
       a.appendChild(link);
       a.title = result['savedArticles'][i]['title'];
       a.href = result['savedArticles'][i]['link'];
-      content.appendChild(a);
+      a.setAttribute('target', '_blank');
+      topdiv.appendChild(a);
+
+      let span = document.createElement('span');
+      span.setAttribute('class', 'fa fa-star');
+      span.setAttribute('id', 'saved-resource-' + i.toString());
+      span.setAttribute('style', 'color:yellow');
+      bottomdiv.appendChild(span);
+
+      outerdiv.appendChild(topdiv);
+      outerdiv.appendChild(bottomdiv);
+
+      content.appendChild(outerdiv);
+
+      document.getElementById('saved-resource-' + i.toString()).addEventListener("click", function(){
+        unSaveArticle(this.id);
+        changeColor(this.id);
+      });
+
       i = i+1;
     }
   });
 }
 
+function checkIfSaved(title, curr, type){
+  chrome.storage.sync.get('savedArticles', function(result) {
+    for (var x = 0; x < result.savedArticles.length; x++) {
+      if (result.savedArticles[x].title === title) {
+        changeColor(type + curr);
+        return true;
+      }
+    }
+    return false;
+  });
+}
+
 function changeColor(id){
   if (document.getElementById(id).style.color==="white"){
-    document.getElementById(id).style.color="orange";
+    document.getElementById(id).style.color="yellow";
   } else {
     document.getElementById(id).style.color="white";
   }
@@ -306,27 +347,80 @@ function saveArticle(id){
   var allArticles = [];
   chrome.storage.sync.get('savedArticles', function(result) {
     allArticles = result.savedArticles;
-    saved.title = document.getElementById(id).innerHTML;
-    saved.link = document.getElementById(id).href;
-
-    if (allArticles === undefined) {
-      allArticles = [];
+    let toDelete = false;
+    let toDeleteIndex = -1;
+    for (let i = 0; i < allArticles.length; i++) {
+      if (allArticles[i]['link'] === document.getElementById(id).href) {
+        toDelete = true;
+        toDeleteIndex = i;
+      }
     }
+    if (toDelete) {
+      allArticles.splice(toDeleteIndex, 1);
+      chrome.storage.local.clear(function() {
+        var error = chrome.runtime.lastError;
+          if (error) {
+              console.error(error);
+          }
+      });
+      chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        updateSavedContent();
+      });
+    } else {
+      saved.title = document.getElementById(id).innerHTML;
+      saved.link = document.getElementById(id).href;
+      allArticles.push(saved);
+      chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        updateSavedContent();
+      });
+    }
+  });
+}
 
-    allArticles.push(saved);
-    chrome.storage.sync.set({'savedArticles': allArticles}, function() {
-      console.log(allArticles);
+function unSaveArticle(i) {
+  let toDeleteIndex = parseInt(i.split('-')[2])
+  var saved = {};
+  var allArticles = [];
+  chrome.storage.sync.get('savedArticles', function(result) {
+    allArticles = result.savedArticles;
+    allArticles.splice(toDeleteIndex, 1);
+    chrome.storage.local.clear(function() {
+      var error = chrome.runtime.lastError;
+        if (error) {
+            console.error(error);
+        }
     });
+    chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+      //updateSavedContent();
+    });
+  });
+}
+
+function updateSavedContent() {
+  let content = document.getElementById("saved-articles-list");
+  while (content.hasChildNodes()) {
+      content.removeChild(content.lastChild);
+  }
+  addSavedItemsToList();
+}
+
+function mouseOffResources() {
+  document.getElementById("full-list").addEventListener("mouseleave", function(){
+    console.log("moouse off");
+    updateSavedContent();
   });
 }
 
 window.onload = function () {
   updateTime();
   addSavedItemsToList();
+  mouseOffResources();
 };
 
 readTextFileArt('art.csv');
 readTextFileResources('resources.csv');
+
+
 
 // This updates every second in case the time changes
 setInterval(updateTime,1000);
