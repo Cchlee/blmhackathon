@@ -78,7 +78,7 @@ function readTextFileResources(file)
                 let selectedPetition = getRandom(jsonSign, numToGrab);
                 let i = 0;
                 while (i < 3) {
-                  if (selectedPetition[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
+                  if (selectedPetition[i]['URL to resource'] && selectedPetition[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
                     let addOne = (i + 1).toString()
                     document.getElementById("sign" + addOne).href = selectedPetition[i]['URL to resource'];
                     document.getElementById("sign" + addOne).innerHTML = selectedPetition[i]['Title'];
@@ -88,13 +88,15 @@ function readTextFileResources(file)
                       changeColor("save-sign-" + addOne);
                     });
                     i += 1
+                  } else {
+                    selectedPetition = getRandom(jsonSign, numToGrab);
                   }
                 }
 
                 i = 0;
                 let selectedDonation = getRandom(jsonDonate, numToGrab);
                 while (i < 3) {
-                  if (selectedDonation[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
+                  if (selectedDonation[i]['URL to resource'] && selectedDonation[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
                     let addOne = (i + 1).toString()
                     document.getElementById("donate" + addOne).href = selectedDonation[i]['URL to resource'];
                     document.getElementById("donate" + addOne).innerHTML = selectedDonation[i]['Title'];
@@ -104,13 +106,15 @@ function readTextFileResources(file)
                       changeColor("save-donate-" + addOne);
                     });
                     i += 1
+                  } else {
+                    selectedDonation = getRandom(jsonDonate, numToGrab);
                   }
                 }
 
                 i = 0;
-                let selectedRead = getRandom(jsonRead, 3);
+                let selectedRead = getRandom(jsonRead, numToGrab);
                 while (i < 3) {
-                  if (selectedRead[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
+                  if (selectedRead[i]['URL to resource'] && selectedRead[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
                     let addOne = (i + 1).toString()
                     document.getElementById("read" + addOne).href = selectedRead[i]['URL to resource'];
                     document.getElementById("read" + addOne).innerHTML = selectedRead[i]['Title'];
@@ -120,6 +124,8 @@ function readTextFileResources(file)
                       changeColor("save-read-" + addOne);
                     });
                     i += 1
+                  } else {
+                    selectedRead = getRandom(jsonRead, numToGrab);
                   }
                 }
             }
