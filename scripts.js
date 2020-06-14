@@ -280,8 +280,6 @@ function showHideItems() {
     if (result.isVisible === undefined){
       result.isVisible = true;
     }
-    console.log(result);
-    console.log("result is:" + result.isVisible)
     if (result.isVisible) {
       for (let i = 0; i < overlay.length; i++) {
           overlay[i].style.visibility = "visible";
@@ -361,6 +359,10 @@ function addSavedItemsToList() {
 
 function checkIfSaved(title, curr, type){
   chrome.storage.sync.get('savedArticles', function(result) {
+    if(result.savedArticles === undefined) {
+      chrome.storage.sync.set({savedArticles: []}, function(){})
+    }
+    result.savedArticles = [];
     for (var x = 0; x < result.savedArticles.length; x++) {
       if (result.savedArticles[x].title === title) {
         changeColor(type + curr);
@@ -395,6 +397,7 @@ function saveArticle(id){
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
       chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        console.log("running");
         updateSavedContent();
       });
     } else {
