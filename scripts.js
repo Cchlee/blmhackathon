@@ -285,6 +285,7 @@ function addSavedItemsToList() {
 
       document.getElementById('saved-resource-' + i.toString()).addEventListener("click", function(){
         unSaveArticle(this.id);
+        changeColor(this.id);
       });
 
       i = i+1;
