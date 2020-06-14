@@ -250,11 +250,40 @@ function convertMonth(num) {
 }
 }
 
+function toggleOverlay() {
+  let overlay = document.getElementsByClassName("hideable");
+  let eye = document.getElementById("hide-overlay-btn");
+  for (let i = 0; i < overlay.length; i++) {
+    if (overlay[i].style.visibility === "hidden") {
+      overlay[i].style.visibility = "visible";
+      eye.innerHTML = "<i class=\"fa fa-eye\"></i>";
+    } else {
+      overlay[i].style.visibility = "hidden";
+      eye.innerHTML = "<i class=\"fa fa-eye-slash\"></i>";
+    }
+  }
+}
+
 function addSavedItemsToList() {
+    //ADD EYE BTN
+    this.document.getElementById("hide-overlay-btn").addEventListener("click", function(){
+      toggleOverlay();
+    });
+  
   let content = document.getElementById("saved-articles-list");
   let i = 0;
   chrome.storage.sync.get('savedArticles', function(result) {
     for (let savedItem in result['savedArticles']) {
+      //INCREASE MARGIN SIZE
+      console.log(result['savedArticles'].length);
+      if (result['savedArticles'].length <= 7) { // 7 = amount of saved objects that fit in the window
+          let dropupContent = document.getElementsByClassName("dropup-content")[0];
+          let marginTop = 115 + (result['savedArticles'].length - 1)*60;
+          dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
+        
+          let dropup = document.getElementsByClassName("dropup")[0];
+            console.log(dropup.style.margin);
+      }
       let outerdiv = document.createElement('div');
       outerdiv.setAttribute('class', 'row align-items-center');
 
@@ -263,7 +292,6 @@ function addSavedItemsToList() {
 
       let bottomdiv = document.createElement('div');
       bottomdiv.setAttribute('class', 'col-1');
-
 
       let a = document.createElement('a');
       let link = document.createTextNode(result['savedArticles'][i]['title']);
@@ -398,7 +426,6 @@ function updateSavedContent() {
 
 function mouseOffResources() {
   document.getElementById("full-list").addEventListener("mouseleave", function(){
-    console.log("moouse off");
     updateSavedContent();
   });
 }

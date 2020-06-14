@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+<title>New Tab 4 BLM</title>
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Yatra+One&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -14,12 +16,12 @@
 
 <header>
   <div class="container" style="height: 100px; font-size: 24px;">
-      <div class="h-100 row align-items-center text-center" >
-        <div class="col-3">
-          <h1 id="clock" style="font-size:80px; text-shadow: 2px 2px black;"></h1>
-          <p id="date" style="text-shadow: 2px 2px black;"></p>
+    <div class="h-100 row align-items-center text-center">
+        <div class="col-4">
+            <h1 id="clock" style="font-size:80px; text-shadow: 2px 2px black;"></h1>
+            <p id="date" style="text-shadow: 2px 2px black;"></p>
         </div>
-          <div class="col-3">
+          <div class="col-2 hideable">
             <div class="dropdown">
                 <button class="dropbtn"> <div class="reverse-skew">SIGN</div></button>
                 <div class="dropdown-content text-left" style="left:-25px; font-family: 'Italiana', serif; font-weight:bold">
@@ -38,7 +40,7 @@
                 </div>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-2 hideable">
             <div class="dropdown" >
               <button class="dropbtn"><div class="reverse-skew" >READ </div></button>
               <div class="dropdown-content text-left" style="left: -25px; font-family: 'Italiana', serif;">
@@ -57,7 +59,7 @@
               </div>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-2 hideable">
             <div class="dropdown" >
               <button class="dropbtn"><div class="reverse-skew">DONATE </div></button>
               <div class="dropdown-content text-left" style="left: -25px; font-family: 'Italiana', serif;">
@@ -76,9 +78,12 @@
               </div>
             </div>
           </div>
+          <div class="col-2" id="hide-overlay-btn">
+            <i class="fa fa-eye"></i>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 </header>
 
 <footer>
@@ -90,7 +95,7 @@
         <a id="artistName" href="#" target="_blank"></a>
       </div>
         <div class="col-4 ">
-          <div class="saved-articles" id="full-list">
+          <div class="saved-articles hideable" id="full-list">
             <div class="dropup">
               <button class="dropupbtn" id="dropdownTitle"><div class="reverse-skew">YOUR SAVED RESOURCES</div></button>
               <div id="saved-articles-list" class="dropup-content">
@@ -98,7 +103,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4 text-right">
+        <div class="col-4 text-right hideable">
             SUBMIT [<a id="resource-link" href="https://docs.google.com/forms/d/e/1FAIpQLSc8EzwfUvxn8B2MaMX62wDdnmtPsRE76lF3F_Jb0u82BPXXuw/viewform?usp=sf_link" target="_blank">RESOURCES</a>, <a id="art-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfMR5f7tIkXzaZtIEOlbyi5mDdpMjgKrn4GLRL9TuIrXDFKsw/viewform?usp=sf_link" target="_blank">ART</a>]
             <br>
             <a id="creditsLink" href="http://tabforblacklivesmatter.github.io/" target="_blank">CREDITS</a>

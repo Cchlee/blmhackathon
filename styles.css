@@ -8,6 +8,16 @@ body {
     padding-top: 20px;
 }
 
+.hideable {
+    display: block;
+}
+
+.fa-eye-slash:hover .fa-eye:before {
+    /* content:"\f06e"; */
+    color: red;
+    content:"\f070";
+}
+
 footer {
   position: absolute;
   bottom: 0;
@@ -116,8 +126,10 @@ footer {
   background-color: #ddd;
   max-height: 300px;
   overflow: scroll;
+
 }
 .dropup:hover .dropup-content {
+  background-color: #ddd;
   display: block;
   position: absolute;
   margin-top: -365px;
