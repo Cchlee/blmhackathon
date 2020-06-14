@@ -22,10 +22,10 @@
   <div class="container" style="height: 100px; font-size: 24px;">
     <div class="h-100 row align-items-center text-center">
         <div class="col-4">
-            <h1 id="clock" style="text-shadow: 2px 2px black;"></h1>
+            <h1 id="clock" style="font-size:80px; text-shadow: 2px 2px black;"></h1>
             <p id="date" style="text-shadow: 2px 2px black;"></p>
         </div>
-          <div class="col-2 hideable">
+          <div class="col-2 hideable" style="visibility:hidden">
             <div class="dropdown">
                 <button class="dropbtn"> <div class="reverse-skew">SIGN</div></button>
                 <div class="dropdown-content text-left" style="left:-25px; font-family: 'Italiana', serif; font-weight:bold">
@@ -44,7 +44,7 @@
                 </div>
             </div>
           </div>
-          <div class="col-2 hideable">
+          <div class="col-2 hideable" style="visibility:hidden">
             <div class="dropdown" >
               <button class="dropbtn"><div class="reverse-skew" >READ</div></button>
               <div class="dropdown-content text-left" style="left: -25px; font-family: 'Italiana', serif;">
@@ -63,7 +63,7 @@
               </div>
             </div>
           </div>
-          <div class="col-2 hideable">
+          <div class="col-2 hideable" style="visibility:hidden">
             <div class="dropdown" >
               <button class="dropbtn"><div class="reverse-skew">DONATE</div></button>
               <div class="dropdown-content text-left" style="left: -25px; font-family: 'Italiana', serif;">
@@ -99,7 +99,7 @@
         <a id="artistName" href="#" target="_blank"></a>
       </div>
         <div class="col-4 " id="full-list">
-          <div class="saved-articles hideable" >
+          <div class="saved-articles hideable" style="visibility:hidden">
             <div class="dropup">
               <button class="dropupbtn" id="dropdownTitle"><div class="reverse-skew">YOUR SAVED RESOURCES</div></button>
               <div id="saved-articles-list" class="dropup-content">
@@ -107,7 +107,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4 text-right hideable" id="submit-credits">
+        <div class="col-4 text-right hideable" id="submit-credits" style="visibility:hidden">
             Submit [<a id="resource-link" href="https://docs.google.com/forms/d/e/1FAIpQLSc8EzwfUvxn8B2MaMX62wDdnmtPsRE76lF3F_Jb0u82BPXXuw/viewform?usp=sf_link" target="_blank">Resources</a>, <a id="art-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfMR5f7tIkXzaZtIEOlbyi5mDdpMjgKrn4GLRL9TuIrXDFKsw/viewform?usp=sf_link" target="_blank">Art</a>]
             <br>
             <a id="creditsLink" href="http://tabforblacklivesmatter.github.io/" target="_blank">Credits</a>
