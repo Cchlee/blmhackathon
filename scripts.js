@@ -101,7 +101,7 @@ function readTextFileResources(file)
                 i = 0;
                 let selectedRead = getRandom(jsonRead, 3);
                 while (i < 3) {
-                  if (selectedDonation[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
+                  if (selectedRead[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
                     let addOne = (i + 1).toString()
                     document.getElementById("read" + addOne).href = selectedRead[i]['URL to resource'];
                     document.getElementById("read" + addOne).innerHTML = selectedRead[i]['Title'];
@@ -269,18 +269,17 @@ function addSavedItemsToList() {
     this.document.getElementById("hide-overlay-btn").addEventListener("click", function(){
       toggleOverlay();
     });
-  
+
   let content = document.getElementById("saved-articles-list");
   let i = 0;
   chrome.storage.sync.get('savedArticles', function(result) {
     for (let savedItem in result['savedArticles']) {
       //INCREASE MARGIN SIZE
-      console.log(result['savedArticles'].length);
       if (result['savedArticles'].length <= 7) { // 7 = amount of saved objects that fit in the window
           let dropupContent = document.getElementsByClassName("dropup-content")[0];
           let marginTop = 115 + (result['savedArticles'].length - 1)*60;
           dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
-        
+
           let dropup = document.getElementsByClassName("dropup")[0];
             console.log(dropup.style.margin);
       }
@@ -388,14 +387,11 @@ function unSaveArticle(id) {
   chrome.storage.sync.get('savedArticles', function(result) {
     allArticles = result.savedArticles;
     for (let i = 0; i < allArticles.length; i++) {
-      console.log(allArticles[i]['link'])
-      console.log(document.getElementById("saved-resource-link-" + toDeleteIndex).href);
       if (allArticles[i]['link'] === document.getElementById("saved-resource-link-" + toDeleteIndex).href) {
         toDelete = true;
         toDeleteIndex = i;
       }
     }
-    console.log(toDelete);
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
       chrome.storage.local.clear(function() {
@@ -422,6 +418,20 @@ function updateSavedContent() {
       content.removeChild(content.lastChild);
   }
   addSavedItemsToList();
+  let i = 0;
+  let addOne = (i + 1).toString()
+
+  // while (i < 3) {
+  //   let read = document.getElementById("read" + addOne).innerHTML;
+  //   console.log(document.getElementById("read" + addOne).innerHTML);
+  //   let sign = document.getElementById("sign" + addOne).innerHTML;
+  //   let donate = document.getElementById("donate" + addOne).innerHTML;
+  //   checkIfSaved(read, addOne, "save-read-");
+  //   checkIfSaved(sign, addOne, "save-sign-");
+  //   checkIfSaved(donate, "save-donate-");
+  //   i += 1;
+  //   addOne = (i + 1).toString()
+  // }
 }
 
 function mouseOffResources() {
