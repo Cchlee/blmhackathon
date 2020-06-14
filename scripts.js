@@ -187,67 +187,67 @@ function updateTime() {
 
 function convertDay(num) {
   switch(num) {
-    case 0:
-      return "Sunday"
-      break;
-    case 1:
-      return "Monday"
-      break;
-    case 2:
-      return "Tuesday"
-      break;
-    case 3:
-      return "Wednesday"
-      break;
-    case 4:
-      return "Thursday"
-      break;
-    case 5:
-      return "Friday"
-      break;
-    default:
-      return "Saturday"
-  }
+  case 0:
+    return "Sunday"
+    break;
+  case 1:
+    return "Monday"
+    break;
+  case 2:
+    return "Tuesday"
+    break;
+  case 3:
+    return "Wednesday"
+    break;
+  case 4:
+    return "Thursday"
+    break;
+  case 5:
+    return "Friday"
+    break;
+  default:
+    return "Saturday"
+}
 }
 
 function convertMonth(num) {
   switch(num) {
-    case 0:
-      return "January"
-      break;
-    case 1:
-      return "February"
-      break;
-    case 2:
-      return "March"
-      break;
-    case 3:
-      return "April"
-      break;
-    case 4:
-      return "May"
-      break;
-    case 5:
-      return "June"
-      break;
-    case 6:
-      return "July"
-      break;
-    case 7:
-      return "August"
-      break;
-    case 8:
-      return "September"
-      break;
-    case 9:
-      return "October"
-      break;
-    case 10:
-      return "November"
-      break;
-    default:
-      return "December"
-  }
+  case 0:
+    return "January"
+    break;
+  case 1:
+    return "February"
+    break;
+  case 2:
+    return "March"
+    break;
+  case 3:
+    return "April"
+    break;
+  case 4:
+    return "May"
+    break;
+  case 5:
+    return "June"
+    break;
+  case 6:
+    return "July"
+    break;
+  case 7:
+    return "August"
+    break;
+  case 8:
+    return "September"
+    break;
+  case 9:
+    return "October"
+    break;
+  case 10:
+    return "November"
+    break;
+  default:
+    return "December"
+}
 }
 
 function toggleOverlay() {
@@ -265,11 +265,11 @@ function toggleOverlay() {
 }
 
 function addSavedItemsToList() {
-  //ADD EYE BTN
-  this.document.getElementById("hide-overlay-btn").addEventListener("click", function(){
-    toggleOverlay();
-  });
-
+    //ADD EYE BTN
+    this.document.getElementById("hide-overlay-btn").addEventListener("click", function(){
+      toggleOverlay();
+    });
+  
   let content = document.getElementById("saved-articles-list");
   let i = 0;
   chrome.storage.sync.get('savedArticles', function(result) {
@@ -277,12 +277,12 @@ function addSavedItemsToList() {
       //INCREASE MARGIN SIZE
       console.log(result['savedArticles'].length);
       if (result['savedArticles'].length <= 7) { // 7 = amount of saved objects that fit in the window
-        let dropupContent = document.getElementsByClassName("dropup-content")[0];
-        let marginTop = 115 + (result['savedArticles'].length - 1)*60;
-        dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
-
-        let dropup = document.getElementsByClassName("dropup")[0];
-        console.log(dropup.style.margin);
+          let dropupContent = document.getElementsByClassName("dropup-content")[0];
+          let marginTop = 115 + (result['savedArticles'].length - 1)*60;
+          dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
+        
+          let dropup = document.getElementsByClassName("dropup")[0];
+            console.log(dropup.style.margin);
       }
       let outerdiv = document.createElement('div');
       outerdiv.setAttribute('class', 'row align-items-center');
@@ -406,7 +406,6 @@ function updateSavedContent() {
 
 function mouseOffResources() {
   document.getElementById("full-list").addEventListener("mouseleave", function(){
-    console.log("moouse off");
     updateSavedContent();
   });
 }
