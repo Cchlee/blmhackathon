@@ -295,14 +295,14 @@ function addSavedItemsToList() {
   let i = 0;
   chrome.storage.sync.get("savedArticles", function (result) {
     //This code determinse how high to place the dropup menu
-    if (result["savedArticles"].length <= 6) {
+    if (result["savedArticles"].length <= 3) {
       let list = document.getElementById("saved-articles-list");
       let dropupContent = document.getElementsByClassName(
         "dropup-content"
       )[0];
       let button = document.getElementById("dropdownTitle");
       let marginTop =
-        42 + button.offsetHeight + (result["savedArticles"].length - 1) * 46; // The height of each link is exactly 46
+        42 + button.offsetHeight + (result["savedArticles"].length + 2) * 46; // The height of each link is exactly 46
       dropupContent.style.marginTop = "-" + marginTop.toString() + "px";
       let dropup = document.getElementsByClassName("dropup")[0];
     } else {
