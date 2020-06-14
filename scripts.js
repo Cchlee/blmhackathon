@@ -313,7 +313,8 @@ function addSavedItemsToList() {
         // console.log(elmnt.offsetHeight)
         // list.setAttribute('display': 'hidden')
           let dropupContent = document.getElementsByClassName("dropup-content")[0];
-          let marginTop = 115 + (result['savedArticles'].length - 1)*60;
+          let marginTop = 115 + (result['savedArticles'].length * 1.1 - 1) * 45;
+
           dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
 
           let dropup = document.getElementsByClassName("dropup")[0];
