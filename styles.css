@@ -2,17 +2,14 @@
 
 body {
     font-family: 'Yatra One', cursive;
-    /* background-image: url("https://i.pinimg.com/originals/bb/02/ea/bb02eaf013b066bae3077469c2155c63.jpg"); */
-    /*background-image: url("https://drive.google.com/uc?export=view&id=1vCwT_TA3lXtyvVwBJJ4Off8cixg-V1Yz");
-    background-size: cover;*/
-
+    background-color: #f1eae3;
     animation: fadeInAnimation ease 2s; 
     animation-iteration-count: 1; 
     animation-fill-mode: forwards; 
 }
 
 #background-img {
-    background-image: url("https://drive.google.com/uc?export=view&id=1vCwT_TA3lXtyvVwBJJ4Off8cixg-V1Yz");
+    background-image: url("https://drive.google.com/open?id=199eohrV7JHkm8UfLkl5XndIz3LRHGCry");
     background-size: cover;
     height:100vh;
     z-index: -900;
@@ -43,10 +40,22 @@ body {
     text-shadow: 2px 2px black;
 }
 
-.fa-eye-slash:hover .fa-eye:before {
-    /* content:"\f06e"; */
-    color: red;
+.fa-star {
+    cursor: pointer;
+}
+
+div > .fa-star {
+    color: black;
+}
+
+#hide-overlay-btn:hover .fa-eye:before {
+    cursor: pointer;
     content:"\f070";
+}
+
+#hide-overlay-btn:hover .fa-eye-slash:before {
+    cursor: pointer;
+    content:"\f06e";
 }
 
 header {
