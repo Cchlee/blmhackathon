@@ -73,51 +73,14 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("sign" + addOne).href = selectedPetition[i]['URL to resource'];
                     document.getElementById("sign" + addOne).innerHTML = selectedPetition[i]['Title'];
+                    checkIfSaved(selectedPetition[i]['Title'], i, "save-sign-");
                     document.getElementById("save-sign-" + addOne).addEventListener("click", function(){
                       saveArticle("sign" + addOne);
+                      changeColor("save-sign-" + addOne);
                     });
                     i += 1
                   }
                 }
-                let selectedPetition = getRandom(jsonSign, 3);
-                document.getElementById("sign1").href = selectedPetition[0]['URL to resource'];
-                document.getElementById("sign1").innerHTML = selectedPetition[0]['Title'];
-                document.getElementById("save-sign-1").addEventListener("click", function(){
-                  saveArticle("sign1");
-                  changeColor("save-sign-1");
-                });
-                document.getElementById("sign2").href = selectedPetition[1]['URL to resource'];
-                document.getElementById("sign2").innerHTML = selectedPetition[1]['Title'];
-                document.getElementById("save-sign-2").addEventListener("click", function(){
-                  saveArticle("sign2");
-                  changeColor("save-sign-2");
-                });
-                document.getElementById("sign3").href = selectedPetition[2]['URL to resource'];
-                document.getElementById("sign3").innerHTML = selectedPetition[2]['Title'];
-                document.getElementById("save-sign-3").addEventListener("click", function(){
-                  saveArticle("sign3");
-                  changeColor("save-sign-3");
-                });
-
-                let selectedDonation = getRandom(jsonDonate, 3);
-                document.getElementById("donate1").href = selectedDonation[0]['URL to resource'];
-                document.getElementById("donate1").innerHTML = selectedDonation[0]['Title'];
-                document.getElementById("save-donate-1").addEventListener("click", function(){
-                  saveArticle("donate1");
-                  changeColor("save-donate-1");
-                });
-                document.getElementById("donate2").href = selectedDonation[1]['URL to resource'];
-                document.getElementById("donate2").innerHTML = selectedDonation[1]['Title'];
-                document.getElementById("save-donate-2").addEventListener("click", function(){
-                  saveArticle("donate2");
-                  changeColor("save-donate-2");
-                });
-                document.getElementById("donate3").href = selectedDonation[2]['URL to resource'];
-                document.getElementById("donate3").innerHTML = selectedDonation[2]['Title'];
-                document.getElementById("save-donate-3").addEventListener("click", function(){
-                  saveArticle("donate3");
-                  changeColor("save-donate-3");
-                });
 
                 i = 0;
                 let selectedDonation = getRandom(jsonDonate, numToGrab);
@@ -126,8 +89,10 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("donate" + addOne).href = selectedDonation[i]['URL to resource'];
                     document.getElementById("donate" + addOne).innerHTML = selectedDonation[i]['Title'];
+                    checkIfSaved(selectedDonation[i]['Title'], i, "save-donate-");
                     document.getElementById("save-donate-" + addOne).addEventListener("click", function(){
                       saveArticle("donate" + addOne);
+                      changeColor("save-donate-" + addOne);
                     });
                     i += 1
                   }
@@ -140,31 +105,14 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("read" + addOne).href = selectedRead[i]['URL to resource'];
                     document.getElementById("read" + addOne).innerHTML = selectedRead[i]['Title'];
+                    checkIfSaved(selectedRead[i]['Title'], i, "save-read-");
                     document.getElementById("save-read-" + addOne).addEventListener("click", function(){
                       saveArticle("read" + addOne);
+                      changeColor("save-read-" + addOne);
                     });
                     i += 1
                   }
                 }
-                document.getElementById("read1").href = selectedRead[0]['URL to resource'];
-                document.getElementById("read1").innerHTML = selectedRead[0]['Title'];
-                document.getElementById("save-read-1").addEventListener("click", function(){
-                  saveArticle("read1");
-                  changeColor("save-read-1");
-                });
-                document.getElementById("read2").href = selectedRead[1]['URL to resource'];
-                document.getElementById("read2").innerHTML = selectedRead[1]['Title'];
-                document.getElementById("save-read-2").addEventListener("click", function(){
-                  saveArticle("read2");
-                  changeColor("save-read-2");
-                });
-                document.getElementById("read3").href = selectedRead[2]['URL to resource'];
-                document.getElementById("read3").innerHTML = selectedRead[2]['Title'];
-                document.getElementById("save-read-3").addEventListener("click", function(){
-                  saveArticle("read3");
-                  changeColor("save-read-3");
-                });
-
             }
         }
     }
@@ -316,14 +264,22 @@ function addSavedItemsToList() {
       i = i+1;
     }
   });
-
 }
 
-function storeLink(id) {
-  console.log(id);
-  chrome.storage.sync.set({'name': 'Chris'}, function() {
-    console.log('Value is set to ' + 'chris');
+function checkIfSaved(title, curr, type){
+  chrome.storage.sync.get('savedArticles', function(result) {
+    for (var x = 0; x < result.savedArticles.length; x++) {
+      if (result.savedArticles[x].title === title) {
+        console.log("there");
+        changeColor(type + curr);
+        return true;
+      } 
+    }
+    console.log("not there")
+    return false;
   });
+}
+
 function changeColor(id){
   if (document.getElementById(id).style.color==="white"){
     document.getElementById(id).style.color="orange";
