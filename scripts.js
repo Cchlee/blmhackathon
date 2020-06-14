@@ -253,6 +253,14 @@ function convertMonth(num) {
 function toggleOverlay() {
   let overlay = document.getElementsByClassName("hideable");
   let eye = document.getElementById("hide-overlay-btn");
+  chrome.storage.sync.get("isVisible", function(result) {
+    if (result === undefined){
+      result.isVisible = true;
+    }
+    chrome.storage.sync.set({"isVisible": !result.isVisible}, function() {
+      console.log("click!");
+    });
+  });
   for (let i = 0; i < overlay.length; i++) {
     if (overlay[i].style.visibility === "hidden") {
       overlay[i].style.visibility = "visible";
@@ -262,6 +270,27 @@ function toggleOverlay() {
       eye.innerHTML = "<i class=\"fa fa-eye-slash\"></i>";
     }
   }
+}
+
+function showHideItems() {
+  let overlay = document.getElementsByClassName("hideable");
+  let eye = document.getElementById("hide-overlay-btn");
+  chrome.storage.sync.get("isVisible", function(result) {
+    if (result === undefined){
+      result.isVisible = true;
+    }
+    if (result.isVisible) {
+      for (let i = 0; i < overlay.length; i++) {
+          overlay[i].style.visibility = "visible";
+          eye.innerHTML = "<i class=\"fa fa-eye\"></i>";
+      }
+    } else {
+      for (let i = 0; i < overlay.length; i++) {
+          overlay[i].style.visibility = "hidden";
+          eye.innerHTML = "<i class=\"fa fa-eye-slash\"></i>";
+      }
+    }
+  });
 }
 
 function addSavedItemsToList() {
@@ -358,12 +387,6 @@ function saveArticle(id){
     }
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
-      chrome.storage.local.clear(function() {
-        var error = chrome.runtime.lastError;
-          if (error) {
-              console.error(error);
-          }
-      });
       chrome.storage.sync.set({'savedArticles': allArticles}, function() {
         updateSavedContent();
       });
@@ -398,12 +421,6 @@ function unSaveArticle(id) {
     console.log(toDelete);
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
-      chrome.storage.local.clear(function() {
-        var error = chrome.runtime.lastError;
-          if (error) {
-              console.error(error);
-          }
-      });
       chrome.storage.sync.set({'savedArticles': allArticles}, function() {
         //updateSavedContent();
       });
@@ -433,6 +450,7 @@ function mouseOffResources() {
 window.onload = function () {
   updateTime();
   addSavedItemsToList();
+  showHideItems();
   mouseOffResources();
 };
 
