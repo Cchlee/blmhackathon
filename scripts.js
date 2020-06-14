@@ -2,6 +2,10 @@ function truncate(str, n){
   return (str.length > n) ? str.substr(0, n-1) + '&hellip;' : str;
 }
 
+function truncateLink(str, n){
+  return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+}
+
 function readTextFileArt(file)
 {
     let rawFile = new XMLHttpRequest();
@@ -281,8 +285,6 @@ function showHideItems() {
     if (result.isVisible === undefined){
       result.isVisible = true;
     }
-    console.log(result);
-    console.log("result is:" + result.isVisible)
     if (result.isVisible) {
       for (let i = 0; i < overlay.length; i++) {
           overlay[i].style.visibility = "visible";
@@ -315,7 +317,7 @@ function addSavedItemsToList() {
         // console.log(elmnt.offsetHeight)
         // list.setAttribute('display': 'hidden')
           let dropupContent = document.getElementsByClassName("dropup-content")[0];
-          let marginTop = 115 + (result['savedArticles'].length - 1)*50;
+          let marginTop = 115 + (result['savedArticles'].length - 1) * 50;
           dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
 
           let dropup = document.getElementsByClassName("dropup")[0];
@@ -333,7 +335,7 @@ function addSavedItemsToList() {
       bottomdiv.setAttribute('class', 'col-1');
 
       let a = document.createElement('a');
-      let link = document.createTextNode(result['savedArticles'][i]['title']);
+      let link = document.createTextNode(truncateLink(result['savedArticles'][i]['title'], 30));
       a.appendChild(link);
       a.title = result['savedArticles'][i]['title'];
       a.href = result['savedArticles'][i]['link'];
@@ -364,6 +366,10 @@ function addSavedItemsToList() {
 
 function checkIfSaved(title, curr, type){
   chrome.storage.sync.get('savedArticles', function(result) {
+    if(result.savedArticles === undefined) {
+      chrome.storage.sync.set({savedArticles: []}, function(){})
+    }
+    result.savedArticles = [];
     for (var x = 0; x < result.savedArticles.length; x++) {
       if (result.savedArticles[x].title === title) {
         changeColor(type + curr);
@@ -398,6 +404,7 @@ function saveArticle(id){
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
       chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        console.log("running");
         updateSavedContent();
       });
     } else {
