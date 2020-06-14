@@ -313,11 +313,16 @@ function addSavedItemsToList() {
       });
       topdiv.appendChild(a);
 
+      let starSpan = document.createElement("span");
+      starSpan.setAttribute("class", "star-btn-dropup");
+
       let span = document.createElement("span");
       span.setAttribute("class", "fa fa-star");
       span.setAttribute("id", "saved-resource-" + i.toString());
       span.setAttribute("style", "color:yellow");
-      bottomdiv.appendChild(span);
+
+      starSpan.appendChild(span);
+      bottomdiv.appendChild(starSpan);
       outerdiv.appendChild(topdiv);
       outerdiv.appendChild(bottomdiv);
       content.appendChild(outerdiv);

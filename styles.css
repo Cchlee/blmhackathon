@@ -44,8 +44,12 @@ body {
     cursor: pointer;
 }
 
-div > .fa-star {
-    color: black;
+.star-btn:hover .fa-star:before {
+    color: yellow;
+}
+
+.star-btn-dropup:hover .fa-star:before {
+    color: white;
 }
 
 #hide-overlay-btn:hover .fa-eye:before {
@@ -90,6 +94,7 @@ footer {
   display: block;
   transform: skew(20deg);
 }
+
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
   position: relative;
