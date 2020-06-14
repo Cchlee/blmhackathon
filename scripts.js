@@ -258,6 +258,18 @@ function toggleOverlay() {
   }
 }
 
+// /**
+//  * this function starts header info invisible and then shows if clicked
+//  */
+// function startInvisible() {
+//   let overlay = document.getElementsByClassName("hideable");
+//   let eye = document.getElementById("hide-overlay-btn");
+//   for (let i = 0; i < overlay.length; i++) {
+//     overlay[i].style.visibility = "hidden";
+//     eye.innerHTML = '<i class="fa fa-eye-slash"></i>';
+//   }
+// }
+
 /**
  * this function goes through all the items a user has saved and adds them to the "your saved items" drop-up list
  */
@@ -326,11 +338,16 @@ function addSavedItemsToList() {
       });
       topdiv.appendChild(a);
 
+      let starSpan = document.createElement("span");
+      starSpan.setAttribute("class", "star-btn-dropup");
+
       let span = document.createElement("span");
       span.setAttribute("class", "fa fa-star");
       span.setAttribute("id", "saved-resource-" + i.toString());
       span.setAttribute("style", "color:yellow");
-      bottomdiv.appendChild(span);
+
+      starSpan.appendChild(span);
+      bottomdiv.appendChild(starSpan);
       outerdiv.appendChild(topdiv);
       outerdiv.appendChild(bottomdiv);
 

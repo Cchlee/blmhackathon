@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <title>New Tab 4 BLM</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon/">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -21,68 +22,68 @@
   <div class="container" style="height: 100px; font-size: 24px;">
     <div class="h-100 row align-items-center text-center">
         <div class="col-4">
-            <h1 id="clock" style="text-shadow: 2px 2px black;"></h1>
+            <h1 id="clock" style="font-size:80px; text-shadow: 2px 2px black;"></h1>
             <p id="date" style="text-shadow: 2px 2px black;"></p>
         </div>
-          <div class="col-2 hideable">
+          <div class="col-2 hideable" style="visibility:hidden">
             <div class="dropdown">
                 <button class="dropbtn"> <div class="reverse-skew">SIGN</div></button>
                 <div class="dropdown-content text-left" style="left:-25px; font-family: 'Italiana', serif; font-weight:bold">
                   <div class="row align-items-center">
                     <div class="col-10"><a id="sign1" href="#" target="_blank">Link 1</a></div>
-                    <div class="col-1 align-items-center"><span class="fa fa-star" id="save-sign-1" style="color:white;text-shadow: 2px 2px black;"></span></div>
+                    <div class="col-1 align-items-center star-btn"><span class="fa fa-star" id="save-sign-1" style="color:white;text-shadow: 2px 2px black;"></span></div>
                   </div>
                   <div class="row align-items-center">
                     <div class="col-10"><a id="sign2" href="#" target="_blank">Link 2</a></div>
-                    <div class="col-1"><span class="fa fa-star" id="save-sign-2" style="color:white;text-shadow: 2px 2px black;"></span></div>
+                    <div class="col-1 star-btn"><span class="fa fa-star" id="save-sign-2" style="color:white;text-shadow: 2px 2px black;"></span></div>
                   </div>
                   <div class="row align-items-center">
                     <div class="col-10"><a id="sign3" href="#" target="_blank">Link 3</a> </div>
-                    <div class="col-1"><span class="fa fa-star" id="save-sign-3" style="color:white;text-shadow: 2px 2px black;"></span></div>
+                    <div class="col-1 star-btn"><span class="fa fa-star" id="save-sign-3" style="color:white;text-shadow: 2px 2px black;"></span></div>
                   </div>
                 </div>
             </div>
           </div>
-          <div class="col-2 hideable">
+          <div class="col-2 hideable" style="visibility:hidden">
             <div class="dropdown" >
               <button class="dropbtn"><div class="reverse-skew" >READ</div></button>
               <div class="dropdown-content text-left" style="left: -25px; font-family: 'Italiana', serif;">
                 <div class="row align-items-center">
                   <div class="col-10"><a id="read1" href="#" target="_blank">Link 1</a></div>
-                  <div class="col-1"><span class="fa fa-star" id="save-read-1" style="color:white;text-shadow: 2px 2px black;"></span></div>
+                  <div class="col-1 star-btn"><span class="fa fa-star" id="save-read-1" style="color:white;text-shadow: 2px 2px black;"></span></div>
                 </div>
                 <div class="row align-items-center">
                   <div class="col-10"><a id="read2" href="#" target="_blank">Link 2</a> </div>
-                  <div class="col-1"><span class="fa fa-star" id="save-read-2" style="color:white;text-shadow: 2px 2px black;"></span></div>
+                  <div class="col-1 star-btn"><span class="fa fa-star" id="save-read-2" style="color:white;text-shadow: 2px 2px black;"></span></div>
                 </div>
                 <div class="row align-items-center">
                   <div class="col-10"><a id="read3" href="#" target="_blank">Link 3</a> </div>
-                  <div class="col-1"><span class="fa fa-star" id="save-read-3" style="color:white;text-shadow: 2px 2px black;"></span></div>
+                  <div class="col-1 star-btn"><span class="fa fa-star" id="save-read-3" style="color:white;text-shadow: 2px 2px black;"></span></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-2 hideable">
+          <div class="col-2 hideable" style="visibility:hidden">
             <div class="dropdown" >
               <button class="dropbtn"><div class="reverse-skew">DONATE</div></button>
               <div class="dropdown-content text-left" style="left: -25px; font-family: 'Italiana', serif;">
                 <div class="row align-items-center">
                   <div class="col-10"><a id="donate1" href="#" target="_blank">Link 1</a> </div>
-                  <div class="col-1"><span class="fa fa-star" id="save-donate-1" style="color:white;text-shadow: 2px 2px black;"></span></div>
+                  <div class="col-1 star-btn"><span class="fa fa-star" id="save-donate-1" style="color:white;text-shadow: 2px 2px black;"></span></div>
                 </div>
                 <div class="row align-items-center">
                   <div class="col-10"><a id="donate2" href="#" target="_blank">Link 2</a></div>
-                  <div class="col-1"><span class="fa fa-star" id="save-donate-2" style="color:white;text-shadow: 2px 2px black;"></span></div>
+                  <div class="col-1 star-btn"><span class="fa fa-star" id="save-donate-2" style="color:white;text-shadow: 2px 2px black;"></span></div>
                 </div>
                 <div class="row align-items-center">
                   <div class="col-10"><a id="donate3" href="#" target="_blank">Link 3</a> </div>
-                  <div class="col-1"><span class="fa fa-star" id="save-donate-3" style="color:white;text-shadow: 2px 2px black;"></span></div>
+                  <div class="col-1 star-btn"><span class="fa fa-star" id="save-donate-3" style="color:white;text-shadow: 2px 2px black;"></span></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-2" id="hide-overlay-btn">
-            <i class="fa fa-eye"></i>
+          <div class="col-2">
+            <span id="hide-overlay-btn"><i class="fa fa-eye"></i></span>
           </div>
         </div>
       </div>
@@ -98,7 +99,7 @@
         <a id="artistName" href="#" target="_blank"></a>
       </div>
         <div class="col-4 " id="full-list">
-          <div class="saved-articles hideable" >
+          <div class="saved-articles hideable" style="visibility:hidden">
             <div class="dropup">
               <button class="dropupbtn" id="dropdownTitle"><div class="reverse-skew">YOUR SAVED RESOURCES</div></button>
               <div id="saved-articles-list" class="dropup-content">
@@ -106,7 +107,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4 text-right hideable" id="submit-credits">
+        <div class="col-4 text-right hideable" id="submit-credits" style="visibility:hidden">
             Submit [<a id="resource-link" href="https://docs.google.com/forms/d/e/1FAIpQLSc8EzwfUvxn8B2MaMX62wDdnmtPsRE76lF3F_Jb0u82BPXXuw/viewform?usp=sf_link" target="_blank">Resources</a>, <a id="art-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfMR5f7tIkXzaZtIEOlbyi5mDdpMjgKrn4GLRL9TuIrXDFKsw/viewform?usp=sf_link" target="_blank">Art</a>]
             <br>
             <a id="creditsLink" href="http://tabforblacklivesmatter.github.io/" target="_blank">Credits</a>
