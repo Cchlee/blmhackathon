@@ -270,6 +270,7 @@ function addSavedItemsToList() {
       a.appendChild(link);
       a.title = result['savedArticles'][i]['title'];
       a.href = result['savedArticles'][i]['link'];
+      a.setAttribute('id', 'saved-resource-link-' + i.toString());
       a.setAttribute('target', '_blank');
       topdiv.appendChild(a);
 
@@ -349,22 +350,41 @@ function saveArticle(id){
   });
 }
 
-function unSaveArticle(i) {
-  let toDeleteIndex = parseInt(i.split('-')[2])
+function unSaveArticle(id) {
+  let toDeleteIndex = parseInt(id.split('-')[2])
   var saved = {};
+  let toDelete = false;
+  saved.title = document.getElementById("saved-resource-link-" + toDeleteIndex).innerHTML;
+  saved.link = document.getElementById("saved-resource-link-" + toDeleteIndex).href;
   var allArticles = [];
   chrome.storage.sync.get('savedArticles', function(result) {
     allArticles = result.savedArticles;
-    allArticles.splice(toDeleteIndex, 1);
-    chrome.storage.local.clear(function() {
-      var error = chrome.runtime.lastError;
-        if (error) {
-            console.error(error);
-        }
-    });
-    chrome.storage.sync.set({'savedArticles': allArticles}, function() {
-      //updateSavedContent();
-    });
+    for (let i = 0; i < allArticles.length; i++) {
+      console.log(allArticles[i]['link'])
+      console.log(document.getElementById("saved-resource-link-" + toDeleteIndex).href);
+      if (allArticles[i]['link'] === document.getElementById("saved-resource-link-" + toDeleteIndex).href) {
+        toDelete = true;
+        toDeleteIndex = i;
+      }
+    }
+    console.log(toDelete);
+    if (toDelete) {
+      allArticles.splice(toDeleteIndex, 1);
+      chrome.storage.local.clear(function() {
+        var error = chrome.runtime.lastError;
+          if (error) {
+              console.error(error);
+          }
+      });
+      chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        //updateSavedContent();
+      });
+    } else {
+      allArticles.push(saved);
+      chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        // updateSavedContent();
+      });
+    }
   });
 }
 
