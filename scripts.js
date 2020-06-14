@@ -24,7 +24,8 @@ function readTextFileArt(file)
                 let selectedArtTitleURL = selectedArt[0]["Link where we can find this work online"];
                 let selectedArtist = selectedArt[0]["What is the name of the artist?"];
                 let selectedArtistURL = selectedArt[0]["The artist's online portfolio or Instagram handle - if possible (i.e. @kerryjamesmarshs)\r"]
-                document.body.style.backgroundImage = "url(\'" + convertGoogleImageToURL(selectedArtURL) + "\')";
+                let bgimg = document.getElementById("background-img");
+                bgimg.style.backgroundImage = "url(\'" + convertGoogleImageToURL(selectedArtURL) + "\')";
                 document.getElementById("artTitle").innerHTML = truncate(selectedArtTitle,25);
                 document.getElementById("artTitle").href = selectedArtTitleURL;
                 document.getElementById("artistName").innerHTML = selectedArtist;
@@ -309,18 +310,20 @@ function addSavedItemsToList() {
   chrome.storage.sync.get('savedArticles', function(result) {
     for (let savedItem in result['savedArticles']) {
       //INCREASE MARGIN SIZE
-      if (result['savedArticles'].length <= 7) { // 7 = amount of saved objects that fit in the window
+      if (result['savedArticles'].length <= 4) { //  = amount of saved objects that fit in the window
+
         let list = document.getElementById("saved-articles-list")
         // list.setAttribute('display': 'visible')
         // console.log(elmnt.offsetHeight)
         // list.setAttribute('display': 'hidden')
           let dropupContent = document.getElementsByClassName("dropup-content")[0];
-          let marginTop = 115 + (result['savedArticles'].length - 1) * 45;
-
+          let marginTop = 115 + (result['savedArticles'].length - 1) * 50;
           dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
 
           let dropup = document.getElementsByClassName("dropup")[0];
-            console.log(dropup.style.margin);
+      } else {
+        let dropupContent = document.getElementsByClassName("dropup-content")[0];
+        dropupContent.style.marginTop = "-365px";
       }
       let outerdiv = document.createElement('div');
       outerdiv.setAttribute('class', 'row align-items-center');
@@ -477,6 +480,7 @@ window.onload = function () {
   addSavedItemsToList();
   showHideItems();
   mouseOffResources();
+
 };
 
 readTextFileArt('art.csv');
