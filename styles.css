@@ -40,6 +40,18 @@ body {
   text-shadow: 2px 2px black;
 }
 
+#hide-overlay-btn:hover .fa-eye:before {
+    cursor: pointer;
+    content:"\f070";
+    color: grey;
+}
+
+#hide-overlay-btn:hover .fa-eye-slash:before {
+    cursor: pointer;
+    content:"\f06e";
+    color: grey;
+}
+
 .fa-star {
     cursor: pointer;
 }
@@ -50,16 +62,6 @@ body {
 
 .star-btn-dropup:hover .fa-star:before {
     color: white;
-}
-
-#hide-overlay-btn:hover .fa-eye:before {
-    cursor: pointer;
-    content:"\f070";
-}
-
-#hide-overlay-btn:hover .fa-eye-slash:before {
-    cursor: pointer;
-    content:"\f06e";
 }
 
 header {
