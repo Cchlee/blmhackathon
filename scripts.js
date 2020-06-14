@@ -292,7 +292,7 @@ function addSavedItemsToList() {
         )[0];
         let button = document.getElementById("dropdownTitle");
         let marginTop =
-          42 + button.offsetHeight + (result["savedArticles"].length - 1) * 46; // The height of each link is exactly 46
+          45 + button.offsetHeight + (result["savedArticles"].length - 1) * 46; // The height of each link is exactly 46
         dropupContent.style.marginTop = "-" + marginTop.toString() + "px";
 
         let dropup = document.getElementsByClassName("dropup")[0];
@@ -328,7 +328,7 @@ function addSavedItemsToList() {
       let span = document.createElement("span");
       span.setAttribute("class", "fa fa-star");
       span.setAttribute("id", "saved-resource-" + i.toString());
-      span.setAttribute("style", "color:yellow");
+      span.setAttribute("style", "color:gray");
       bottomdiv.appendChild(span);
       outerdiv.appendChild(topdiv);
       outerdiv.appendChild(bottomdiv);
@@ -397,7 +397,7 @@ function checkIfSaved(title, curr, type) {
  */
 function changeColor(id) {
   if (document.getElementById(id).style.color === "white") {
-    document.getElementById(id).style.color = "yellow";
+    document.getElementById(id).style.color = "gray";
   } else {
     document.getElementById(id).style.color = "white";
   }
