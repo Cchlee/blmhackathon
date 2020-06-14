@@ -73,7 +73,7 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("sign" + addOne).href = selectedPetition[i]['URL to resource'];
                     document.getElementById("sign" + addOne).innerHTML = selectedPetition[i]['Title'];
-                    checkIfSaved(selectedPetition[i]['Title'], i, "save-sign-");
+                    checkIfSaved(selectedPetition[i]['Title'], addOne, "save-sign-");
                     document.getElementById("save-sign-" + addOne).addEventListener("click", function(){
                       saveArticle("sign" + addOne);
                       changeColor("save-sign-" + addOne);
@@ -89,7 +89,7 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("donate" + addOne).href = selectedDonation[i]['URL to resource'];
                     document.getElementById("donate" + addOne).innerHTML = selectedDonation[i]['Title'];
-                    checkIfSaved(selectedDonation[i]['Title'], i, "save-donate-");
+                    checkIfSaved(selectedDonation[i]['Title'], addOne, "save-donate-");
                     document.getElementById("save-donate-" + addOne).addEventListener("click", function(){
                       saveArticle("donate" + addOne);
                       changeColor("save-donate-" + addOne);
@@ -105,7 +105,7 @@ function readTextFileResources(file)
                     let addOne = (i + 1).toString()
                     document.getElementById("read" + addOne).href = selectedRead[i]['URL to resource'];
                     document.getElementById("read" + addOne).innerHTML = selectedRead[i]['Title'];
-                    checkIfSaved(selectedRead[i]['Title'], i, "save-read-");
+                    checkIfSaved(selectedRead[i]['Title'], addOne, "save-read-");
                     document.getElementById("save-read-" + addOne).addEventListener("click", function(){
                       saveArticle("read" + addOne);
                       changeColor("save-read-" + addOne);
@@ -320,18 +320,14 @@ function saveArticle(id){
     allArticles = result.savedArticles;
     let toDelete = false;
     let toDeleteIndex = -1;
-    console.log(document.getElementById(id).href)
     for (let i = 0; i < allArticles.length; i++) {
-      console.log(allArticles[i]['link'])
       if (allArticles[i]['link'] === document.getElementById(id).href) {
         toDelete = true;
         toDeleteIndex = i;
       }
     }
-    console.log(toDelete);
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
-      console.log(allArticles);
       chrome.storage.local.clear(function() {
         var error = chrome.runtime.lastError;
           if (error) {
@@ -340,7 +336,6 @@ function saveArticle(id){
       });
       chrome.storage.sync.set({'savedArticles': allArticles}, function() {
         updateSavedContent();
-        console.log("deleting");
       });
     } else {
       saved.title = document.getElementById(id).innerHTML;
