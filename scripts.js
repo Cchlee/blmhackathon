@@ -243,9 +243,7 @@ function toggleOverlay() {
   let overlay = document.getElementsByClassName("hideable");
   let eye = document.getElementById("hide-overlay-btn");
   chrome.storage.sync.get("isVisible", function (result) {
-    chrome.storage.sync.set({ isVisible: !result.isVisible }, function () {
-      console.log("click!");
-    });
+    chrome.storage.sync.set({ isVisible: !result.isVisible }, function () {});
   });
   for (let i = 0; i < overlay.length; i++) {
     if (overlay[i].style.visibility === "hidden") {
@@ -276,7 +274,7 @@ function toggleOverlay() {
 function addSavedItemsToList() {
   this.document
     .getElementById("hide-overlay-btn")
-    .addEventListener("click", function () {
+    .addEventListener("mousedown", function (event) {
       toggleOverlay();
     });
 
