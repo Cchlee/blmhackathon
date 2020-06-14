@@ -3,9 +3,9 @@
 body {
     font-family: 'Yatra One', cursive;
     background-color: #f1eae3;
-    animation: fadeInAnimation ease 2s; 
-    animation-iteration-count: 1; 
-    animation-fill-mode: forwards; 
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
 #background-img {
@@ -21,14 +21,14 @@ body {
 
 /* Animations */
 
-@keyframes fadeInAnimation { 
-    0% { 
-        opacity: 0; 
-    } 
-    100% { 
-        opacity: 1; 
-    } 
-} 
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
 @keyframes moveFromTop {
   from {
@@ -229,8 +229,8 @@ footer {
 }
 
 .dropup-content a:hover {
-  background-color: rgba(205, 205, 205, 1);
-  text-decoration: none;
+  /* background-color: rgba(205, 205, 205, 1); */
+  text-decoration: underline;
   max-height: 300px;
 }
 .dropup:hover .dropup-content {
@@ -241,8 +241,8 @@ footer {
   max-height: 300px;
 }
 .dropup:hover .dropupbtn {
-  background: #ddd;
-  color: white;
+    background: #ddd;
+    color: white;
 }
 
 #dropdownTitle {
