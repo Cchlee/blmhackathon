@@ -3,10 +3,33 @@
 body {
     font-family: 'Yatra One', cursive; /* doesnt work */
     /* background-image: url("https://i.pinimg.com/originals/bb/02/ea/bb02eaf013b066bae3077469c2155c63.jpg"); */
+    /*background-image: url("https://drive.google.com/uc?export=view&id=1vCwT_TA3lXtyvVwBJJ4Off8cixg-V1Yz");
+    background-size: cover;*/
+
+    animation: fadeInAnimation ease 2s; 
+    animation-iteration-count: 1; 
+    animation-fill-mode: forwards; 
+}
+
+#background-img {
     background-image: url("https://drive.google.com/uc?export=view&id=1vCwT_TA3lXtyvVwBJJ4Off8cixg-V1Yz");
     background-size: cover;
-    padding-top: 20px;
+    height:100vh;
+    z-index: -900;
+
+    animation: fadeInAnimation ease 2.5s; 
+    animation-iteration-count: 1; 
+    animation-fill-mode: forwards; 
 }
+
+@keyframes fadeInAnimation { 
+    0% { 
+        opacity: 0; 
+    } 
+    100% { 
+        opacity: 1; 
+    } 
+} 
 
 .hideable {
     display: block;
@@ -16,6 +39,12 @@ body {
     /* content:"\f06e"; */
     color: red;
     content:"\f070";
+}
+
+header {
+    position: absolute;
+    top: 20px;
+    width: 100%;
 }
 
 footer {
@@ -126,8 +155,6 @@ footer {
   background-color: #ddd;
   max-height: 300px;
   overflow: scroll;
-  margin: 0px !important;
-  padding: 0px !important;
 }
 .dropup:hover .dropup-content {
   background-color: #ddd;

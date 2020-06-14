@@ -16,7 +16,10 @@ function readTextFileArt(file)
                 let selectedArtTitleURL = selectedArt[0]["Link where we can find this work online"];
                 let selectedArtist = selectedArt[0]["What is the name of the artist?"];
                 let selectedArtistURL = selectedArt[0]["The artist's online portfolio or Instagram handle - if possible (i.e. @kerryjamesmarshs)\r"]
-                document.body.style.backgroundImage = "url(\'" + convertGoogleImageToURL(selectedArtURL) + "\')";
+                
+                let bgimg = document.getElementById("background-img");
+                bgimg.style.backgroundImage = "url(\'" + convertGoogleImageToURL(selectedArtURL) + "\')";
+                console.log(bgimg.style.backgroundImage);
                 document.getElementById("artTitle").innerHTML = selectedArtTitle;
                 document.getElementById("artTitle").href = selectedArtTitleURL;
                 document.getElementById("artistName").innerHTML = selectedArtist;
@@ -275,14 +278,10 @@ function addSavedItemsToList() {
   chrome.storage.sync.get('savedArticles', function(result) {
     for (let savedItem in result['savedArticles']) {
       //INCREASE MARGIN SIZE
-      console.log(result['savedArticles'].length);
       if (result['savedArticles'].length <= 7) { // 7 = amount of saved objects that fit in the window
         let dropupContent = document.getElementsByClassName("dropup-content")[0];
         let marginTop = 115 + (result['savedArticles'].length - 1)*60;
         dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
-
-        let dropup = document.getElementsByClassName("dropup")[0];
-        console.log(dropup.style.margin);
       }
       let outerdiv = document.createElement('div');
       outerdiv.setAttribute('class', 'row align-items-center');
@@ -415,6 +414,7 @@ window.onload = function () {
   updateTime();
   addSavedItemsToList();
   mouseOffResources();
+
 };
 
 readTextFileArt('art.csv');
