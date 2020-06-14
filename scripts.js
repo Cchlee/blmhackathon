@@ -2,6 +2,10 @@ function truncate(str, n){
   return (str.length > n) ? str.substr(0, n-1) + '&hellip;' : str;
 }
 
+function truncateLink(str, n){
+  return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+}
+
 function readTextFileArt(file)
 {
     let rawFile = new XMLHttpRequest();
@@ -311,7 +315,7 @@ function addSavedItemsToList() {
         // console.log(elmnt.offsetHeight)
         // list.setAttribute('display': 'hidden')
           let dropupContent = document.getElementsByClassName("dropup-content")[0];
-          let marginTop = 115 + (result['savedArticles'].length * 1.1 - 1) * 45;
+          let marginTop = 115 + (result['savedArticles'].length - 1) * 45;
 
           dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
 
@@ -328,7 +332,7 @@ function addSavedItemsToList() {
       bottomdiv.setAttribute('class', 'col-1');
 
       let a = document.createElement('a');
-      let link = document.createTextNode(result['savedArticles'][i]['title']);
+      let link = document.createTextNode(truncateLink(result['savedArticles'][i]['title'], 30));
       a.appendChild(link);
       a.title = result['savedArticles'][i]['title'];
       a.href = result['savedArticles'][i]['link'];
