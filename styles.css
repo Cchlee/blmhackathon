@@ -140,7 +140,10 @@ footer {
 }
 
 /* Show the dropdown menu on hover */
-
+.dropdown:hover .dropdown-content {
+  display: block;
+  animation: moveFromTop 400ms ease-in-out;
+}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
