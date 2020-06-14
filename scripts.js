@@ -258,9 +258,6 @@ function toggleOverlay() {
   let overlay = document.getElementsByClassName("hideable");
   let eye = document.getElementById("hide-overlay-btn");
   chrome.storage.sync.get("isVisible", function(result) {
-    if (result === undefined){
-      result.isVisible = true;
-    }
     chrome.storage.sync.set({"isVisible": !result.isVisible}, function() {
       console.log("click!");
     });
@@ -280,9 +277,11 @@ function showHideItems() {
   let overlay = document.getElementsByClassName("hideable");
   let eye = document.getElementById("hide-overlay-btn");
   chrome.storage.sync.get("isVisible", function(result) {
-    if (result === undefined){
+    if (result.isVisible === undefined){
       result.isVisible = true;
     }
+    console.log(result);
+    console.log("result is:" + result.isVisible)
     if (result.isVisible) {
       for (let i = 0; i < overlay.length; i++) {
           overlay[i].style.visibility = "visible";
