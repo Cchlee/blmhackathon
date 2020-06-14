@@ -50,6 +50,8 @@ function readTextFileArt(file) {
   rawFile.send(null);
 }
 
+var headerTitleLinks = [] //GLOBAL ARRAY TO STORE HEADER LINKS
+
 /**
  * readTextFileResources is used to handle the dropdown resources
  */
@@ -107,6 +109,8 @@ function readTextFileResources(file) {
                 saveArticleFromDropdown("sign" + addOne);
                 changeColor("save-sign-" + addOne);
               });
+            var preset = {"title": selectedPetition[i]['Title'].toString(), "element": "save-sign-"+addOne};
+            headerTitleLinks.push(preset);
             i += 1;
           } else {
             selectedPetition = getRandom(jsonSign, numToGrab);
@@ -134,6 +138,8 @@ function readTextFileResources(file) {
                 saveArticleFromDropdown("donate" + addOne);
                 changeColor("save-donate-" + addOne);
               });
+              var preset = {"title": selectedDonation[i]['Title'].toString(), "element": "save-donate-"+addOne};
+              headerTitleLinks.push(preset);
             i += 1;
           } else {
             selectedDonation = getRandom(jsonDonate, numToGrab);
@@ -160,6 +166,8 @@ function readTextFileResources(file) {
                 saveArticleFromDropdown("read" + addOne);
                 changeColor("save-read-" + addOne);
               });
+              var preset = {"title": selectedRead[i]['Title'].toString(), "element": "save-read-"+addOne};
+              headerTitleLinks.push(preset);
             i += 1;
           } else {
             selectedRead = getRandom(jsonRead, numToGrab);
@@ -319,6 +327,11 @@ function addSavedItemsToList() {
         .addEventListener("click", function () {
           saveArticleFromDropup(this.id);
           changeColor(this.id);
+          for (let i = 0; i < headerTitleLinks.length; i++) {
+            if (headerTitleLinks[i].title === a.title){
+              changeColor(headerTitleLinks[i].element);
+            }
+          }
         });
       i = i + 1;
     }
