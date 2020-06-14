@@ -362,7 +362,7 @@ function unSaveArticle(i) {
         }
     });
     chrome.storage.sync.set({'savedArticles': allArticles}, function() {
-      updateSavedContent();
+      //updateSavedContent();
     });
   });
 }
@@ -375,13 +375,23 @@ function updateSavedContent() {
   addSavedItemsToList();
 }
 
+function mouseOffResources() {
+  document.getElementById("full-list").addEventListener("mouseleave", function(){
+    console.log("moouse off");
+    updateSavedContent();
+  });
+}
+
 window.onload = function () {
   updateTime();
   addSavedItemsToList();
+  mouseOffResources();
 };
 
 readTextFileArt('art.csv');
 readTextFileResources('resources.csv');
+
+
 
 // This updates every second in case the time changes
 setInterval(updateTime,1000);
