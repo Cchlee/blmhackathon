@@ -49,7 +49,7 @@ footer {
 .dropdown-content {
   display: none;
   position: absolute;
-  min-width: 375px;
+  min-width: 300px;
   z-index: 1;
 }
 
@@ -76,4 +76,66 @@ footer {
 
 footer {
   padding-bottom: 10px;
+}
+
+
+/* DropUP Button */
+.dropupbtn {
+  background-color: transparent;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  transform: skew(-20deg);
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropup {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 375px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+#saved-articles-list {
+  max-height: 300px;
+  overflow: scroll;
+}
+
+/* Links inside the dropdown */
+.dropup-content a {
+  color: black;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+  max-height: 300px;
+  text-shadow: none;
+  font-size: 20px;
+}
+
+.dropup-content a:hover {
+  background-color: #ddd;
+  max-height: 300px;
+  overflow: scroll;
+}
+.dropup:hover .dropup-content {
+  background-color: #ddd;
+  display: block;
+  position: absolute;
+  margin-top: -365px;
+  max-height: 300px;
+}
+.dropup:hover .dropupbtn {background-color: #D3D3D3;}
+
+#dropdownTitle {
+  font-size: 24px;
+  text-shadow: 2px 2px black;
 }
