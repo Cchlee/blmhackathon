@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Yatra+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Yatra+One&display=swap");
 
 body {
     font-family: 'Yatra One', cursive;
@@ -14,30 +14,30 @@ body {
     height:100vh;
     z-index: -900;
 
-    animation: fadeInAnimation ease 2.5s; 
-    animation-iteration-count: 1; 
-    animation-fill-mode: forwards; 
+  animation: fadeInAnimation ease 2.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-@keyframes fadeInAnimation { 
-    0% { 
-        opacity: 0; 
-    } 
-    100% { 
-        opacity: 1; 
-    } 
-} 
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .hideable {
-    display: block;
+  display: block;
 }
 
 .fa-eye {
-    text-shadow: 2px 2px black;
+  text-shadow: 2px 2px black;
 }
 
 .fa-eye-slash {
-    text-shadow: 2px 2px black;
+  text-shadow: 2px 2px black;
 }
 
 .fa-star {
@@ -59,9 +59,9 @@ div > .fa-star {
 }
 
 header {
-    position: absolute;
-    top: 20px;
-    width: 100%;
+  position: absolute;
+  top: 20px;
+  width: 100%;
 }
 
 footer {
@@ -70,8 +70,9 @@ footer {
   width: 100%;
 }
 
-#submit-credits, #dropdownTitle {
-    font-family: 'Yatra One', cursive;
+#submit-credits,
+#dropdownTitle {
+  font-family: "Yatra One", cursive;
 }
 
 /* Dropdown Button */
@@ -90,7 +91,7 @@ footer {
   transform: skew(20deg);
 }
 /* The container <div> - needed to position the dropdown content */
-.dropdown{
+.dropdown {
   position: relative;
   display: inline-block;
 }
@@ -103,8 +104,12 @@ footer {
   z-index: 1;
 }
 
-#resource-link, #art-link, #artistName, #artTitle, #creditsLink {
-  color: #D3D3D3;
+#resource-link,
+#art-link,
+#artistName,
+#artTitle,
+#creditsLink {
+  color: #d3d3d3;
 }
 
 /* Links inside the dropdown */
@@ -117,18 +122,23 @@ footer {
 }
 
 /* Change color of dropdown links on hover */
- .dropdown-content a:hover {color: white;}
+.dropdown-content a:hover {
+  color: white;
+}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #ddd;}
+.dropdown:hover .dropbtn {
+  background-color: #ddd;
+}
 
 footer {
   padding-bottom: 10px;
 }
-
 
 /* DropUP Button */
 .dropupbtn {
@@ -152,7 +162,7 @@ footer {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 375px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -184,9 +194,43 @@ footer {
   margin-top: -365px;
   max-height: 300px;
 }
-.dropup:hover .dropupbtn {background-color: #D3D3D3;}
+.dropup:hover .dropupbtn {
+  background-color: #d3d3d3;
+}
 
 #dropdownTitle {
   font-size: 24px;
   text-shadow: 2px 2px black;
+}
+
+#clock {
+  font-size: 80px;
+}
+
+@media only screen and (max-width: 1000px) {
+  #clock {
+    font-size: 60px;
+  }
+
+  .dropbtn {
+    font-size: 30px;
+  }
+
+  #date,
+  #submit-credits,
+  #dropdownTitle,
+  #art-title,
+  .dropdown-content a {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #clock {
+    font-size: 40px;
+  }
+
+  .dropbtn {
+    font-size: 20px;
+  }
 }
