@@ -374,7 +374,7 @@ function addSavedItemsToList() {
   }
 
   //This code determinse how high to place the dropup menu
-  if (result["savedArticles"].length <= 3) {
+  if (result["savedArticles"].length <= 4) {
     let list = document.getElementById("saved-articles-list");
     let dropupContent = document.getElementsByClassName(
       "dropup-content"
@@ -390,7 +390,6 @@ function addSavedItemsToList() {
     )[0];
     dropupContent.style.marginTop = "-365px";
   }
-
   });
 }
 
@@ -466,7 +465,6 @@ function saveArticleFromDropdown(id) {
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
       chrome.storage.sync.set({ savedArticles: allArticles }, function () {
-        console.log("running");
         updateSavedContent();
       });
     } else {
