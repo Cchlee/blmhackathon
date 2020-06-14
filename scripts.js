@@ -21,7 +21,7 @@ function readTextFileArt(file) {
         let selectedArt = getRandom(jsonArt, 1);
         let selectedArtURL =
           selectedArt[0][
-            "Please upload an image of the art. Aspect ratios of 4:3 are preferred but any art is great!"
+            "Please upload an image of the art. Aspect ratios of 4:3 are preferred (and high-res) but any art is great! If you're getting this art from instagram we recommend https://ingramer.com/tools/instagram-photo-downloader/"
           ];
         let selectedArtTitle =
           selectedArt[0][
