@@ -303,6 +303,31 @@ function addSavedItemsToList() {
       toggleOverlay();
     });
 
+  let stars = this.document.getElementsByClassName("fa-star");
+
+  for (let i = 0; i < stars.length; i++) {
+    stars[i].addEventListener("mouseover", function(event) {
+      console.log(this);
+      if (this.style.color === "grey") {
+        this.style.color = "white";
+        console.log("mousein white");
+      } else {
+        this.style.color = "grey";
+        console.log("mousein grey");
+      }
+    });
+    stars[i].addEventListener("mouseout", function(event) {
+      console.log(this);
+      if (this.style.color === "grey") {
+        this.style.color = "white";
+        console.log("mouseout white");
+      } else {
+        this.style.color = "grey";
+        console.log("mouseout grey");
+      }
+    });
+  }
+
   let content = document.getElementById("saved-articles-list");
   let petitionsdiv = document.createElement("div");
   petitionsdiv.setAttribute("id", "petitionsdiv");
