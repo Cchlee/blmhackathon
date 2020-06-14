@@ -125,6 +125,8 @@ footer {
   background-color: #ddd;
   max-height: 300px;
   overflow: scroll;
+  margin: 0px !important;
+  padding: 0px !important;
 }
 .dropup:hover .dropup-content {
   background-color: #ddd;

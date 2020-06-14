@@ -277,6 +277,9 @@ function addSavedItemsToList() {
         let dropupContent = document.getElementsByClassName("dropup-content")[0];
         let marginTop = 115 + (result['savedArticles'].length - 1)*60;
         dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
+
+        let dropup = document.getElementsByClassName("dropup")[0];
+        console.log(dropup.style.margin);
       }
 
       let a = document.createElement('a');
