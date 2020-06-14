@@ -1,3 +1,7 @@
+function truncate(str, n){
+  return (str.length > n) ? str.substr(0, n-1) + '&hellip;' : str;
+}
+
 function readTextFileArt(file)
 {
     let rawFile = new XMLHttpRequest();
@@ -16,11 +20,9 @@ function readTextFileArt(file)
                 let selectedArtTitleURL = selectedArt[0]["Link where we can find this work online"];
                 let selectedArtist = selectedArt[0]["What is the name of the artist?"];
                 let selectedArtistURL = selectedArt[0]["The artist's online portfolio or Instagram handle - if possible (i.e. @kerryjamesmarshs)\r"]
-                
                 let bgimg = document.getElementById("background-img");
                 bgimg.style.backgroundImage = "url(\'" + convertGoogleImageToURL(selectedArtURL) + "\')";
-                console.log(bgimg.style.backgroundImage);
-                document.getElementById("artTitle").innerHTML = selectedArtTitle;
+                document.getElementById("artTitle").innerHTML = truncate(selectedArtTitle,25);
                 document.getElementById("artTitle").href = selectedArtTitleURL;
                 document.getElementById("artistName").innerHTML = selectedArtist;
                 document.getElementById("artistName").href = selectedArtistURL;
@@ -104,7 +106,7 @@ function readTextFileResources(file)
                 i = 0;
                 let selectedRead = getRandom(jsonRead, 3);
                 while (i < 3) {
-                  if (selectedDonation[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
+                  if (selectedRead[i]['URL to resource'].substring(0, 4).toLowerCase() === "http") {
                     let addOne = (i + 1).toString()
                     document.getElementById("read" + addOne).href = selectedRead[i]['URL to resource'];
                     document.getElementById("read" + addOne).innerHTML = selectedRead[i]['Title'];
@@ -190,72 +192,77 @@ function updateTime() {
 
 function convertDay(num) {
   switch(num) {
-    case 0:
-      return "Sunday"
-      break;
-    case 1:
-      return "Monday"
-      break;
-    case 2:
-      return "Tuesday"
-      break;
-    case 3:
-      return "Wednesday"
-      break;
-    case 4:
-      return "Thursday"
-      break;
-    case 5:
-      return "Friday"
-      break;
-    default:
-      return "Saturday"
-  }
+  case 0:
+    return "Sunday"
+    break;
+  case 1:
+    return "Monday"
+    break;
+  case 2:
+    return "Tuesday"
+    break;
+  case 3:
+    return "Wednesday"
+    break;
+  case 4:
+    return "Thursday"
+    break;
+  case 5:
+    return "Friday"
+    break;
+  default:
+    return "Saturday"
+}
 }
 
 function convertMonth(num) {
   switch(num) {
-    case 0:
-      return "January"
-      break;
-    case 1:
-      return "February"
-      break;
-    case 2:
-      return "March"
-      break;
-    case 3:
-      return "April"
-      break;
-    case 4:
-      return "May"
-      break;
-    case 5:
-      return "June"
-      break;
-    case 6:
-      return "July"
-      break;
-    case 7:
-      return "August"
-      break;
-    case 8:
-      return "September"
-      break;
-    case 9:
-      return "October"
-      break;
-    case 10:
-      return "November"
-      break;
-    default:
-      return "December"
-  }
+  case 0:
+    return "January"
+    break;
+  case 1:
+    return "February"
+    break;
+  case 2:
+    return "March"
+    break;
+  case 3:
+    return "April"
+    break;
+  case 4:
+    return "May"
+    break;
+  case 5:
+    return "June"
+    break;
+  case 6:
+    return "July"
+    break;
+  case 7:
+    return "August"
+    break;
+  case 8:
+    return "September"
+    break;
+  case 9:
+    return "October"
+    break;
+  case 10:
+    return "November"
+    break;
+  default:
+    return "December"
+}
 }
 
 function toggleOverlay() {
   let overlay = document.getElementsByClassName("hideable");
   let eye = document.getElementById("hide-overlay-btn");
+  chrome.storage.sync.get("isVisible", function(result) {
+    chrome.storage.sync.set({"isVisible": !result.isVisible}, function() {
+      console.log("click!");
+    });
+  });
   for (let i = 0; i < overlay.length; i++) {
     if (overlay[i].style.visibility === "hidden") {
       overlay[i].style.visibility = "visible";
@@ -267,21 +274,54 @@ function toggleOverlay() {
   }
 }
 
-function addSavedItemsToList() {
-  //ADD EYE BTN
-  this.document.getElementById("hide-overlay-btn").addEventListener("click", function(){
-    toggleOverlay();
+function showHideItems() {
+  let overlay = document.getElementsByClassName("hideable");
+  let eye = document.getElementById("hide-overlay-btn");
+  chrome.storage.sync.get("isVisible", function(result) {
+    if (result.isVisible === undefined){
+      result.isVisible = true;
+    }
+    console.log(result);
+    console.log("result is:" + result.isVisible)
+    if (result.isVisible) {
+      for (let i = 0; i < overlay.length; i++) {
+          overlay[i].style.visibility = "visible";
+          eye.innerHTML = "<i class=\"fa fa-eye\"></i>";
+      }
+    } else {
+      for (let i = 0; i < overlay.length; i++) {
+          overlay[i].style.visibility = "hidden";
+          eye.innerHTML = "<i class=\"fa fa-eye-slash\"></i>";
+      }
+    }
   });
+}
+
+function addSavedItemsToList() {
+    //ADD EYE BTN
+    this.document.getElementById("hide-overlay-btn").addEventListener("click", function(){
+      toggleOverlay();
+    });
 
   let content = document.getElementById("saved-articles-list");
   let i = 0;
   chrome.storage.sync.get('savedArticles', function(result) {
     for (let savedItem in result['savedArticles']) {
       //INCREASE MARGIN SIZE
-      if (result['savedArticles'].length <= 7) { // 7 = amount of saved objects that fit in the window
+      if (result['savedArticles'].length <= 4) { //  = amount of saved objects that fit in the window
+
+        let list = document.getElementById("saved-articles-list")
+        // list.setAttribute('display': 'visible')
+        // console.log(elmnt.offsetHeight)
+        // list.setAttribute('display': 'hidden')
+          let dropupContent = document.getElementsByClassName("dropup-content")[0];
+          let marginTop = 115 + (result['savedArticles'].length - 1)*50;
+          dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
+
+          let dropup = document.getElementsByClassName("dropup")[0];
+      } else {
         let dropupContent = document.getElementsByClassName("dropup-content")[0];
-        let marginTop = 115 + (result['savedArticles'].length - 1)*60;
-        dropupContent.style.marginTop = "-"+marginTop.toString()+"px";
+        dropupContent.style.marginTop = "-365px";
       }
       let outerdiv = document.createElement('div');
       outerdiv.setAttribute('class', 'row align-items-center');
@@ -297,6 +337,7 @@ function addSavedItemsToList() {
       a.appendChild(link);
       a.title = result['savedArticles'][i]['title'];
       a.href = result['savedArticles'][i]['link'];
+      a.setAttribute('id', 'saved-resource-link-' + i.toString());
       a.setAttribute('target', '_blank');
       topdiv.appendChild(a);
 
@@ -356,12 +397,6 @@ function saveArticle(id){
     }
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
-      chrome.storage.local.clear(function() {
-        var error = chrome.runtime.lastError;
-          if (error) {
-              console.error(error);
-          }
-      });
       chrome.storage.sync.set({'savedArticles': allArticles}, function() {
         updateSavedContent();
       });
@@ -376,22 +411,32 @@ function saveArticle(id){
   });
 }
 
-function unSaveArticle(i) {
-  let toDeleteIndex = parseInt(i.split('-')[2])
+function unSaveArticle(id) {
+  let toDeleteIndex = parseInt(id.split('-')[2])
   var saved = {};
+  let toDelete = false;
+  saved.title = document.getElementById("saved-resource-link-" + toDeleteIndex).innerHTML;
+  saved.link = document.getElementById("saved-resource-link-" + toDeleteIndex).href;
   var allArticles = [];
   chrome.storage.sync.get('savedArticles', function(result) {
     allArticles = result.savedArticles;
-    allArticles.splice(toDeleteIndex, 1);
-    chrome.storage.local.clear(function() {
-      var error = chrome.runtime.lastError;
-        if (error) {
-            console.error(error);
-        }
-    });
-    chrome.storage.sync.set({'savedArticles': allArticles}, function() {
-      //updateSavedContent();
-    });
+    for (let i = 0; i < allArticles.length; i++) {
+      if (allArticles[i]['link'] === document.getElementById("saved-resource-link-" + toDeleteIndex).href) {
+        toDelete = true;
+        toDeleteIndex = i;
+      }
+    }
+    if (toDelete) {
+      allArticles.splice(toDeleteIndex, 1);
+      chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        //updateSavedContent();
+      });
+    } else {
+      allArticles.push(saved);
+      chrome.storage.sync.set({'savedArticles': allArticles}, function() {
+        // updateSavedContent();
+      });
+    }
   });
 }
 
@@ -401,11 +446,24 @@ function updateSavedContent() {
       content.removeChild(content.lastChild);
   }
   addSavedItemsToList();
+  let i = 0;
+  let addOne = (i + 1).toString()
+
+  // while (i < 3) {
+  //   let read = document.getElementById("read" + addOne).innerHTML;
+  //   console.log(document.getElementById("read" + addOne).innerHTML);
+  //   let sign = document.getElementById("sign" + addOne).innerHTML;
+  //   let donate = document.getElementById("donate" + addOne).innerHTML;
+  //   checkIfSaved(read, addOne, "save-read-");
+  //   checkIfSaved(sign, addOne, "save-sign-");
+  //   checkIfSaved(donate, "save-donate-");
+  //   i += 1;
+  //   addOne = (i + 1).toString()
+  // }
 }
 
 function mouseOffResources() {
   document.getElementById("full-list").addEventListener("mouseleave", function(){
-    console.log("moouse off");
     updateSavedContent();
   });
 }
@@ -413,6 +471,7 @@ function mouseOffResources() {
 window.onload = function () {
   updateTime();
   addSavedItemsToList();
+  showHideItems();
   mouseOffResources();
 
 };
