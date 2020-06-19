@@ -310,6 +310,8 @@ function addSavedItemsToList() {
   readingdiv.setAttribute("id", "readingdiv");
   let donatediv = document.createElement("div");
   donatediv.setAttribute("id", "donatediv");
+  let externaldiv = document.createElement("div");
+  externaldiv.setAttribute("id", "externaldiv");
 
   let i = 0;
   chrome.storage.sync.get("savedArticles", function (result) {
@@ -356,13 +358,16 @@ function addSavedItemsToList() {
         readingdiv.appendChild(outerdiv);
       } else if (result["savedArticles"][i]["type"] === "sign") {
         petitionsdiv.appendChild(outerdiv);
-      } else {
+      } else if (result["savedArticles"][i]["type"] === "donate") {
         donatediv.appendChild(outerdiv);
+      } else {
+        externaldiv.appendChild(outerdiv);
       }
 
       content.appendChild(readingdiv);
       content.appendChild(petitionsdiv);
       content.appendChild(donatediv);
+      content.appendChild(externaldiv);
 
       document
         .getElementById("saved-resource-" + i.toString())
@@ -390,6 +395,10 @@ function addSavedItemsToList() {
   }
   if(readingdiv.lastChild != null){
     addLabelToDiv("Read", readingdiv, content);
+    titleCount++;
+  }
+  if(externaldiv.lastChild != null){
+    addLabelToDiv("External", externaldiv, content);
     titleCount++;
   }
 
