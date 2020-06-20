@@ -280,3 +280,9 @@ footer {
     transform: translateY(0%);
   }
 }
+
+/* FOR POPUP.html */
+.popup {
+  display: inline-block; 
+  min-width:200px; padding:10px;
+}
