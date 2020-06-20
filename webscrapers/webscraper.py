@@ -19,7 +19,7 @@ results = soup.find(id='business-section')
 petition_links = results.find_all('a', class_='button')
 
 from csv import writer
-with open('resources.csv', 'a+', newline='') as write_obj:
+with open('../content/resources.csv', 'a+', newline='') as write_obj:
     csv_writer = writer(write_obj)
     for link in petition_links:
         lst_of_elem = ['',type,link.text,link['href'],'','','','']

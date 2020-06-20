@@ -25,6 +25,7 @@ footer {
 #background-img {
   background-image: url("https://drive.google.com/open?id=199eohrV7JHkm8UfLkl5XndIz3LRHGCry");
   background-size: cover;
+  background-position: 50% 50%;
   height: 100vh;
   z-index: -900;
 

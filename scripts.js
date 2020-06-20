@@ -53,11 +53,16 @@ function readTextFileArt(file) {
           let selectedArtist = selectedArt[0]["What is the name of the artist?"];
           let selectedArtistURL =
             selectedArt[0][
-              "The artist's online portfolio or Instagram handle - if possible (i.e. @kerryjamesmarshs)\r"
+              "The artist's online portfolio or Instagram handle - if possible (i.e. https://www.instagram.com/kerryjamesmarshs/)\r"
             ];
+
           let bgimg = document.getElementById("background-img");
+          if (selectedArtURL.includes("drive")) {
+            selectedArtURL = convertGoogleImageToURL(selectedArtURL)
+          }
+
           bgimg.style.backgroundImage =
-            "url('" + convertGoogleImageToURL(selectedArtURL) + "')";
+            "url('" + selectedArtURL + "')";
           document.getElementById("artTitle").innerHTML = truncate(
             selectedArtTitle,
             25
@@ -724,8 +729,8 @@ window.onload = function () {
   mouseOffResources();
 };
 
-readTextFileArt("art.csv");
-readTextFileResources("resources.csv");
+readTextFileArt("content/art.csv");
+readTextFileResources("content/resources.csv");
 
 // This updates every second in case the time changes
 setInterval(updateTime, 1000);
