@@ -1,13 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Yatra+One&display=swap");
+@font-face {
+  font-family: "Yatra One";
+  src: url("webfonts/YatraOne-Regular.ttf")
+}
+
+@font-face {
+  font-family: "Italiana";
+  src: url("webfonts/Italiana-Regular.ttf");
+}
 
 /* General styles for Tab for Black Lives Matter */
-
 body {
   font-family: "Yatra One", cursive;
-  background-color: #f1eae3;
   animation: fadeInAnimation ease 2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+  background-color: #3f3f3f !important;
 }
 
 header {
@@ -22,16 +29,19 @@ footer {
   width: 100%;
 }
 
+#offline {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+}
+
 #background-img {
-  background-image: url("https://drive.google.com/open?id=199eohrV7JHkm8UfLkl5XndIz3LRHGCry");
   background-size: cover;
   background-position: 50% 50%;
   height: 100vh;
   z-index: -900;
-
-  animation: fadeInAnimation ease 2.5s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
 }
 
 #clock {

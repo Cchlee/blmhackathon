@@ -56,13 +56,12 @@ function readTextFileArt(file) {
               "The artist's online portfolio or Instagram handle - if possible (i.e. https://www.instagram.com/kerryjamesmarshs/)\r"
             ];
 
-          let bgimg = document.getElementById("background-img");
           if (selectedArtURL.includes("drive")) {
             selectedArtURL = convertGoogleImageToURL(selectedArtURL)
           }
 
-          bgimg.style.backgroundImage =
-            "url('" + selectedArtURL + "')";
+          loadBackgroundImage(selectedArtURL);
+
           document.getElementById("artTitle").innerHTML = truncate(
             selectedArtTitle,
             25
@@ -78,6 +77,46 @@ function readTextFileArt(file) {
     }
   };
   rawFile.send(null);
+}
+
+/**
+ * loadBackgroundImage allows for loading and fading in the background image
+ */
+function loadBackgroundImage(url) {
+  if (navigator.onLine) {
+    let bgimg = document.createElement("div");
+    bgimg.setAttribute("id", "background-img");
+  
+    let img = new Image(); 
+  
+    img.onload = function() {
+      bgimg.style.backgroundImage = "url('" + img.src + "')";
+      bgimg.style.animation = "fadeInAnimation ease 2.5s";
+      bgimg.style.animationIterationCount = "1";
+      bgimg.style.animationFillMode = "forwards;"
+    };
+  
+    img.src = url;
+  
+    let bgParent = document.getElementById("background-parent");
+    bgParent.appendChild(bgimg);
+  } else {
+    goOffline();
+  }
+}
+
+/**
+ * Shows offline notification when no internet
+ */
+function goOffline() {
+  console.log("is offline");
+  let offline = document.createElement("div");
+  offline.setAttribute("id", "offline");
+  let text = document.createElement("h2");
+  text.innerText = "Connect to the internet to see art."
+  offline.appendChild(text);
+  offline.style.visibility = "visible";
+  document.getElementsByTagName("BODY")[0].appendChild(offline);
 }
 
 var headerTitleLinks = [] //GLOBAL ARRAY TO STORE HEADER LINKS
