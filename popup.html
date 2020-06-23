@@ -8,18 +8,39 @@
 <link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
 <script src="popupscript.js"></script>
 <body style="font-family: Italiana, cursive; color: white; background-color: black">
-    <div class="popup" id="outer-box" style="display: inline-block; min-width:200px; padding:10px;">
+    <div class="popup" id="outer-box" style="display: inline-block; min-width:250px; padding:10px;">
         <div id="prebookmark">
             <h5>Tab For Black Lives Matter</h5>
+            <hr style="background-color: white;display:block">
+            Save this resource?
             <br>
-            Type:
-            <select id="select" style="color: white; background-color: black">
-                <option value="read">Read</option>
-                <option value="sign">Sign</option>
-                <option value="donate">Donate</option>
-              </select>
-            <br>
-            <br>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-9">
+                    <div class="custom-control">
+                        <input type="radio" class="custom-control-input" id="read" value="read" name="selectedType" checked="checked" >
+                        <label class="custom-control-label" for="read">Read</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">Type:</div>
+                <div class="col-9">
+                    <div class="custom-control">
+                        <input type="radio" class="custom-control-input" id="sign" value="sign" name="selectedType">
+                        <label class="custom-control-label" for="sign">Sign</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-9">
+                    <div class="custom-control">
+                        <input type="radio" class="custom-control-input" id="donate" value="donate" name="selectedType">
+                        <label class="custom-control-label" for="donate">Donate</label>
+                    </div>
+                </div>
+            </div>
             <button id="bookmark" style="color:black; border: 1px solid black; background-color: white;" class="btn">Save</button>
         </div>
         <div id="postbookmark" style="display: none;">

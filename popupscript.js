@@ -3,8 +3,13 @@ function saveResource() {
     .getElementById("bookmark")
     .addEventListener("click", function(){
       console.log("running");
-      var element = document.getElementById("select");
-      var type = element.options[element.selectedIndex].value;
+      var elements = document.getElementsByName("selectedType");
+      var type = "read";
+      for (var i = 0; i < elements.length; i++) {
+        if (elements[i].checked) {
+          type = elements[i].value;
+        }
+      }
       chrome.tabs.query({
         active: true,
         currentWindow: true
