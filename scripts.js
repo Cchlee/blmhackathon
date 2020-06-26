@@ -16,7 +16,7 @@ function readTextFileArt(file) {
   rawFile.onreadystatechange = function () {
     if (rawFile.readyState === 4) {
       if (rawFile.status === 200 || rawFile.status == 0) {
-        chrome.storage.sync.get("recentArt", function (result) {
+        chrome.storage.local.get("recentArt", function (result) {
           if (result.recentArt === undefined) {
             result.recentArt = [];
           }
@@ -32,7 +32,7 @@ function readTextFileArt(file) {
             selectedArtURL = getUrlFromArt(selectedArt);
           }
 
-          let newRecentArt = []
+          let newRecentArt = [];
           if (result.recentArt.length > 0 && result.recentArt.length < 15) {
             for (let i = 0; i < result.recentArt.length; i++) {
               newRecentArt.push(result.recentArt[i]);
@@ -50,14 +50,15 @@ function readTextFileArt(file) {
             ];
           let selectedArtTitleURL =
             selectedArt[0]["Link where we can find this work online"];
-          let selectedArtist = selectedArt[0]["What is the name of the artist?"];
+          let selectedArtist =
+            selectedArt[0]["What is the name of the artist?"];
           let selectedArtistURL =
             selectedArt[0][
               "The artist's online portfolio or Instagram handle - if possible (i.e. https://www.instagram.com/kerryjamesmarshs/)\r"
             ];
 
           if (selectedArtURL.includes("drive")) {
-            selectedArtURL = convertGoogleImageToURL(selectedArtURL)
+            selectedArtURL = convertGoogleImageToURL(selectedArtURL);
           }
 
           loadBackgroundImage(selectedArtURL);
@@ -70,8 +71,7 @@ function readTextFileArt(file) {
           document.getElementById("artistName").innerHTML = selectedArtist;
           document.getElementById("artistName").href = selectedArtistURL;
 
-
-          chrome.storage.sync.set({ recentArt:  newRecentArt}, function () {});
+          chrome.storage.local.set({ recentArt: newRecentArt }, function () {});
         });
       }
     }
@@ -86,18 +86,18 @@ function loadBackgroundImage(url) {
   if (navigator.onLine) {
     let bgimg = document.createElement("div");
     bgimg.setAttribute("id", "background-img");
-  
-    let img = new Image(); 
-  
-    img.onload = function() {
+
+    let img = new Image();
+
+    img.onload = function () {
       bgimg.style.backgroundImage = "url('" + img.src + "')";
       bgimg.style.animation = "fadeInAnimation ease 2.5s";
       bgimg.style.animationIterationCount = "1";
-      bgimg.style.animationFillMode = "forwards;"
+      bgimg.style.animationFillMode = "forwards;";
     };
-  
+
     img.src = url;
-  
+
     let bgParent = document.getElementById("background-parent");
     bgParent.appendChild(bgimg);
   } else {
@@ -113,13 +113,13 @@ function goOffline() {
   let offline = document.createElement("div");
   offline.setAttribute("id", "offline");
   let text = document.createElement("h2");
-  text.innerText = "Connect to the internet to see art."
+  text.innerText = "Connect to the internet to see art.";
   offline.appendChild(text);
   offline.style.visibility = "visible";
   document.getElementsByTagName("BODY")[0].appendChild(offline);
 }
 
-var headerTitleLinks = [] //GLOBAL ARRAY TO STORE HEADER LINKS
+var headerTitleLinks = []; //GLOBAL ARRAY TO STORE HEADER LINKS
 
 /**
  * readTextFileResources is used to handle the dropdown resources
@@ -130,118 +130,160 @@ function readTextFileResources(file) {
   rawFile.onreadystatechange = function () {
     if (rawFile.readyState === 4) {
       if (rawFile.status === 200 || rawFile.status == 0) {
-        let allText = rawFile.responseText;
-        let jsonResources = JSON.parse(csvJSON(allText));
-        let jsonSign = [];
-        let jsonRead = [];
-        let jsonDonate = [];
-        let allContentURLs = new Set();
-        for (let i = 0; i < jsonResources.length; i++) {
-          let resource = jsonResources[i];
-          if (resource["Category"] === "Petition") {
-            if (!allContentURLs.has(resource["URL to resource"])) {
-              jsonSign.push(resource);
-              allContentURLs.add(resource["URL to resource"]);
-            }
-          } else if (resource["Category"] === "Donation fund") {
-            if (!allContentURLs.has(resource["URL to resource"])) {
-              jsonDonate.push(resource);
-              allContentURLs.add(resource["URL to resource"]);
-            }
-          } else {
-            if (!allContentURLs.has(resource["URL to resource"])) {
-              jsonRead.push(resource);
-              allContentURLs.add(resource["URL to resource"]);
-            }
+        chrome.storage.local.get("todaysContent", function (result) {
+          if (result.todaysContent === undefined) {
+            result.todaysContent = {};
           }
-        }
 
-        const numToGrab = 10;
-        let selectedPetition = getRandom(jsonSign, numToGrab);
-        let i = 0;
-        while (i < 3) {
-          if (
-            selectedPetition[i]["URL to resource"] &&
-            selectedPetition[i]["URL to resource"]
-              .substring(0, 4)
-              .toLowerCase() === "http"
-          ) {
-            let addOne = (i + 1).toString();
-            document.getElementById("sign" + addOne).href =
-              selectedPetition[i]["URL to resource"];
-            document.getElementById("sign" + addOne).innerHTML =
-              selectedPetition[i]["Title"];
-            checkIfSaved(selectedPetition[i]["Title"], addOne, "save-sign-");
-            document
-              .getElementById("save-sign-" + addOne)
-              .addEventListener("click", function () {
-                saveArticleFromDropdown("sign" + addOne);
-                changeColor("save-sign-" + addOne);
-              });
-            var preset = {"title": selectedPetition[i]['Title'].toString(), "element": "save-sign-"+addOne};
-            headerTitleLinks.push(preset);
-            i += 1;
+          let selectedPetition = [];
+          let selectedDonation = [];
+          let selectedRead = [];
+
+          let date = new Date();
+          let todaysDate =
+            convertDay(date.getDay()) +
+            ", " +
+            convertMonth(date.getMonth()) +
+            " " +
+            date.getDate();
+
+          if (todaysDate in result.todaysContent) {
+            selectedPetition = result.todaysContent[todaysDate][0];
+            selectedDonation = result.todaysContent[todaysDate][1];
+            selectedRead = result.todaysContent[todaysDate][2];
           } else {
+            let allText = rawFile.responseText;
+            let jsonResources = JSON.parse(csvJSON(allText));
+            let jsonSign = [];
+            let jsonRead = [];
+            let jsonDonate = [];
+            let allContentURLs = new Set();
+            for (let i = 0; i < jsonResources.length; i++) {
+              let resource = jsonResources[i];
+              if (resource["Category"] === "Petition") {
+                if (!allContentURLs.has(resource["URL to resource"])) {
+                  jsonSign.push(resource);
+                  allContentURLs.add(resource["URL to resource"]);
+                }
+              } else if (resource["Category"] === "Donation fund") {
+                if (!allContentURLs.has(resource["URL to resource"])) {
+                  jsonDonate.push(resource);
+                  allContentURLs.add(resource["URL to resource"]);
+                }
+              } else {
+                if (!allContentURLs.has(resource["URL to resource"])) {
+                  jsonRead.push(resource);
+                  allContentURLs.add(resource["URL to resource"]);
+                }
+              }
+            }
+            const numToGrab = 10;
             selectedPetition = getRandom(jsonSign, numToGrab);
-          }
-        }
-
-        i = 0;
-        let selectedDonation = getRandom(jsonDonate, numToGrab);
-        while (i < 3) {
-          if (
-            selectedDonation[i]["URL to resource"] &&
-            selectedDonation[i]["URL to resource"]
-              .substring(0, 4)
-              .toLowerCase() === "http"
-          ) {
-            let addOne = (i + 1).toString();
-            document.getElementById("donate" + addOne).href =
-              selectedDonation[i]["URL to resource"];
-            document.getElementById("donate" + addOne).innerHTML =
-              selectedDonation[i]["Title"];
-            checkIfSaved(selectedDonation[i]["Title"], addOne, "save-donate-");
-            document
-              .getElementById("save-donate-" + addOne)
-              .addEventListener("click", function () {
-                saveArticleFromDropdown("donate" + addOne);
-                changeColor("save-donate-" + addOne);
-              });
-              var preset = {"title": selectedDonation[i]['Title'].toString(), "element": "save-donate-"+addOne};
-              headerTitleLinks.push(preset);
-            i += 1;
-          } else {
             selectedDonation = getRandom(jsonDonate, numToGrab);
-          }
-        }
-
-        i = 0;
-        let selectedRead = getRandom(jsonRead, numToGrab);
-        while (i < 3) {
-          if (
-            selectedRead[i]["URL to resource"] &&
-            selectedRead[i]["URL to resource"].substring(0, 4).toLowerCase() ===
-              "http"
-          ) {
-            let addOne = (i + 1).toString();
-            document.getElementById("read" + addOne).href =
-              selectedRead[i]["URL to resource"];
-            document.getElementById("read" + addOne).innerHTML =
-              selectedRead[i]["Title"];
-            checkIfSaved(selectedRead[i]["Title"], addOne, "save-read-");
-            document
-              .getElementById("save-read-" + addOne)
-              .addEventListener("click", function () {
-                saveArticleFromDropdown("read" + addOne);
-                changeColor("save-read-" + addOne);
-              });
-              var preset = {"title": selectedRead[i]['Title'].toString(), "element": "save-read-"+addOne};
-              headerTitleLinks.push(preset);
-            i += 1;
-          } else {
             selectedRead = getRandom(jsonRead, numToGrab);
+
           }
-        }
+
+          let i = 0;
+          while (i < 3) {
+            if (
+              selectedPetition[i]["URL to resource"] &&
+              selectedPetition[i]["URL to resource"]
+                .substring(0, 4)
+                .toLowerCase() === "http"
+            ) {
+              let addOne = (i + 1).toString();
+              document.getElementById("sign" + addOne).href =
+                selectedPetition[i]["URL to resource"];
+              document.getElementById("sign" + addOne).innerHTML =
+                selectedPetition[i]["Title"];
+              checkIfSaved(selectedPetition[i]["Title"], addOne, "save-sign-");
+              document
+                .getElementById("save-sign-" + addOne)
+                .addEventListener("click", function () {
+                  saveArticleFromDropdown("sign" + addOne);
+                  changeColor("save-sign-" + addOne);
+                });
+              var preset = {
+                title: selectedPetition[i]["Title"].toString(),
+                element: "save-sign-" + addOne,
+              };
+              headerTitleLinks.push(preset);
+              i += 1;
+            } else {
+              selectedPetition = getRandom(jsonSign, numToGrab);
+            }
+          }
+
+          i = 0;
+
+          while (i < 3) {
+            if (
+              selectedDonation[i]["URL to resource"] &&
+              selectedDonation[i]["URL to resource"]
+                .substring(0, 4)
+                .toLowerCase() === "http"
+            ) {
+              let addOne = (i + 1).toString();
+              document.getElementById("donate" + addOne).href =
+                selectedDonation[i]["URL to resource"];
+              document.getElementById("donate" + addOne).innerHTML =
+                selectedDonation[i]["Title"];
+              checkIfSaved(
+                selectedDonation[i]["Title"],
+                addOne,
+                "save-donate-"
+              );
+              document
+                .getElementById("save-donate-" + addOne)
+                .addEventListener("click", function () {
+                  saveArticleFromDropdown("donate" + addOne);
+                  changeColor("save-donate-" + addOne);
+                });
+              var preset = {
+                title: selectedDonation[i]["Title"].toString(),
+                element: "save-donate-" + addOne,
+              };
+              headerTitleLinks.push(preset);
+              i += 1;
+            } else {
+              selectedDonation = getRandom(jsonDonate, numToGrab);
+            }
+          }
+
+          i = 0;
+          while (i < 3) {
+            if (
+              selectedRead[i]["URL to resource"] &&
+              selectedRead[i]["URL to resource"]
+                .substring(0, 4)
+                .toLowerCase() === "http"
+            ) {
+              let addOne = (i + 1).toString();
+              document.getElementById("read" + addOne).href =
+                selectedRead[i]["URL to resource"];
+              document.getElementById("read" + addOne).innerHTML =
+                selectedRead[i]["Title"];
+              checkIfSaved(selectedRead[i]["Title"], addOne, "save-read-");
+              document
+                .getElementById("save-read-" + addOne)
+                .addEventListener("click", function () {
+                  saveArticleFromDropdown("read" + addOne);
+                  changeColor("save-read-" + addOne);
+                });
+              var preset = {
+                title: selectedRead[i]["Title"].toString(),
+                element: "save-read-" + addOne,
+              };
+              headerTitleLinks.push(preset);
+              i += 1;
+            } else {
+              selectedRead = getRandom(jsonRead, numToGrab);
+            }
+          }
+
+        chrome.storage.local.set({ todaysContent: {[todaysDate]: [selectedPetition, selectedDonation, selectedRead]} }, function () {});
+        });
       }
     }
   };
@@ -311,8 +353,8 @@ function updateTime() {
 function toggleOverlay() {
   let overlay = document.getElementsByClassName("hideable");
   let eye = document.getElementById("hide-overlay-btn");
-  chrome.storage.sync.get("isVisible", function (result) {
-    chrome.storage.sync.set({ isVisible: !result.isVisible }, function () {});
+  chrome.storage.local.get("isVisible", function (result) {
+    chrome.storage.local.set({ isVisible: !result.isVisible }, function () {});
   });
   for (let i = 0; i < overlay.length; i++) {
     if (overlay[i].style.visibility === "hidden") {
@@ -358,7 +400,7 @@ function addSavedItemsToList() {
   externaldiv.setAttribute("id", "externaldiv");
 
   let i = 0;
-  chrome.storage.sync.get("savedArticles", function (result) {
+  chrome.storage.local.get("savedArticles", function (result) {
     //This code builds the lists
     for (let savedItem in result["savedArticles"]) {
       let outerdiv = document.createElement("div");
@@ -419,7 +461,7 @@ function addSavedItemsToList() {
           saveArticleFromDropup(this.id);
           changeColor(this.id);
           for (let i = 0; i < headerTitleLinks.length; i++) {
-            if (headerTitleLinks[i].title === a.title){
+            if (headerTitleLinks[i].title === a.title) {
               changeColor(headerTitleLinks[i].element);
             }
           }
@@ -429,45 +471,43 @@ function addSavedItemsToList() {
 
     let titleCount = 0;
 
-  if(petitionsdiv.lastChild != null){
-    addLabelToDiv("Sign", petitionsdiv, content);
-    titleCount++;
-  }
-  if(donatediv.lastChild != null){
-    addLabelToDiv("Donate", donatediv, content);
-    titleCount++;
-  }
-  if(readingdiv.lastChild != null){
-    addLabelToDiv("Read", readingdiv, content);
-    titleCount++;
-  }
-  if(externaldiv.lastChild != null){
-    addLabelToDiv("External", externaldiv, content);
-    titleCount++;
-  }
+    if (petitionsdiv.lastChild != null) {
+      addLabelToDiv("Sign", petitionsdiv, content);
+      titleCount++;
+    }
+    if (donatediv.lastChild != null) {
+      addLabelToDiv("Donate", donatediv, content);
+      titleCount++;
+    }
+    if (readingdiv.lastChild != null) {
+      addLabelToDiv("Read", readingdiv, content);
+      titleCount++;
+    }
+    if (externaldiv.lastChild != null) {
+      addLabelToDiv("External", externaldiv, content);
+      titleCount++;
+    }
 
-  if(titleCount == 0){
-    addLabelToDiv("No resources saved.", readingdiv, content);
-    titleCount++;
-  }
+    if (titleCount == 0) {
+      addLabelToDiv("No resources saved.", readingdiv, content);
+      titleCount++;
+    }
 
-  //This code determinse how high to place the dropup menu
-  if (result["savedArticles"].length <= 4) {
-    let list = document.getElementById("saved-articles-list");
-    let dropupContent = document.getElementsByClassName(
-      "dropup-content"
-    )[0];
-    let button = document.getElementById("dropdownTitle");
-    let marginTop =
-      42 + button.offsetHeight + (result["savedArticles"].length - 1 + titleCount) * 46; // The height of each link is exactly 46
-    dropupContent.style.marginTop = "-" + marginTop.toString() + "px";
-    let dropup = document.getElementsByClassName("dropup")[0];
-  } else {
-    let dropupContent = document.getElementsByClassName(
-      "dropup-content"
-    )[0];
-    dropupContent.style.marginTop = "-365px";
-  }
+    //This code determinse how high to place the dropup menu
+    if (result["savedArticles"].length <= 4) {
+      let list = document.getElementById("saved-articles-list");
+      let dropupContent = document.getElementsByClassName("dropup-content")[0];
+      let button = document.getElementById("dropdownTitle");
+      let marginTop =
+        42 +
+        button.offsetHeight +
+        (result["savedArticles"].length - 1 + titleCount) * 46; // The height of each link is exactly 46
+      dropupContent.style.marginTop = "-" + marginTop.toString() + "px";
+      let dropup = document.getElementsByClassName("dropup")[0];
+    } else {
+      let dropupContent = document.getElementsByClassName("dropup-content")[0];
+      dropupContent.style.marginTop = "-365px";
+    }
   });
 }
 
@@ -477,7 +517,7 @@ function addSavedItemsToList() {
 function showHideItems() {
   let overlay = document.getElementsByClassName("hideable");
   let eye = document.getElementById("hide-overlay-btn");
-  chrome.storage.sync.get("isVisible", function (result) {
+  chrome.storage.local.get("isVisible", function (result) {
     if (result.isVisible === undefined) {
       result.isVisible = true;
     }
@@ -499,9 +539,9 @@ function showHideItems() {
  * this function checks if an article has been saved already
  */
 function checkIfSaved(title, curr, type) {
-  chrome.storage.sync.get("savedArticles", function (result) {
+  chrome.storage.local.get("savedArticles", function (result) {
     if (result.savedArticles === undefined) {
-      chrome.storage.sync.set({ savedArticles: [] }, function () {});
+      chrome.storage.local.set({ savedArticles: [] }, function () {});
     }
     for (var x = 0; x < result.savedArticles.length; x++) {
       if (result.savedArticles[x].title === title) {
@@ -530,7 +570,7 @@ function changeColor(id) {
 function saveArticleFromDropdown(id) {
   var saved = {};
   var allArticles = [];
-  chrome.storage.sync.get("savedArticles", function (result) {
+  chrome.storage.local.get("savedArticles", function (result) {
     allArticles = result.savedArticles;
     let toDelete = false;
     let toDeleteIndex = -1;
@@ -542,7 +582,7 @@ function saveArticleFromDropdown(id) {
     }
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
-      chrome.storage.sync.set({ savedArticles: allArticles }, function () {
+      chrome.storage.local.set({ savedArticles: allArticles }, function () {
         updateSavedContent();
       });
     } else {
@@ -550,7 +590,7 @@ function saveArticleFromDropdown(id) {
       saved.link = document.getElementById(id).href;
       saved.type = id.substring(0, id.length - 1);
       allArticles.push(saved);
-      chrome.storage.sync.set({ savedArticles: allArticles }, function () {
+      chrome.storage.local.set({ savedArticles: allArticles }, function () {
         updateSavedContent();
       });
     }
@@ -571,7 +611,7 @@ function saveArticleFromDropup(id) {
     "saved-resource-link-" + toDeleteIndex
   ).href;
   var allArticles = [];
-  chrome.storage.sync.get("savedArticles", function (result) {
+  chrome.storage.local.get("savedArticles", function (result) {
     allArticles = result.savedArticles;
     for (let i = 0; i < allArticles.length; i++) {
       if (
@@ -584,12 +624,12 @@ function saveArticleFromDropup(id) {
     }
     if (toDelete) {
       allArticles.splice(toDeleteIndex, 1);
-      chrome.storage.sync.set({ savedArticles: allArticles }, function () {
+      chrome.storage.local.set({ savedArticles: allArticles }, function () {
         //updateSavedContent();
       });
     } else {
       allArticles.push(saved);
-      chrome.storage.sync.set({ savedArticles: allArticles }, function () {
+      chrome.storage.local.set({ savedArticles: allArticles }, function () {
         // updateSavedContent();
       });
     }
@@ -746,10 +786,11 @@ function addLabelToDiv(label, inputdiv, content) {
   let topdiv = document.createElement("div");
   topdiv.setAttribute("class", "col-10");
   let p = document.createElement("p");
-  let title = document.createTextNode(
-    label
+  let title = document.createTextNode(label);
+  p.setAttribute(
+    "style",
+    "padding-left:10px;padding-top:8px;margin-bottom:2px;"
   );
-  p.setAttribute("style", "padding-left:10px;padding-top:8px;margin-bottom:2px;")
   p.appendChild(title);
   topdiv.appendChild(p);
   outerdiv.appendChild(topdiv);
@@ -758,7 +799,9 @@ function addLabelToDiv(label, inputdiv, content) {
 }
 
 function getUrlFromArt(art) {
-  return art[0]["Please upload an image of the art. Aspect ratios of 4:3 are preferred (and high-res) but any art is great! If you're getting this art from instagram we recommend https://ingramer.com/tools/instagram-photo-downloader/"]
+  return art[0][
+    "Please upload an image of the art. Aspect ratios of 4:3 are preferred (and high-res) but any art is great! If you're getting this art from instagram we recommend https://ingramer.com/tools/instagram-photo-downloader/"
+  ];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
