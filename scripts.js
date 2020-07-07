@@ -146,7 +146,8 @@ function readTextFileResources(file) {
             convertMonth(date.getMonth()) +
             " " +
             date.getDate();
-
+          // console.log(todaysDate);
+          // console.log(result.todaysContent);
           if (todaysDate in result.todaysContent) {
             selectedPetition = result.todaysContent[todaysDate][0];
             selectedDonation = result.todaysContent[todaysDate][1];
@@ -804,6 +805,21 @@ function getUrlFromArt(art) {
   ];
 }
 
+//CODE FOR CONNECTING TO A BACKEND
+// function addListener() {
+//   var testButton = this.document.getElementById("testButton").addEventListener("click", function (event) {
+//     fetch("http://localhost:8081/test/",
+//       {
+//         method: "GET",
+//         mode: 'no-cors'
+//       }).then(res => {
+//         console.log(res)
+//       }, err => {
+//         console.log(err);
+//       })
+//   });
+// } 
+
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -818,6 +834,7 @@ window.onload = function () {
   addSavedItemsToList();
   showHideItems();
   mouseOffResources();
+  // addListener();
 };
 
 readTextFileArt("content/art.csv");
