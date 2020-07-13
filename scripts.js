@@ -261,6 +261,10 @@ function readTextFileResources(file) {
                 .toLowerCase() === "http"
             ) {
               let addOne = (i + 1).toString();
+              // console.log(selectedRead[i]["CW\r"].length);
+              // if (selectedRead[i]["CW\r"]) {
+              //   console.log(addOne);
+              // }
               document.getElementById("read" + addOne).href =
                 selectedRead[i]["URL to resource"];
               document.getElementById("read" + addOne).innerHTML =
@@ -818,7 +822,7 @@ function getUrlFromArt(art) {
 //         console.log(err);
 //       })
 //   });
-// } 
+// }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
