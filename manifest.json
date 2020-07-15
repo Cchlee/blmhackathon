@@ -1,6 +1,6 @@
 {
     "name": "Tab for Black Lives Matter",
-    "version": "1.3",
+    "version": "1.4",
     "description": "Discover new Black artists, contribute ad revenue to, and educate yourself on the Black lives matter cause.",
     "manifest_version": 2,
     "chrome_url_overrides" : {

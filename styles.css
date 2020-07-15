@@ -291,3 +291,54 @@ footer {
   }
 }
 
+
+/* Content warning hover */
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  position: absolute;
+  z-index: 1;
+}
+
+#cw-read1:hover #tooltiptext-read1 {
+    visibility: visible;
+}
+
+#cw-read2:hover #tooltiptext-read2 {
+    visibility: visible;
+}
+
+#cw-read3:hover #tooltiptext-read3 {
+    visibility: visible;
+}
+
+#cw-sign1:hover #tooltiptext-sign1 {
+    visibility: visible;
+}
+
+#cw-sign2:hover #tooltiptext-sign2 {
+    visibility: visible;
+}
+
+#cw-sign3:hover #tooltiptext-sign3 {
+    visibility: visible;
+}
+
+#cw-donate1:hover #tooltiptext-donate1 {
+    visibility: visible;
+}
+
+#cw-donate2:hover #tooltiptext-donate2 {
+    visibility: visible;
+}
+
+#cw-donate3:hover #tooltiptext-donate3 {
+    visibility: visible;
+}

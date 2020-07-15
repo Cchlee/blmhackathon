@@ -146,8 +146,7 @@ function readTextFileResources(file) {
             convertMonth(date.getMonth()) +
             " " +
             date.getDate();
-          // console.log(todaysDate);
-          // console.log(result.todaysContent);
+
           if (todaysDate in result.todaysContent) {
             selectedPetition = result.todaysContent[todaysDate][0];
             selectedDonation = result.todaysContent[todaysDate][1];
@@ -194,6 +193,10 @@ function readTextFileResources(file) {
                 .toLowerCase() === "http"
             ) {
               let addOne = (i + 1).toString();
+              if (selectedPetition[i]["CW\r"].length == 1) {
+                document.getElementById("cw-sign" + addOne).style.display = "none";
+                document.getElementById("tooltiptext-sign" + addOne).innerHTML = selectedPetition[i]["CW\r"];
+              }
               document.getElementById("sign" + addOne).href =
                 selectedPetition[i]["URL to resource"];
               document.getElementById("sign" + addOne).innerHTML =
@@ -226,6 +229,11 @@ function readTextFileResources(file) {
                 .toLowerCase() === "http"
             ) {
               let addOne = (i + 1).toString();
+              if (selectedDonation[i]["CW\r"].length == 1) {
+                document.getElementById("cw-donate" + addOne).style.display = "none";
+                document.getElementById("tooltiptext-donate" + addOne).innerHTML = selectedDonation[i]["CW\r"];
+              }
+
               document.getElementById("donate" + addOne).href =
                 selectedDonation[i]["URL to resource"];
               document.getElementById("donate" + addOne).innerHTML =
@@ -253,6 +261,7 @@ function readTextFileResources(file) {
           }
 
           i = 0;
+
           while (i < 3) {
             if (
               selectedRead[i]["URL to resource"] &&
@@ -261,10 +270,11 @@ function readTextFileResources(file) {
                 .toLowerCase() === "http"
             ) {
               let addOne = (i + 1).toString();
-              // console.log(selectedRead[i]["CW\r"].length);
-              // if (selectedRead[i]["CW\r"]) {
-              //   console.log(addOne);
-              // }
+              if (selectedRead[i]["CW\r"].length == 1) {
+                document.getElementById("cw-read" + addOne).style.display = "none";
+                document.getElementById("tooltiptext-read" + addOne).innerHTML = selectedRead[i]["CW\r"];
+              }
+
               document.getElementById("read" + addOne).href =
                 selectedRead[i]["URL to resource"];
               document.getElementById("read" + addOne).innerHTML =
