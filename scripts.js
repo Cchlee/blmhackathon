@@ -56,6 +56,9 @@ function readTextFileArt(file) {
             selectedArt[0][
               "The artist's online portfolio or Instagram handle - if possible (i.e. https://www.instagram.com/kerryjamesmarshs/)\r"
             ];
+          let artistBio = selectedArt[0]["Artist Bio\r"];
+          let artistFirstName = selectedArtist.split(" ")[0]
+
 
           if (selectedArtURL.includes("drive")) {
             selectedArtURL = convertGoogleImageToURL(selectedArtURL);
@@ -67,6 +70,12 @@ function readTextFileArt(file) {
             selectedArtTitle,
             25
           );
+          document.getElementById("artistBio").innerHTML = "Learn more about " + artistFirstName + '<span id="artistBioInfo" class="tooltiptext-bottom">' + artistBio + '</span>';
+
+          let height = document.getElementById('artistBioInfo').offsetHeight;
+          let newTop = -1 * (height / 2)
+          // document.getElementById('artistBioInfo').style.top = newTop + 'px';
+
           document.getElementById("artTitle").href = selectedArtTitleURL;
           document.getElementById("artistName").innerHTML = selectedArtist;
           document.getElementById("artistName").href = selectedArtistURL;

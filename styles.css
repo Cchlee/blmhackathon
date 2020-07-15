@@ -52,7 +52,7 @@ footer {
 #art-link,
 #artistName,
 #artTitle,
-#creditsLink {
+#creditsLink, #patreon {
   color: #d3d3d3;
 }
 
@@ -307,6 +307,22 @@ footer {
   z-index: 1;
 }
 
+.tooltiptext-bottom {
+  visibility: hidden;
+  width: 400px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  left: -25px;
+  bottom: 0px;
+  font-size: 20px;
+
+  position: absolute;
+  z-index: 1;
+}
+
 #cw-read1:hover #tooltiptext-read1 {
     visibility: visible;
 }
@@ -340,5 +356,9 @@ footer {
 }
 
 #cw-donate3:hover #tooltiptext-donate3 {
+    visibility: visible;
+}
+
+#artistBio:hover #artistBioInfo {
     visibility: visible;
 }
