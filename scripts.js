@@ -682,24 +682,63 @@ function mouseOffResources() {
     });
 }
 
-logClicks = function(e) {
-  chrome.storage.local.get("lastClicked", function (result) {
-    chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
-  });
-}
+function monitorClicks(tracker) {
+  document.getElementById("read1").onclick = function(e) {
+    tracker.sendEvent('Link Clicks', 'User Clicked an Article');
+    chrome.storage.local.get("lastClicked", function (result) {
+      chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+    });
+  };
+  document.getElementById("read2").onclick = function(e) {
+    tracker.sendEvent('Link Clicks', 'User Clicked an Article');
+    chrome.storage.local.get("lastClicked", function (result) {
+      chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+    });
+  };
+  document.getElementById("read3").onclick = function(e) {
+    tracker.sendEvent('Link Clicks', 'User Clicked an Article');
+    chrome.storage.local.get("lastClicked", function (result) {
+      chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+    });
+  };
 
-function monitorClicks() {
-  document.getElementById("read1").onclick = logClicks;
-  document.getElementById("read2").onclick = logClicks;
-  document.getElementById("read3").onclick = logClicks;
+  document.getElementById("sign1").onclick = function(e) {
+    tracker.sendEvent('Link Clicks', 'User Clicked a Petition');
+    chrome.storage.local.get("lastClicked", function (result) {
+      chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+    });
+  };
+  document.getElementById("sign2").onclick = function(e) {
+    tracker.sendEvent('Link Clicks', 'User Clicked a Petition');
+    chrome.storage.local.get("lastClicked", function (result) {
+      chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+    });
+  };
+  document.getElementById("sign3").onclick = function(e) {
+    tracker.sendEvent('Link Clicks', 'User Clicked a Petition');
+    chrome.storage.local.get("lastClicked", function (result) {
+      chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+    });
+  };
 
-  document.getElementById("sign1").onclick = logClicks;
-  document.getElementById("sign2").onclick = logClicks;
-  document.getElementById("sign3").onclick = logClicks;
-
-  document.getElementById("donate1").onclick = logClicks;
-  document.getElementById("donate2").onclick = logClicks;
-  document.getElementById("donate3").onclick = logClicks;
+  document.getElementById("donate1").onclick = function(e) {
+    tracker.sendEvent('Link Clicks', 'User Clicked a Donation Fund');
+    chrome.storage.local.get("lastClicked", function (result) {
+      chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+    });
+  };
+  document.getElementById("donate2").onclick = function(e) {
+    tracker.sendEvent('Link Clicks', 'User Clicked a Donation Fund');
+    chrome.storage.local.get("lastClicked", function (result) {
+      chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+    });
+  };
+  document.getElementById("donate3").onclick = function(e) {
+    tracker.sendEvent('Link Clicks', 'User Clicked a Donation Fund');
+    chrome.storage.local.get("lastClicked", function (result) {
+      chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+    });
+  };
 }
 
 function displayTooLongSinceClick() {
@@ -884,20 +923,28 @@ function getUrlFromArt(art) {
   ];
 }
 
-//CODE FOR CONNECTING TO A BACKEND
-// function addListener() {
-//   let testButton = this.document.getElementById("testButton").addEventListener("click", function (event) {
-//     fetch("http://localhost:8081/test/",
-//       {
-//         method: "GET",
-//         mode: 'no-cors'
-//       }).then(res => {
-//         console.log(res)
-//       }, err => {
-//         console.log(err);
-//       })
-//   });
-// }
+// ANALYTICS SETUP
+
+let service, tracker, previous, currentChoice, previousChoice;
+function startApp() {
+  // Initialize the Analytics service object with the name of your app.
+  service = analytics.getService('tab_4_blm_chrome_extension');
+  //service.getConfig().addCallback(initAnalyticsConfig);
+
+  // Get a Tracker using your Google Analytics app Tracking ID.
+  tracker = service.getTracker('UA-172853637-1');
+
+  // Start timing...
+  // var timing = tracker.startTiming('Analytics Performance', 'Send Event');
+
+  // Record an "appView" each time the user launches your app or goes to a new
+  // screen within the app.
+  tracker.sendAppView('TabView');
+
+  // Record user actions with "sendEvent".
+  tracker.sendEvent('Opened Tab', 'User Opened a New Tab');
+  return tracker;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -914,7 +961,7 @@ window.onload = function () {
   showHideItems();
   mouseOffResources();
   displayTooLongSinceClick();
-  monitorClicks();
+  monitorClicks(startApp());
   // addListener();
 };
 
