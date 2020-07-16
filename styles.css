@@ -254,14 +254,14 @@ footer {
   .dropdown-content a {
     font-size: 20px;
   }
-  .tooltiptext-bottom {
-    left: 0px;
-  }
 }
 
 #artistBioInfo {
-  font-family: "Yatra One", cursive;
+  font-family: "Italiana";
   font-size: 20px;
+  padding: 10px;
+  text-align: left;
+  line-height: 1.2em;
 }
 
 
