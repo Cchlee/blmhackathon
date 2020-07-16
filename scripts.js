@@ -7,6 +7,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
+// CONSTANTS
+NUM_SECONDS_IN_DAY = 86400;
+
 /**
  * readTextFileArt is used to handle the background image art
  */
@@ -27,7 +30,6 @@ function readTextFileArt(file) {
           let selectedArtURL = getUrlFromArt(selectedArt);
 
           while (result.recentArt.includes(selectedArtURL)) {
-            console.log("getting new art");
             selectedArt = getRandom(jsonArt, 1);
             selectedArtURL = getUrlFromArt(selectedArt);
           }
@@ -124,7 +126,7 @@ function goOffline() {
   document.getElementsByTagName("BODY")[0].appendChild(offline);
 }
 
-var headerTitleLinks = []; //GLOBAL ARRAY TO STORE HEADER LINKS
+let headerTitleLinks = []; //GLOBAL ARRAY TO STORE HEADER LINKS
 
 /**
  * readTextFileResources is used to handle the dropdown resources
@@ -213,7 +215,7 @@ function readTextFileResources(file) {
                   saveArticleFromDropdown("sign" + addOne);
                   changeColor("save-sign-" + addOne);
                 });
-              var preset = {
+              let preset = {
                 title: selectedPetition[i]["Title"].toString(),
                 element: "save-sign-" + addOne,
               };
@@ -254,7 +256,7 @@ function readTextFileResources(file) {
                   saveArticleFromDropdown("donate" + addOne);
                   changeColor("save-donate-" + addOne);
                 });
-              var preset = {
+              let preset = {
                 title: selectedDonation[i]["Title"].toString(),
                 element: "save-donate-" + addOne,
               };
@@ -291,7 +293,7 @@ function readTextFileResources(file) {
                   saveArticleFromDropdown("read" + addOne);
                   changeColor("save-read-" + addOne);
                 });
-              var preset = {
+              let preset = {
                 title: selectedRead[i]["Title"].toString(),
                 element: "save-read-" + addOne,
               };
@@ -563,7 +565,7 @@ function checkIfSaved(title, curr, type) {
     if (result.savedArticles === undefined) {
       chrome.storage.local.set({ savedArticles: [] }, function () {});
     }
-    for (var x = 0; x < result.savedArticles.length; x++) {
+    for (let x = 0; x < result.savedArticles.length; x++) {
       if (result.savedArticles[x].title === title) {
         changeColor(type + curr);
         return true;
@@ -588,8 +590,8 @@ function changeColor(id) {
  * this function saves or unsaves an article that a user selects in the dropdowns
  */
 function saveArticleFromDropdown(id) {
-  var saved = {};
-  var allArticles = [];
+  let saved = {};
+  let allArticles = [];
   chrome.storage.local.get("savedArticles", function (result) {
     allArticles = result.savedArticles;
     let toDelete = false;
@@ -622,7 +624,7 @@ function saveArticleFromDropdown(id) {
  */
 function saveArticleFromDropup(id) {
   let toDeleteIndex = parseInt(id.split("-")[2]);
-  var saved = {};
+  let saved = {};
   let toDelete = false;
   saved.title = document.getElementById(
     "saved-resource-link-" + toDeleteIndex
@@ -630,7 +632,7 @@ function saveArticleFromDropup(id) {
   saved.link = document.getElementById(
     "saved-resource-link-" + toDeleteIndex
   ).href;
-  var allArticles = [];
+  let allArticles = [];
   chrome.storage.local.get("savedArticles", function (result) {
     allArticles = result.savedArticles;
     for (let i = 0; i < allArticles.length; i++) {
@@ -678,6 +680,44 @@ function mouseOffResources() {
     .addEventListener("mouseleave", function () {
       updateSavedContent();
     });
+}
+
+logClicks = function(e) {
+  chrome.storage.local.get("lastClicked", function (result) {
+    chrome.storage.local.set({ lastClicked: Date.now() }, function () {});
+  });
+}
+
+function monitorClicks() {
+  document.getElementById("read1").onclick = logClicks;
+  document.getElementById("read2").onclick = logClicks;
+  document.getElementById("read3").onclick = logClicks;
+
+  document.getElementById("sign1").onclick = logClicks;
+  document.getElementById("sign2").onclick = logClicks;
+  document.getElementById("sign3").onclick = logClicks;
+
+  document.getElementById("donate1").onclick = logClicks;
+  document.getElementById("donate2").onclick = logClicks;
+  document.getElementById("donate3").onclick = logClicks;
+}
+
+function displayTooLongSinceClick() {
+  chrome.storage.local.get("lastClicked", function (result) {
+    if (result.lastClicked === undefined) {
+      result.lastClicked = Date.now();
+    }
+
+    const start = result.lastClicked;
+    const diff = Date.now() - start;
+
+    let numDaysToDelay = 3;
+    let secondsSinceClick = Math.floor(diff / 1000);
+
+    if (secondsSinceClick > numDaysToDelay * NUM_SECONDS_IN_DAY) {
+      document.getElementById("noInteractionWarning").style.display = "block";
+    }
+  });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -757,6 +797,26 @@ function convertDay(num) {
   }
 }
 
+// function clickOrigin(e){
+//     let target = e.target;
+//     let tag = [];
+//     tag.tagType = target.tagName.toLowerCase();
+//     tag.tagClass = target.className.split(' ');
+//     tag.id = target.id;
+//     tag.parent = target.parentNode;
+//
+//     return tag;
+// }
+
+// document.body.onclick = function(e){
+//     let elem = clickOrigin(e);
+//     if (elem.tagType == 'a'){
+//         console.log('You\'ve clicked a monitored tag (' + elem.tagType + ', in this case).');
+//         return false; // or do something else.
+//     }
+// };
+//
+
 /**
  * This converts a number to a month it represents
  */
@@ -826,7 +886,7 @@ function getUrlFromArt(art) {
 
 //CODE FOR CONNECTING TO A BACKEND
 // function addListener() {
-//   var testButton = this.document.getElementById("testButton").addEventListener("click", function (event) {
+//   let testButton = this.document.getElementById("testButton").addEventListener("click", function (event) {
 //     fetch("http://localhost:8081/test/",
 //       {
 //         method: "GET",
@@ -853,6 +913,8 @@ window.onload = function () {
   addSavedItemsToList();
   showHideItems();
   mouseOffResources();
+  displayTooLongSinceClick();
+  monitorClicks();
   // addListener();
 };
 

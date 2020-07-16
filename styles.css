@@ -55,6 +55,14 @@ footer {
   color: #d3d3d3;
 }
 
+#noInteractionWarning {
+  padding-left: 15px;
+  padding-top: 75px;
+  text-shadow: 2px 2px black;
+  font-size: 20px;
+  display: none;
+}
+
 /* Icon styling */
 .fa-eye {
   text-shadow: 2px 2px black;
