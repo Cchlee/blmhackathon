@@ -246,6 +246,9 @@ footer {
   .dropdown-content a {
     font-size: 20px;
   }
+  .tooltiptext-bottom {
+    left: 0px;
+  }
 }
 
 #artistBioInfo {
@@ -261,6 +264,9 @@ footer {
 
   .dropbtn {
     font-size: 20px;
+  }
+  .tooltiptext-bottom {
+    left: 0px;
   }
 }
 

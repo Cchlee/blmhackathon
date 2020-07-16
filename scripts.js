@@ -70,7 +70,7 @@ function readTextFileArt(file) {
             selectedArtTitle,
             25
           );
-          document.getElementById("artistBio").innerHTML = "&#xf0eb " + '<span id="artistBioInfo" class="tooltiptext-bottom">' + artistBio + '</span>';
+          document.getElementById("artistBio").innerHTML = "&#xf0eb " + '<span id="artistBioInfo" class="tooltiptext-bottom">About ' + artistFirstName + ": " + artistBio + '</span>';
 
           document.getElementById("artTitle").href = selectedArtTitleURL;
           document.getElementById("artistName").innerHTML = selectedArtist;
