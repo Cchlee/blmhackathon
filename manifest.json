@@ -11,9 +11,7 @@
     },
     "permissions": [
         "storage",
-        "bookmarks",
         "tabs",
-        "unlimitedStorage",
         "https://www.google-analytics.com/"
     ],
     "browser_action": {

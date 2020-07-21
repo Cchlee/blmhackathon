@@ -202,8 +202,8 @@ function readTextFileResources(file) {
               let addOne = (i + 1).toString();
               if (selectedPetition[i]["CW\r"].length == 1) {
                 document.getElementById("cw-sign" + addOne).style.display = "none";
-                document.getElementById("tooltiptext-sign" + addOne).innerHTML = selectedPetition[i]["CW\r"];
               }
+              document.getElementById("tooltiptext-sign" + addOne).innerHTML = selectedPetition[i]["CW\r"];
               document.getElementById("sign" + addOne).href =
                 selectedPetition[i]["URL to resource"];
               document.getElementById("sign" + addOne).innerHTML =
@@ -237,10 +237,9 @@ function readTextFileResources(file) {
             ) {
               let addOne = (i + 1).toString();
               if (selectedDonation[i]["CW\r"].length == 1) {
-                document.getElementById("cw-donate" + addOne).style.display = "none";
-                document.getElementById("tooltiptext-donate" + addOne).innerHTML = selectedDonation[i]["CW\r"];
+                document.getElementById("cw-donate" + addOne).style.display = "none";            
               }
-
+              document.getElementById("tooltiptext-donate" + addOne).innerHTML = selectedDonation[i]["CW\r"];
               document.getElementById("donate" + addOne).href =
                 selectedDonation[i]["URL to resource"];
               document.getElementById("donate" + addOne).innerHTML =
@@ -279,9 +278,8 @@ function readTextFileResources(file) {
               let addOne = (i + 1).toString();
               if (selectedRead[i]["CW\r"].length == 1) {
                 document.getElementById("cw-read" + addOne).style.display = "none";
-                document.getElementById("tooltiptext-read" + addOne).innerHTML = selectedRead[i]["CW\r"];
               }
-
+              document.getElementById("tooltiptext-read" + addOne).innerHTML = selectedRead[i]["CW\r"];
               document.getElementById("read" + addOne).href =
                 selectedRead[i]["URL to resource"];
               document.getElementById("read" + addOne).innerHTML =
