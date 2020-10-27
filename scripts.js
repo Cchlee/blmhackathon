@@ -61,12 +61,27 @@ function readTextFileArt(file) {
           let artistBio = selectedArt[0]["Artist Bio\r"].replace("\"", "").replace("\"", "");
           let artistFirstName = selectedArtist.split(" ")[0]
 
+          if (selectedArtURL.includes("instagram")) {
+            const Http = new XMLHttpRequest();
+            var url = new URL("https://graph.facebook.com/v8.0/instagram_oembed");
+            url.searchParams.append('url', selectedArtURL.split("media")[0]);
+            url.searchParams.append('fields', 'thumbnail_url');
+            url.searchParams.append('access_token', '217651948990036|ab3c5d521cd6ab52446731cde4e2b7d5');
+            Http.open("GET", url);
+            Http.send();
 
-          if (selectedArtURL.includes("drive")) {
-            selectedArtURL = convertGoogleImageToURL(selectedArtURL);
+            Http.onreadystatechange = (e) => {
+              if (Http.readyState === 4) {
+                if (Http.status === 200) {
+                  loadBackgroundImage(JSON.parse(Http.responseText)["thumbnail_url"]);
+                }
+              }
+            }
           }
 
-          loadBackgroundImage(selectedArtURL);
+          if (selectedArtURL.includes("drive")) {
+            loadBackgroundImage(convertGoogleImageToURL(selectedArtURL));
+          }
 
           document.getElementById("artTitle").innerHTML = truncate(
             selectedArtTitle,
@@ -202,8 +217,8 @@ function readTextFileResources(file) {
               let addOne = (i + 1).toString();
               if (selectedPetition[i]["CW\r"].length == 1) {
                 document.getElementById("cw-sign" + addOne).style.display = "none";
-                document.getElementById("tooltiptext-sign" + addOne).innerHTML = selectedPetition[i]["CW\r"];
               }
+              document.getElementById("tooltiptext-sign" + addOne).innerHTML = selectedPetition[i]["CW\r"];
               document.getElementById("sign" + addOne).href =
                 selectedPetition[i]["URL to resource"];
               document.getElementById("sign" + addOne).innerHTML =
@@ -238,9 +253,9 @@ function readTextFileResources(file) {
               let addOne = (i + 1).toString();
               if (selectedDonation[i]["CW\r"].length == 1) {
                 document.getElementById("cw-donate" + addOne).style.display = "none";
-                document.getElementById("tooltiptext-donate" + addOne).innerHTML = selectedDonation[i]["CW\r"];
-              }
 
+              }
+              document.getElementById("tooltiptext-donate" + addOne).innerHTML = selectedDonation[i]["CW\r"];
               document.getElementById("donate" + addOne).href =
                 selectedDonation[i]["URL to resource"];
               document.getElementById("donate" + addOne).innerHTML =
@@ -279,9 +294,9 @@ function readTextFileResources(file) {
               let addOne = (i + 1).toString();
               if (selectedRead[i]["CW\r"].length == 1) {
                 document.getElementById("cw-read" + addOne).style.display = "none";
-                document.getElementById("tooltiptext-read" + addOne).innerHTML = selectedRead[i]["CW\r"];
-              }
 
+              }
+              document.getElementById("tooltiptext-read" + addOne).innerHTML = selectedRead[i]["CW\r"];
               document.getElementById("read" + addOne).href =
                 selectedRead[i]["URL to resource"];
               document.getElementById("read" + addOne).innerHTML =
@@ -752,6 +767,7 @@ function getRandom(arr, n) {
 function convertGoogleImageToURL(googleURL) {
   let arr = googleURL.split("https://drive.google.com/open?id=");
   img_id = arr[1];
+  console.log("https://drive.google.com/uc?export=view&id=" + img_id);
   return "https://drive.google.com/uc?export=view&id=" + img_id;
 }
 
