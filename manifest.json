@@ -11,8 +11,7 @@
     },
     "permissions": [
         "storage",
-        "tabs",
-        "https://www.google-analytics.com/"
+        "tabs"
     ],
     "browser_action": {
         "default_icon": "icon.png",
